@@ -1,4 +1,3 @@
-
 ---
 title: El título de tu entrada
 tldr: Una o dos frases que resuman de qué va.
