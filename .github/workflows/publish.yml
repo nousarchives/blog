@@ -9,6 +9,8 @@ on:
       - "antonio/*.md"
       - "invitados/**/*.md"
 
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
