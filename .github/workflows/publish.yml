@@ -1,4 +1,4 @@
-name: Publicar entradas
+çname: Publicar entradas
 
 on:
   push:
@@ -28,16 +28,26 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Instalar dependencias
-        run: npm ci
+      # CAMBIO CLAVE: 'npm install' en lugar de 'npm ci'
+      # Esto permite que npm arregle el lockfile automáticamente si es viejo o inconsistente
+      - name: Instalar y sincronizar dependencias
+        run: npm install
 
       - name: Convertir Markdown → HTML y regenerar posts.js
         run: node scripts/build.js
 
-      - name: Commit archivos generados
+      - name: Commit y Push (Incluye correcciones de dependencias)
         run: |
           git config user.name "NousArchives Bot"
           git config user.email "bot@nousarchives.github.io"
+          
+          # Añadimos todo, incluido el nuevo package-lock.json generado
           git add -A
-          git diff --staged --quiet || git commit -m "build: publicar entradas generadas automáticamente [skip ci]"
-          git push
+          
+          # Solo hacemos commit si realmente hay cambios
+          if ! git diff --staged --quiet; then
+            git commit -m "build: publicar entradas y actualizar dependencias [skip ci]"
+            git push
+          else
+            echo "Nada que actualizar."
+          fi
