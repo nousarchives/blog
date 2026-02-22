@@ -1,9 +1,9 @@
 
 ---
-title: Half Life 1 no sabe lo que quiere
-tldr: Half Life 1 no sabe lo que quiere
+title: El título de tu entrada
+tldr: Una o dos frases que resuman de qué va.
 date: 2026-02-22
-type: ensayo
+type: articulo
 tags: [cine, literatura]
 readtime: 8 min
 ---
