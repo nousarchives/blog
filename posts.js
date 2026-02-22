@@ -29,6 +29,20 @@ const POSTS = [
         type: "articulo",
         tags: ["cine", "literatura"],
         readtime: "8 min"
+    },
+
+    {
+        id: "angel-el-sistema-vive-prueba-de-automatizacion",
+        author: "Ángel",
+        authorSlug: "angel",
+        date: "feb 2026",
+        dateISO: "2026-02-01",
+        title: "El Sistema Vive: Prueba de Automatización",
+        tldr: "Esta es una entrada de prueba para verificar que el index.html y la home se actualizan solos sin tocar código.",
+        url: "angel/prueba-sistema.html",
+        type: "ensayo",
+        tags: ["ia", "ml"],
+        readtime: "2 min"
     }
 
     // ── PLANTILLA ───────────────────────────────────────────────
