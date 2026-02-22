@@ -25,21 +25,22 @@
         <div class="author-hero-right">
             <h1 class="author-hero-name">Ángel</h1>
             <p class="author-hero-bio">Ingeniero de telecomunicaciones reconvertido en consultor de arquitecturas API. Escribe sobre tecnología, filosofía clásica y el ecosistema del Mar Menor.</p>
-            <div class="author-hero-meta">
+            <div class="author-hero-meta" id="author-meta">
                 <span>Murcia</span>
                 <span> · </span>
-                <span>0 entradas</span>
+                <span id="post-count">0 entradas</span>
             </div>
         </div>
     </header>
 
     <section class="author-posts-section">
-
         <div class="section-header">
             <span class="section-label">Todas las entradas</span>
             <div class="section-rule"></div>
         </div>
-        <div id="author-pub-list"></div>
+
+        <div id="author-pub-list">
+            </div>
     </section>
 
     <footer class="footer">
@@ -57,70 +58,59 @@
         </div>
     </footer>
 
-<script src="../posts.js"></script>
-<script>
-    // CAMBIA ESTO SEGÚN LA CARPETA: "angel", "javi" o "antonio"
-    const CURRENT_AUTHOR_SLUG = "angel"; 
+    <script src="../posts.js"></script>
+    <script>
+        const CURRENT_AUTHOR_SLUG = "angel";
 
-    function renderAuthorPage() {
-        const pubList = document.getElementById('author-pub-list');
-        const metaContainer = document.querySelector('.author-hero-meta');
-        
-        // 1. Filtrar posts de este autor
-        const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
-
-        // 2. Actualizar el contador en la cabecera
-        if (metaContainer) {
-            const countText = `${myPosts.length} ${myPosts.length === 1 ? 'entrada' : 'entradas'}`;
-            // Mantenemos el formato original (Murcia · X entradas)
-            metaContainer.innerHTML = `<span>Murcia</span><span> · </span><span>${countText}</span>`;
-        }
-
-        // 3. Renderizar lista o mensaje de vacío
-        if (myPosts.length === 0) {
-            pubList.innerHTML = `
-                <div class="pub-empty">
-                    <span class="pub-empty-glyph">∅</span>
-                    <p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p>
-                </div>`;
-            return;
-        }
-
-        const listContainer = document.createElement('div');
-        listContainer.className = 'pub-list';
-
-        myPosts.forEach(post => {
-            const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
+        function renderAuthorPage() {
+            const pubList = document.getElementById('author-pub-list');
+            const countLabel = document.getElementById('post-count');
             
-            // Ajustamos la URL para que funcione desde la subcarpeta
-            const postUrl = post.url.replace(`${CURRENT_AUTHOR_SLUG}/`, '');
+            const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
 
-            listContainer.innerHTML += `
-                <a href="${postUrl}" class="pub-item">
-                    <div class="pub-left">
-                        <span class="pub-author">${post.author}</span>
-                        <span class="pub-date">${post.date}</span>
-                    </div>
-                    <div class="pub-center">
-                        <span class="pub-title">${post.title}</span>
-                        <span class="pub-tldr">${post.tldr}</span>
-                        <div class="pub-tags">${tagsHTML}</div>
-                    </div>
-                    <div class="pub-right">
-                        <span class="pub-type ${post.type}">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
-                        <span class="pub-readtime">${post.readtime}</span>
-                    </div>
-                </a>`;
-        });
-        pubList.appendChild(listContainer);
-    }
+            if (countLabel) {
+                countLabel.textContent = `${myPosts.length} ${myPosts.length === 1 ? 'entrada' : 'entradas'}`;
+            }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof POSTS !== 'undefined') {
-            renderAuthorPage();
+            if (myPosts.length === 0) {
+                pubList.innerHTML = `
+                    <div class="pub-empty">
+                        <span class="pub-empty-glyph">∅</span>
+                        <p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p>
+                    </div>`;
+                return;
+            }
+
+            const listContainer = document.createElement('div');
+            listContainer.className = 'pub-list';
+
+            myPosts.forEach(post => {
+                const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
+                const postUrl = post.url.split('/').pop(); // Solo el nombre del archivo html
+
+                listContainer.innerHTML += `
+                    <a href="${postUrl}" class="pub-item">
+                        <div class="pub-left">
+                            <span class="pub-author">${post.author}</span>
+                            <span class="pub-date">${post.date}</span>
+                        </div>
+                        <div class="pub-center">
+                            <span class="pub-title">${post.title}</span>
+                            <span class="pub-tldr">${post.tldr}</span>
+                            <div class="pub-tags">${tagsHTML}</div>
+                        </div>
+                        <div class="pub-right">
+                            <span class="pub-type ${post.type}">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
+                            <span class="pub-readtime">${post.readtime}</span>
+                        </div>
+                    </a>`;
+            });
+            pubList.appendChild(listContainer);
         }
-    });
-</script>
-    
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof POSTS !== 'undefined') renderAuthorPage();
+        });
+    </script>
 </body>
 </html>
