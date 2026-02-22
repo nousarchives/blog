@@ -1,213 +1,117 @@
 # Cómo publicar en NousArchives
 
-Este es un sitio estático en GitHub Pages. No hay CMS ni base de datos. Para publicar, se añaden archivos HTML directamente al repositorio. Aquí el proceso completo.
+El proceso tiene dos pasos: escribir el artículo y subirlo. Nada más.
 
 ---
 
-## Estructura de carpetas
+## Lo que necesitas saber
 
-```
-nousarchives/
-├── index.html              ← home principal
-├── style.css               ← CSS compartido por todas las páginas
-├── angel/
-│   ├── index.html          ← perfil de Ángel
-│   └── nombre-articulo.html
-├── javi/
-│   ├── index.html
-│   └── nombre-articulo.html
-├── antonio/
-│   ├── index.html
-│   ├── tfg-nousarchives.html
-│   └── nombre-articulo.html
-└── CONTRIBUTING.md
-```
+Escribes en **Markdown**, un formato de texto muy simple. El sistema convierte tu archivo en una página web automáticamente en menos de un minuto.
 
 ---
 
-## Paso a paso para publicar un artículo
+## Paso 1 — Escribir el artículo
 
-### 1. Crear el archivo HTML del artículo
+Crea un archivo de texto con extensión `.md`. Empieza siempre con esta cabecera:
 
-Dentro de tu carpeta (`angel/`, `javi/`, `antonio/`), crea un archivo `.html`. Usa kebab-case para el nombre: `mi-articulo-sobre-cine.html`.
+```
+---
+title: El título de tu entrada
+tldr: Una o dos frases que resuman de qué va.
+date: 2026-02-22
+type: articulo
+tags: [cine, literatura]
+readtime: 8 min
+---
 
-Copia esta plantilla y rellena los campos marcados con `[]:
+Aquí empieza el texto del artículo.
+```
 
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[TITULO] — NousArchives</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-</head>
-<body>
+### Campos de la cabecera
 
-    <nav class="topnav">
-        <a href="../" class="nav-left">← NousArchives</a>
-        <span class="nav-center">[TU NOMBRE]</span>
-        <div class="nav-links">
-            <a href="../angel/">Ángel</a>
-            <a href="../javi/">Javi</a>
-            <a href="../antonio/">Antonio</a>
-        </div>
-    </nav>
+| Campo | Qué poner |
+|-------|-----------|
+| `title` | El título, sin comillas |
+| `tldr` | Resumen breve para la portada |
+| `date` | Fecha en formato `AAAA-MM-DD` |
+| `type` | `articulo`, `comentario`, `respuesta` o `ensayo` |
+| `tags` | Secciones: `ia`, `cine`, `literatura`, `musica`, `ml`, `derecho` |
+| `readtime` | Tiempo estimado de lectura, ej: `6 min` |
 
-    <header class="article-header">
-        <div class="article-meta-top">
-            <span>[TU NOMBRE]</span>
-            <span class="dot">·</span>
-            <span>[MES AÑO, ej: Febrero 2026]</span>
-            <span class="dot">·</span>
-            <span>[TIPO: Artículo / Comentario / Ensayo / Respuesta]</span>
-        </div>
+### Formato del texto (Markdown básico)
 
-        <h1 class="article-title">[TÍTULO DEL ARTÍCULO]</h1>
+```markdown
+## Esto es un subtítulo
 
-        <p class="article-subtitle">[SUBTÍTULO O DESCRIPCIÓN BREVE — una o dos frases]</p>
+Un párrafo normal. Puedes poner **negrita** o *cursiva*.
 
-        <div class="article-tags">
-            <!-- Pon aquí las etiquetas. Valores posibles: ia, cine, literatura, musica, ml, derecho -->
-            <span class="pub-tag">cine</span>
-            <span class="pub-tag">literatura</span>
-        </div>
-    </header>
+> Esto es una cita destacada.
 
-    <div class="article-body">
-
-        <p>Primer párrafo del artículo.</p>
-
-        <p>Segundo párrafo.</p>
-
-        <h2>Un subtítulo</h2>
-
-        <p>Más contenido...</p>
-
-        <blockquote>
-            Una cita que quieras destacar.
-        </blockquote>
-
-        <!-- Nota al pie opcional -->
-        <p class="article-nota">
-            Nota: cualquier aclaración o fuente que quieras añadir al final.
-        </p>
-
-    </div>
-
-    <footer class="footer">
-        <div class="footer-top">
-            <a href="../" class="footer-logo">NousArchives</a>
-            <nav class="footer-nav">
-                <a href="../angel/">Ángel</a>
-                <a href="../javi/">Javi</a>
-                <a href="../antonio/">Antonio</a>
-            </nav>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2026 NousArchives — Murcia</span>
-            <span>CC BY-NC-SA 4.0</span>
-        </div>
-    </footer>
-
-</body>
-</html>
+- Punto de una lista
+- Otro punto
 ```
 
 ---
 
-### 2. Añadir la entrada a tu página de autor (`tunom/index.html`)
+## Paso 2 — Subir el archivo a GitHub
 
-Dentro de `<div class="pub-list">`, añade un bloque `.pub-item` apuntando al nuevo archivo:
-
-```html
-<a href="nombre-articulo.html" class="pub-item">
-    <div class="pub-left">
-        <span class="pub-author">[Tu nombre]</span>
-        <span class="pub-date">[Feb 2026]</span>
-    </div>
-    <div class="pub-center">
-        <span class="pub-title">[Título]</span>
-        <span class="pub-tldr">[Descripción breve / TLDR]</span>
-        <div class="pub-tags">
-            <span class="pub-tag">cine</span>
-        </div>
-    </div>
-    <div class="pub-right">
-        <span class="pub-type articulo">Artículo</span>
-        <!-- Tipos disponibles: articulo / comentario / respuesta / ensayo -->
-        <span class="pub-readtime">5 min</span>
-    </div>
-</a>
-```
-
-También actualiza el contador en la cabecera del autor:
-```html
-<span>2 entradas</span>  <!-- cambia el número -->
-```
-
----
-
-### 3. Añadir la entrada a la home (`index.html`)
-
-Copia el mismo bloque `.pub-item` dentro del `<div class="pub-list" id="pub-list">` de la home. Importante: añade el atributo `data-tags` con las secciones separadas por espacio para que funcione el filtro:
-
-```html
-<a href="antonio/nombre-articulo.html" class="pub-item" data-tags="cine literatura">
-    ...
-</a>
-```
-
-Los valores válidos para `data-tags` son: `ia`, `cine`, `literatura`, `musica`, `ml`, `derecho`.
-
-También actualiza el contador en la tarjeta del autor en la home:
-```html
-<span class="author-column-count">2 entradas</span>
-```
-
----
-
-### 4. Subir a GitHub
+### Si usas Git (el que sabe)
 
 ```bash
+# Copia tu .md a tu carpeta (angel/, javi/, antonio/)
 git add .
-git commit -m "Add: [título del artículo] por [nombre]"
+git commit -m "Add: título del artículo"
 git push
 ```
 
-GitHub Pages publicará los cambios en cuestión de segundos.
+### Si no usas Git (el resto) — desde el navegador
+
+1. Ve a **github.com/[usuario]/nousarchives**
+2. Navega a tu carpeta (`angel/`, `javi/` o `antonio/`)
+3. Haz click en **"Add file" → "Create new file"**
+4. Nombre del archivo: `nombre-de-tu-articulo.md`
+5. Pega tu contenido con la cabecera arriba
+6. Abajo, click en **"Commit changes"**
+
+Listo. En 30–60 segundos tu artículo aparece publicado en la web.
 
 ---
 
-## Tipos de publicación disponibles
+## Qué pasa automáticamente después de subir
 
-| Clase CSS     | Uso                                         |
-|---------------|---------------------------------------------|
-| `articulo`    | Textos largos con desarrollo propio         |
-| `comentario`  | Notas cortas, apuntes, observaciones        |
-| `respuesta`   | Respuesta directa a algo o a alguien        |
-| `ensayo`      | Textos académicos o de investigación        |
-
----
-
-## Secciones (tags) disponibles
-
-`ia` · `cine` · `literatura` · `musica` · `ml` · `derecho`
-
-Si queréis añadir una nueva sección, hay que añadir el botón en `index.html`:
-```html
-<button class="tag-btn" data-tag="nueva-seccion">Nueva sección</button>
+```
+tu .md
+  → se convierte en .html con el diseño del blog
+  → se añade a la lista de publicaciones en portada
+  → se actualiza tu página de autor
+  → se hace commit y se publica
 ```
 
+No tienes que tocar ningún otro archivo.
+
 ---
 
-## Abrir el blog a más autores
+## Añadir un nuevo autor
 
-Para añadir un nuevo autor:
-1. Crear carpeta `nombre/` con su `index.html` (copiar el de Javi como plantilla)
-2. Añadir su columna en el grid de autores en `index.html`
-3. Añadir su enlace en la nav de todas las páginas
+Cualquiera puede publicar en NousArchives. Para añadir a alguien nuevo:
 
-No hay límite de autores.
+1. El que sabe Git crea la carpeta `nombre/` con su `index.html` (copiar el de Javi)
+2. Añade al nuevo autor en `scripts/build.js` en el objeto `AUTHORS`
+3. El nuevo autor ya puede subir sus `.md` directamente desde el navegador
+
+---
+
+## Preguntas frecuentes
+
+**¿Puedo editar un artículo ya publicado?**
+Modifica el `.md` y vuelve a hacer commit. Se regenera solo.
+
+**¿El nombre del archivo importa?**
+Sí, se convierte en la URL. Usa minúsculas y guiones: `mi-articulo-sobre-cine.md`
+
+**¿Qué pasa si me equivoco en la cabecera?**
+El Action fallará y te avisará. El artículo no se publica hasta que lo corrijas.
+
+**¿Puedo poner imágenes?**
+Sí. Sube la imagen a tu carpeta y refiérela en el Markdown:
+`![Descripción](nombre-imagen.jpg)`
