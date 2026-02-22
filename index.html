@@ -1,81 +1,216 @@
-<script>
-    // 1. Renderizar la lista de publicaciones desde POSTS (de posts.js)
-    const pubList = document.getElementById('pub-list');
-    const noResults = document.getElementById('no-results');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NousArchives</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
 
-    function renderPosts(filterTag = 'all') {
-        pubList.innerHTML = ''; // Limpiar lista
-        let visibleCount = 0;
+    <nav class="topnav">
+        <span class="nav-left">EST. 2026</span>
+        <span class="nav-center">NousArchives</span>
+        <div class="nav-links">
+            <a href="angel/">Ángel</a>
+            <a href="javi/">Javi</a>
+            <a href="antonio/">Antonio</a>
+            <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
+        </div>
+    </nav>
 
-        POSTS.forEach(post => {
-            // Filtrado por etiquetas
-            if (filterTag !== 'all' && !post.tags.includes(filterTag)) return;
+    <header class="hero">
+        <div class="hero-rule"></div>
+        <h1 class="hero-title">
+            <span class="title-line">Nous</span>
+            <span class="title-line title-italic">Archives</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <div class="hero-meta">
+            <span>Volumen I</span>
+            <span>·</span>
+            <span>Febrero 2026</span>
+            <span>·</span>
+            <span>Murcia</span>
+        </div>
+    </header>
 
-            visibleCount++;
-            const item = document.createElement('a');
-            item.href = post.url;
-            item.className = 'pub-item';
-            
-            // Generar etiquetas HTML
-            const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
-
-            item.innerHTML = `
-                <div class="pub-left">
-                    <span class="pub-author">${post.author}</span>
-                    <span class="pub-date">${post.date}</span>
+    <section class="manifiesto">
+        <div class="manifiesto-inner">
+            <div class="manifiesto-label">Manifiesto</div>
+            <div>
+                <p class="manifiesto-text">
+                    Esto es un <strong>cuaderno de bitácora</strong>. No un newsletter, no un portfolio, no una marca personal. Escribimos porque pensamos, y publicamos porque el pensamiento solo no llega a ningún sitio.
+                </p>
+                <div class="manifiesto-lines">
+                    <p class="manifiesto-point">Un archivo vivo. Abierto a quien quiera escribir.</p>
+                    <p class="manifiesto-point">Sin urgencia de publicar cada semana. Sin formato obligatorio.</p>
+                    <p class="manifiesto-point">Artículos largos cuando haga falta. Notas cortas cuando no.</p>
                 </div>
-                <div class="pub-center">
-                    <span class="pub-title">${post.title}</span>
-                    <span class="pub-tldr">${post.tldr}</span>
-                    <div class="pub-tags">${tagsHTML}</div>
+            </div>
+        </div>
+    </section>
+
+    <main class="content">
+
+        <div class="section-header">
+            <span class="section-label">Los autores</span>
+            <div class="section-rule"></div>
+        </div>
+
+        <section class="authors-grid">
+            <a href="angel/" class="author-column" data-slug="angel">
+                <span class="author-column-number">01 — Autor</span>
+                <div class="author-column-initial">Á</div>
+                <div class="author-column-name">Ángel</div>
+                <p class="author-column-bio">Ingeniero de teleco reconvertido en consultor. Escribe sobre tecnología, filosofía clásica y el Mar Menor.</p>
+                <div class="author-column-meta">
+                    <span class="author-column-count">Cargando...</span>
+                    <span class="author-arrow">→</span>
                 </div>
-                <div class="pub-right">
-                    <span class="pub-type ${post.type}">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
-                    <span class="pub-readtime">${post.readtime}</span>
+            </a>
+
+            <a href="javi/" class="author-column" data-slug="javi">
+                <span class="author-column-number">02 — Autor</span>
+                <div class="author-column-initial">J</div>
+                <div class="author-column-name">Javi</div>
+                <p class="author-column-bio">El espacio está listo. La primera entrada, en camino.</p>
+                <div class="author-column-meta">
+                    <span class="author-column-count">Cargando...</span>
+                    <span class="author-arrow">→</span>
                 </div>
-            `;
-            pubList.appendChild(item);
+            </a>
+
+            <a href="antonio/" class="author-column" data-slug="antonio">
+                <span class="author-column-number">03 — Autor</span>
+                <div class="author-column-initial">A</div>
+                <div class="author-column-name">Antonio</div>
+                <p class="author-column-bio">Periodista. Escribe sobre cultura, medios y el lado terapéutico del arte. Co-fundador de NousArchives.</p>
+                <div class="author-column-meta">
+                    <span class="author-column-count">Cargando...</span>
+                    <span class="author-arrow">→</span>
+                </div>
+            </a>
+        </section>
+
+        <div class="section-header">
+            <span class="section-label">Últimas publicaciones</span>
+            <div class="section-rule"></div>
+        </div>
+
+        <section class="publications">
+            <div class="tags-filter">
+                <button class="tag-btn active" data-tag="all">Todas</button>
+                <button class="tag-btn" data-tag="ia">IA</button>
+                <button class="tag-btn" data-tag="cine">Cine</button>
+                <button class="tag-btn" data-tag="literatura">Literatura</button>
+                <button class="tag-btn" data-tag="musica">Música</button>
+                <button class="tag-btn" data-tag="ml">ML</button>
+                <button class="tag-btn" data-tag="derecho">Derecho</button>
+            </div>
+
+            <div class="pub-list" id="pub-list">
+                </div>
+
+            <div class="pub-empty" id="no-results" style="display:none;">
+                <span class="pub-empty-glyph">∅</span>
+                <p>Nada en esta sección todavía.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <a href="/" class="footer-logo">NousArchives</a>
+            <nav class="footer-nav">
+                <a href="angel/">Ángel</a>
+                <a href="javi/">Javi</a>
+                <a href="antonio/">Antonio</a>
+                <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 NousArchives — Murcia</span>
+            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="LICENSE">MIT</a></span>
+        </div>
+    </footer>
+
+    <script src="posts.js"></script>
+
+    <script>
+        const pubList = document.getElementById('pub-list');
+        const noResults = document.getElementById('no-results');
+        const btns = document.querySelectorAll('.tag-btn');
+
+        // Función para renderizar los posts
+        function renderPosts(filterTag = 'all') {
+            pubList.innerHTML = '';
+            let visibleCount = 0;
+
+            if (typeof POSTS === 'undefined') return;
+
+            POSTS.forEach(post => {
+                if (filterTag !== 'all' && !post.tags.includes(filterTag)) return;
+
+                visibleCount++;
+                const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
+                
+                const item = document.createElement('a');
+                item.href = post.url;
+                item.className = 'pub-item';
+                item.innerHTML = `
+                    <div class="pub-left">
+                        <span class="pub-author">${post.author}</span>
+                        <span class="pub-date">${post.date}</span>
+                    </div>
+                    <div class="pub-center">
+                        <span class="pub-title">${post.title}</span>
+                        <span class="pub-tldr">${post.tldr}</span>
+                        <div class="pub-tags">${tagsHTML}</div>
+                    </div>
+                    <div class="pub-right">
+                        <span class="pub-type ${post.type}">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
+                        <span class="pub-readtime">${post.readtime}</span>
+                    </div>
+                `;
+                pubList.appendChild(item);
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Función para actualizar contadores de autores
+        function updateAuthorCounts() {
+            const authorColumns = document.querySelectorAll('.author-column');
+            authorColumns.forEach(col => {
+                const slug = col.dataset.slug;
+                const count = POSTS.filter(p => p.authorSlug === slug).length;
+                const countElement = col.querySelector('.author-column-count');
+                if (countElement) {
+                    countElement.textContent = `${count} ${count === 1 ? 'entrada' : 'entradas'}`;
+                }
+            });
+        }
+
+        // Eventos de los botones de filtro
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderPosts(btn.dataset.tag);
+            });
         });
 
-        // Mostrar mensaje si no hay resultados
-        if (visibleCount === 0) {
-            const emptyMsg = document.createElement('div');
-            emptyMsg.className = 'pub-empty';
-            emptyMsg.innerHTML = '<span class="pub-empty-glyph">∅</span><p>Nada en esta sección todavía.</p>';
-            pubList.appendChild(emptyMsg);
-        }
-    }
-
-    // 2. Actualizar contadores de autores automáticamente
-    function updateAuthorCounts() {
-        const columns = document.querySelectorAll('.author-column');
-        columns.forEach(col => {
-            const slug = col.getAttribute('href').replace('/', '');
-            const count = POSTS.filter(p => p.authorSlug === slug).length;
-            const countLabel = col.querySelector('.author-column-count');
-            if (countLabel) {
-                countLabel.textContent = `${count} ${count === 1 ? 'entrada' : 'entradas'}`;
+        // Inicio
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof POSTS !== 'undefined') {
+                renderPosts();
+                updateAuthorCounts();
             }
         });
-    }
-
-    // 3. Manejo de Filtros
-    const btns = document.querySelectorAll('.tag-btn');
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            btns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderPosts(btn.dataset.tag);
-        });
-    });
-
-    // Inicializar al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof POSTS !== 'undefined') {
-            renderPosts();
-            updateAuthorCounts();
-        } else {
-            console.error("No se encontró el archivo posts.js");
-        }
-    });
-</script>
+    </script>
+</body>
+</html>
