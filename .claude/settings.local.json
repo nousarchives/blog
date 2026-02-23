@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:www.lesswrong.com)",
       "Bash(cd \"C:/Users/Angel/Desktop/code_proye/nous-blog/blog\" && node scripts/build.js 2>&1)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(cd \"C:\\\\Users\\\\Angel\\\\Desktop\\\\code_proye\\\\nous-blog\\\\blog\" && node scripts/build.js 2>&1)",
+      "Bash(node:*)"
     ]
   }
 }
