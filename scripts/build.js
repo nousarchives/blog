@@ -326,7 +326,7 @@ function archivoPageTemplate() {
         <div class="hero-meta" style="padding-bottom:3rem;">Todas las entradas por orden cronológico</div>
     </header>
 
-    <main class="content">
+    <main class="content" style="padding-bottom:5rem;">
         <div id="archivo-list"></div>
     </main>
 
