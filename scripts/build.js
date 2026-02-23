@@ -112,7 +112,7 @@ function htmlHead(title, depth = 1) {
     <link rel="icon" type="image/jpeg" href="${rel}logo_color.jpg">
     <link rel="stylesheet" href="${rel}style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>`;
 }
 

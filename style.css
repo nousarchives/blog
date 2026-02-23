@@ -2,7 +2,7 @@
    NousArchives — V4
    ======================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -86,7 +86,7 @@ body {
        transform-origin en el centro → queda centrado. */
     width: 100vh;
     height: 48px;
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
     transform-origin: center center;
     overflow: visible;
     flex-shrink: 0;
@@ -187,61 +187,56 @@ body {
     white-space: nowrap;
 }
 
-/* n — sans-serif (JetBrains Mono, igual que en el logo) */
-.ht-n {
-    font-family: var(--font-mono);
-    font-weight: 400;
+/* "nous" — Open Sans bold */
+.ht-n, .ht-ous {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
     font-style: normal;
-    display: inline-block;
-    transform-origin: right center;
 }
+.ht-n { display: inline-block; }
 
-/* ous — letras que desaparecen al scrollear */
+/* "ous" — se encoge hacia la derecha al scrollear */
 .ht-ous {
-    font-family: var(--font-mono);
-    font-weight: 400;
     display: inline-block;
     transform-origin: left center;
-    overflow: hidden;
-    /* animadas por JS con --t (0→1) */
     opacity: calc(1 - var(--t, 0));
-    max-width: calc((1 - var(--t, 0)) * 3.2em);
-    transition: none;
+    overflow: hidden;
+    /* el width se contrae junto con la opacidad */
+    max-width: 2.2em;
+    width: calc((1 - var(--t, 0)) * 2.2em);
 }
 
 /* línea del logo — crece al scrollear */
 .ht-line {
     display: inline-block;
-    height: 0.06em;
+    height: 0.065em;
     background: currentColor;
     vertical-align: baseline;
     position: relative;
-    bottom: 0.12em;
-    /* de 0 a ~1.4em de ancho */
-    width: calc(var(--t, 0) * 1.4em);
+    bottom: 0.1em;
+    width: calc(var(--t, 0) * 1.6em);
     opacity: var(--t, 0);
-    transition: none;
+    flex-shrink: 0;
 }
 
-/* A — Playfair Display (serif, igual que en el logo) */
+/* "A" — Open Sans regular */
 .ht-A {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
     font-style: normal;
     display: inline-block;
 }
 
-/* rchives — letras que desaparecen al scrollear */
+/* "rchives" — se encoge hacia la izquierda al scrollear */
 .ht-rchives {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-style: italic;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
     display: inline-block;
-    transform-origin: left center;
-    overflow: hidden;
     opacity: calc(1 - var(--t, 0));
-    max-width: calc((1 - var(--t, 0)) * 4.8em);
-    transition: none;
+    overflow: hidden;
+    max-width: 4em;
+    width: calc((1 - var(--t, 0)) * 4em);
 }
 
 .hero-meta { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); display: flex; justify-content: center; gap: 0.8rem; margin-top: 0.5rem; padding-bottom: 4rem; }
