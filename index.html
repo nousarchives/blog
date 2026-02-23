@@ -29,16 +29,19 @@
         </div>
     </nav>
 
-    <header class="hero">
-        <h1 class="hero-title" id="hero-title" aria-label="nous Archives">
-            <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
-        </h1>
-        <div class="hero-meta">
-            <span>Volumen I</span>
-            <span>·</span>
-            <span>Febrero 2026</span>
-        </div>
-    </header>
+    <!-- hero-sticky: altura extra para que la animación tenga tiempo mientras scrolleas -->
+    <div class="hero-sticky-wrap">
+        <header class="hero">
+            <h1 class="hero-title" id="hero-title" aria-label="nous Archives">
+                <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
+            </h1>
+            <div class="hero-meta">
+                <span>Volumen I</span>
+                <span>·</span>
+                <span>Febrero 2026</span>
+            </div>
+        </header>
+    </div>
 
     <section class="manifiesto">
         <div class="manifiesto-inner">
@@ -284,13 +287,20 @@
                 updateNaThumb();
             }
 
-            // Animación hero: "nous Archives" → "n_A" al scrollear
+            // Animación hero sticky: "nous Archives" → "n_A"
+            // La animación ocurre mientras el wrapper sticky está activo
             const heroTitle = document.getElementById('hero-title');
-            if (heroTitle) {
-                // La animación ocurre en los primeros 120px de scroll
-                const ANIM_END = 120;
+            const heroWrap = heroTitle ? heroTitle.closest('.hero-sticky-wrap') : null;
+            if (heroTitle && heroWrap) {
                 function updateHeroAnim() {
-                    const t = Math.min(1, window.scrollY / ANIM_END);
+                    const wrapTop = heroWrap.getBoundingClientRect().top + window.scrollY;
+                    const wrapH = heroWrap.offsetHeight;
+                    const viewH = window.innerHeight;
+                    // La animación empieza cuando el hero llega a sticky (top=0)
+                    // y termina cuando el wrap abandona la pantalla
+                    const animStart = wrapTop; // cuando el hero queda pegado arriba
+                    const animEnd = wrapTop + wrapH - viewH; // cuando el wrap se va
+                    const t = Math.max(0, Math.min(1, (window.scrollY - animStart) / (animEnd - animStart)));
                     heroTitle.style.setProperty('--t', t.toFixed(3));
                 }
                 window.addEventListener('scroll', updateHeroAnim, { passive: true });
