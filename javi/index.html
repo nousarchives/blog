@@ -4,30 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javi — NousArchives</title>
+    <link rel="icon" type="image/jpeg" href="../logo_color.jpg">
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <nav class="topnav">
         <a href="../" class="nav-left">← NousArchives</a>
-        <span class="nav-center">Javi</span>
+        <a href="../" class="nav-center"><img src="../logo.png" alt="NousArchives" class="nav-logo"></a>
         <div class="nav-links">
-            <a href="../angel/">Ángel</a>
-            <a href="./" class="active">Javi</a>
-            <a href="../antonio/">Antonio</a>
+            <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
         </div>
     </nav>
-
     <header class="author-hero">
         <div class="author-hero-initial">J</div>
         <div class="author-hero-right">
             <h1 class="author-hero-name">Javi</h1>
             <p class="author-hero-bio">El espacio está listo. La primera entrada, en camino.</p>
             <div class="author-hero-meta">
-                <span>Murcia</span>
-                <span> · </span>
                 <span id="post-count">0 entradas</span>
             </div>
         </div>
@@ -45,14 +40,12 @@
         <div class="footer-top">
             <a href="../" class="footer-logo">NousArchives</a>
             <nav class="footer-nav">
-                <a href="../angel/">Ángel</a>
-                <a href="./">Javi</a>
-                <a href="../antonio/">Antonio</a>
+                <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
             </nav>
         </div>
         <div class="footer-bottom">
-            <span>© 2026 NousArchives — Murcia</span>
-            <span>CC BY-NC-SA 4.0</span>
+            <span>© 2026 NousArchives</span>
+            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="../LICENSE">MIT</a></span>
         </div>
     </footer>
 
@@ -63,26 +56,41 @@
             const pubList = document.getElementById('author-pub-list');
             const countLabel = document.getElementById('post-count');
             const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
-            if (countLabel) countLabel.textContent = `${myPosts.length} ${myPosts.length === 1 ? 'entrada' : 'entradas'}`;
+            if (countLabel) {
+                countLabel.textContent = myPosts.length + ' ' + (myPosts.length === 1 ? 'entrada' : 'entradas');
+            }
             if (myPosts.length === 0) {
-                pubList.innerHTML = `<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>Todavía no hay nada por aquí.</p></div>`;
+                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p></div>';
                 return;
             }
             const listContainer = document.createElement('div');
             listContainer.className = 'pub-list';
             myPosts.forEach(post => {
-                const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
+                const tagsHTML = post.tags.map(t => '<span class="pub-tag">' + t + '</span>').join('');
                 const postUrl = post.url.split('/').pop();
+                const typeLabel = post.type ? post.type.charAt(0).toUpperCase() + post.type.slice(1) : '';
                 listContainer.innerHTML += `
                     <a href="${postUrl}" class="pub-item">
-                        <div class="pub-left"><span class="pub-author">${post.author}</span><span class="pub-date">${post.date}</span></div>
-                        <div class="pub-center"><span class="pub-title">${post.title}</span><span class="pub-tldr">${post.tldr}</span><div class="pub-tags">${tagsHTML}</div></div>
-                        <div class="pub-right"><span class="pub-type ${post.type}">${post.type}</span><span class="pub-readtime">${post.readtime}</span></div>
+                        <div class="pub-left">
+                            <span class="pub-author">${post.author}</span>
+                            <span class="pub-date">${post.date}</span>
+                        </div>
+                        <div class="pub-center">
+                            <span class="pub-title">${post.title}</span>
+                            <span class="pub-tldr">${post.tldr}</span>
+                            <div class="pub-tags">${tagsHTML}</div>
+                        </div>
+                        <div class="pub-right">
+                            <span class="pub-type ${post.type}">${typeLabel}</span>
+                            <span class="pub-readtime">${post.readtime}</span>
+                        </div>
                     </a>`;
             });
             pubList.appendChild(listContainer);
         }
-        document.addEventListener('DOMContentLoaded', () => { if (typeof POSTS !== 'undefined') renderAuthorPage(); });
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof POSTS !== 'undefined') renderAuthorPage();
+        });
     </script>
 </body>
 </html>

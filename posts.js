@@ -1,83 +1,16 @@
-// posts.js — generado automáticamente por scripts/build.js
-// NO editar manualmente. Escribe en los .md de cada autor.
-// Para cambiar bios, edita AUTHORS en scripts/build.js
-
 const POSTS = [
-    {
-        id: "angel-el-titulo-de-tu-entrada",
-        author: "Ángel",
-        authorSlug: "angel",
-        date: "feb 2026",
-        dateISO: "2026-02-22",
-        title: "El título de tu entrada",
-        tldr: "Una o dos frases que resuman de qué va.",
-        url: "angel/Half-Life-1.html",
-        type: "articulo",
-        tags: ["cine", "literatura"],
-        readtime: "8 min"
-    },
-
-    {
-        id: "javi-prueba-javi-dinamica-1",
-        author: "Javi",
-        authorSlug: "javi",
-        date: "feb 2026",
-        dateISO: "2026-02-22",
-        title: "prueba javi dinamica 1",
-        tldr: "Una o dos frases que resuman de qué va.",
-        url: "javi/prueba1.html",
-        type: "articulo",
-        tags: ["cine", "literatura"],
-        readtime: "8 min"
-    },
-
-    {
-        id: "angel-el-sistema-vive-prueba-de-automatizacion",
-        author: "Ángel",
-        authorSlug: "angel",
-        date: "feb 2026",
-        dateISO: "2026-02-01",
-        title: "El Sistema Vive: Prueba de Automatización",
-        tldr: "Esta es una entrada de prueba para verificar que el index.html y la home se actualizan solos sin tocar código.",
-        url: "angel/prueba-sistema.html",
-        type: "ensayo",
-        tags: ["ia", "ml"],
-        readtime: "2 min"
-    }
-
-    // ── PLANTILLA ───────────────────────────────────────────────
-    // Crea un archivo .md en tu carpeta con este formato:
-    //
-    // ---
-    // title: Título de tu entrada
-    // tldr: Una o dos frases que resuman de qué va.
-    // date: 2026-02-22
-    // type: articulo       # articulo | comentario | respuesta | ensayo
-    // tags: [cine, ia]     # ia | cine | literatura | musica | ml | derecho
-    // readtime: 8 min
-    // ---
-    //
-    // El contenido del artículo en Markdown debajo del ---
-    // ────────────────────────────────────────────────────────────
+  {
+    "title": "El título de tu entrada",
+    "tldr": "Una o dos frases que resuman de qué va.",
+    "date": "2026-02-22",
+    "type": "articulo",
+    "tags": [
+      "cine",
+      "literatura"
+    ],
+    "readtime": "8 min",
+    "author": "Ángel",
+    "authorSlug": "angel",
+    "url": "angel/Half-Life-1.html"
+  }
 ];
-
-const AUTHORS = {
-    angel: {
-        name: "Ángel",
-        initial: "Á",
-        bio: "",      // ← editar en posts.js directamente
-        location: "Murcia"
-    },
-    javi: {
-        name: "Javi",
-        initial: "J",
-        bio: "",      // ← editar en posts.js directamente
-        location: "Murcia"
-    },
-    antonio: {
-        name: "Antonio",
-        initial: "A",
-        bio: "",      // ← editar en posts.js directamente
-        location: "Murcia"
-    }
-};

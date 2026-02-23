@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ángel Allepuz — NousArchives</title>
+    <title>Ángel — NousArchives</title>
+    <link rel="icon" type="image/jpeg" href="../logo_color.jpg">
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <nav class="topnav">
         <a href="../" class="nav-left">← NousArchives</a>
-        <span class="nav-center">Ángel</span>
+        <a href="../" class="nav-center"><img src="../logo.png" alt="NousArchives" class="nav-logo"></a>
         <div class="nav-links">
-            <a href="./" class="active">Ángel</a>
-            <a href="../javi/">Javi</a>
-            <a href="../antonio/">Antonio</a>
+            <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
         </div>
     </nav>
-
     <header class="author-hero">
         <div class="author-hero-initial">Á</div>
         <div class="author-hero-right">
             <h1 class="author-hero-name">Ángel</h1>
-            <p class="author-hero-bio">Ingeniero de telecomunicaciones reconvertido en consultor de arquitecturas API</p>
-            <div class="author-hero-meta" id="author-meta">
-                <span>Murcia</span>
-                <span> · </span>
+            <p class="author-hero-bio">Ingeniero de telecomunicaciones reconvertido en consultor de arquitecturas API.</p>
+            <div class="author-hero-meta">
                 <span id="post-count">0 entradas</span>
             </div>
         </div>
@@ -38,56 +33,42 @@
             <span class="section-label">Todas las entradas</span>
             <div class="section-rule"></div>
         </div>
-
-        <div id="author-pub-list">
-            </div>
+        <div id="author-pub-list"></div>
     </section>
 
     <footer class="footer">
         <div class="footer-top">
             <a href="../" class="footer-logo">NousArchives</a>
             <nav class="footer-nav">
-                <a href="./">Ángel</a>
-                <a href="../javi/">Javi</a>
-                <a href="../antonio/">Antonio</a>
+                <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
             </nav>
         </div>
         <div class="footer-bottom">
-            <span>© 2026 NousArchives — Murcia</span>
-            <span>CC BY-NC-SA 4.0</span>
+            <span>© 2026 NousArchives</span>
+            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="../LICENSE">MIT</a></span>
         </div>
     </footer>
 
     <script src="../posts.js"></script>
     <script>
         const CURRENT_AUTHOR_SLUG = "angel";
-
         function renderAuthorPage() {
             const pubList = document.getElementById('author-pub-list');
             const countLabel = document.getElementById('post-count');
-            
             const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
-
             if (countLabel) {
-                countLabel.textContent = `${myPosts.length} ${myPosts.length === 1 ? 'entrada' : 'entradas'}`;
+                countLabel.textContent = myPosts.length + ' ' + (myPosts.length === 1 ? 'entrada' : 'entradas');
             }
-
             if (myPosts.length === 0) {
-                pubList.innerHTML = `
-                    <div class="pub-empty">
-                        <span class="pub-empty-glyph">∅</span>
-                        <p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p>
-                    </div>`;
+                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p></div>';
                 return;
             }
-
             const listContainer = document.createElement('div');
             listContainer.className = 'pub-list';
-
             myPosts.forEach(post => {
-                const tagsHTML = post.tags.map(t => `<span class="pub-tag">${t}</span>`).join('');
-                const postUrl = post.url.split('/').pop(); // Solo el nombre del archivo html
-
+                const tagsHTML = post.tags.map(t => '<span class="pub-tag">' + t + '</span>').join('');
+                const postUrl = post.url.split('/').pop();
+                const typeLabel = post.type ? post.type.charAt(0).toUpperCase() + post.type.slice(1) : '';
                 listContainer.innerHTML += `
                     <a href="${postUrl}" class="pub-item">
                         <div class="pub-left">
@@ -100,15 +81,14 @@
                             <div class="pub-tags">${tagsHTML}</div>
                         </div>
                         <div class="pub-right">
-                            <span class="pub-type ${post.type}">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
+                            <span class="pub-type ${post.type}">${typeLabel}</span>
                             <span class="pub-readtime">${post.readtime}</span>
                         </div>
                     </a>`;
             });
             pubList.appendChild(listContainer);
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             if (typeof POSTS !== 'undefined') renderAuthorPage();
         });
     </script>
