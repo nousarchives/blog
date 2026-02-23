@@ -66,7 +66,7 @@ body {
     padding-left: 48px;
 }
 
-/* ── CUSTOM SCROLLBAR nA ── */
+/* ── CUSTOM SCROLLBAR nA — SVG ── */
 .na-scrollbar {
     position: fixed;
     left: 0;
@@ -74,57 +74,16 @@ body {
     bottom: 0;
     width: 48px;
     z-index: 500;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     pointer-events: none;
 }
 
-/* n arriba — writing-mode vertical para que el texto ocupe espacio real en el eje vertical */
-.na-scrollbar-top {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 2rem;
-    color: var(--grey-light);
-    line-height: 1;
-    writing-mode: vertical-lr;
-    transform: rotate(90deg);
-    padding-top: 16px;
-    transition: color 0.3s;
-}
-
-/* A abajo — mismo writing-mode, sin rotate para que apunte al otro lado */
-.na-scrollbar-bottom {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 2rem;
-    color: var(--grey-light);
-    line-height: 1;
-    writing-mode: vertical-lr;
-    padding-bottom: 16px;
-    transition: color 0.3s;
-}
-
-/* Track — la línea vertical */
-.na-scrollbar-track {
-    flex: 1;
-    width: 1px;
-    background: var(--rule-light);
-    position: relative;
-    transition: background 0.3s;
-}
-
-/* Thumb — indicador de posición */
-.na-scrollbar-thumb {
+.na-scrollbar svg {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    background: var(--black);
     top: 0;
-    height: 40px;
-    transition: background 0.3s;
-    pointer-events: none;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
 
