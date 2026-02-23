@@ -201,11 +201,11 @@ const sharedScript = `
 
 const naScrollbar = `
     <div class="na-scrollbar" aria-hidden="true">
-        <div class="na-scrollbar-top">A</div>
+        <div class="na-scrollbar-top">n</div>
         <div class="na-scrollbar-track" id="na-track">
             <div class="na-scrollbar-thumb" id="na-thumb"></div>
         </div>
-        <div class="na-scrollbar-bottom">n</div>
+        <div class="na-scrollbar-bottom">A</div>
     </div>`;
 
 const backToTopBtn = `    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>`;

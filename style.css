@@ -68,10 +68,10 @@ body {
 /* ── CUSTOM SCROLLBAR nA ── */
 .na-scrollbar {
     position: fixed;
-    right: 0;
+    right: 12px;
     top: 0;
     bottom: 0;
-    width: 28px;
+    width: 36px;
     z-index: 500;
     display: flex;
     flex-direction: column;
@@ -79,15 +79,15 @@ body {
     pointer-events: none;
 }
 
-/* Letra superior: A rotada -90° apuntando a la izquierda */
+/* Letra superior: n rotada 90° apuntando a la derecha */
 .na-scrollbar-top {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: 0.95rem;
+    font-size: 1.4rem;
     color: var(--grey-light);
     line-height: 1;
-    padding: 10px 0 6px;
-    transform: rotate(-90deg);
+    padding: 14px 0 8px;
+    transform: rotate(90deg);
     letter-spacing: -0.02em;
     transition: color 0.3s;
 }
@@ -115,15 +115,15 @@ body {
     pointer-events: none;
 }
 
-/* Letra inferior: n rotada -90° apuntando a la izquierda */
+/* Letra inferior: A rotada 90° apuntando a la derecha */
 .na-scrollbar-bottom {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: 0.95rem;
+    font-size: 1.4rem;
     color: var(--grey-light);
     line-height: 1;
-    padding: 6px 0 10px;
-    transform: rotate(-90deg);
+    padding: 8px 0 14px;
+    transform: rotate(90deg);
     letter-spacing: -0.02em;
     transition: color 0.3s;
 }
