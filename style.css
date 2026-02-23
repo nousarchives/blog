@@ -88,7 +88,8 @@ body {
     font-size: 2rem;
     color: var(--grey-light);
     line-height: 1;
-    padding: 16px 0 10px;
+    padding: 16px 0 0;
+    margin-bottom: -0.6rem;
     transform: rotate(90deg);
     letter-spacing: -0.02em;
     transition: color 0.3s;
@@ -124,7 +125,8 @@ body {
     font-size: 2rem;
     color: var(--grey-light);
     line-height: 1;
-    padding: 10px 0 16px;
+    padding: 0 0 16px;
+    margin-top: -0.6rem;
     transform: rotate(90deg);
     letter-spacing: -0.02em;
     transition: color 0.3s;
