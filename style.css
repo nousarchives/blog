@@ -88,7 +88,20 @@ body {
     color: var(--grey-light);
     line-height: 1;
     writing-mode: vertical-lr;
+    transform: rotate(90deg);
     padding-top: 16px;
+    transition: color 0.3s;
+}
+
+/* A abajo — mismo writing-mode, sin rotate para que apunte al otro lado */
+.na-scrollbar-bottom {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--grey-light);
+    line-height: 1;
+    writing-mode: vertical-lr;
+    padding-bottom: 16px;
     transition: color 0.3s;
 }
 
@@ -114,17 +127,7 @@ body {
     pointer-events: none;
 }
 
-/* A abajo — mismo writing-mode, sin rotate para que apunte al otro lado */
-.na-scrollbar-bottom {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 2rem;
-    color: var(--grey-light);
-    line-height: 1;
-    writing-mode: vertical-lr;
-    padding-bottom: 16px;
-    transition: color 0.3s;
-}
+
 
 /* ── BARRA DE PROGRESO ── */
 .progress-bar {
