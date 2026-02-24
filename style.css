@@ -869,6 +869,8 @@ body {
     left: 12px;
     right: 12px;
     height: 120px;
+    opacity: 0;
+    transition: opacity 0.5s ease calc(var(--folder-index, 0) * 0.15s);
     text-decoration: none;
     color: var(--cab-color);
     display: flex;
@@ -877,7 +879,11 @@ body {
     transition: transform 0.22s ease, opacity 0.22s ease;
     cursor: pointer;
 }
-.cab-folder.dimmed { opacity: 0.35; pointer-events: none; }
+.cab-drawer.open .cab-folder {
+    opacity: 1;
+    transition: opacity 0.5s ease calc(var(--folder-index, 0) * 0.15s);
+}
+.cab-folder.dimmed { opacity: 0.35 !important; pointer-events: none; }
 .cab-folder.active .cab-folder-tab {
     background: var(--black);
     color: var(--white);

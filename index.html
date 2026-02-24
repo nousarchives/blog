@@ -357,6 +357,7 @@
                     const tz = fi * folderSpacing;
                     folder.style.transform = `translateZ(${tz}px)`;
                     folder.style.setProperty('--lift-z', `${tz}px`);
+                    folder.style.setProperty('--folder-index', fi);
                     // La más al frente (último índice) tiene mayor z-index en 2D
                     folder.style.zIndex = fi + 1;
                 });
