@@ -130,6 +130,7 @@ function authorNav(depth = 1) {
             <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
             <a href="${rel}archivo.html">Archivo</a>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
+            <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
         </div>
     </nav>`;
 }
