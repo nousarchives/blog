@@ -921,6 +921,12 @@ body {
     letter-spacing: 0;
     width: 100%;
 }
+.cab-folder-tab--name {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    width: 100%;
+    text-transform: none;
+}
 
 /* Cuerpo carpeta — no clicable, solo decorativo */
 .cab-folder-body {

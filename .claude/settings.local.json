@@ -10,7 +10,8 @@
       "Bash(sleep 2:*)",
       "Bash(curl:*)",
       "Bash(python3:*)",
-      "WebFetch(domain:uxwing.com)"
+      "WebFetch(domain:uxwing.com)",
+      "Bash(npx serve:*)"
     ]
   }
 }
