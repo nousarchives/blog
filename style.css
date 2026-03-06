@@ -276,7 +276,7 @@ body {
 .manifiesto-point::before { content: '→ '; font-family: var(--font-mono); color: var(--grey-light); }
 
 /* ── CONTENT ── */
-.content { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+.content { max-width: 850px; margin: 0 auto; padding: 0 0.25rem; }
 
 /* ── SECTION HEADER ── */
 .section-header { display: flex; align-items: center; gap: 1.5rem; margin: 4rem 0 2.5rem; }
@@ -325,7 +325,7 @@ body {
     grid-template-columns: 1fr auto;
     gap: 1.5rem 3rem;
     align-items: start;
-    padding: 2.5rem 1rem;
+    padding: 1.2rem 1rem;
     border-bottom: 1px solid var(--rule-light);
     border-top: 1px solid var(--rule-light);
     text-decoration: none;
@@ -335,12 +335,12 @@ body {
     background: var(--cream);
 }
 .pub-item-featured:hover { background: var(--rule-light); }
-.pub-item-featured .pub-title { font-size: 1.65rem; }
-.pub-item-featured .pub-tldr { font-size: 0.9rem; }
+.pub-item-featured .pub-title { font-size: 1.2rem; }
+.pub-item-featured .pub-tldr { font-size: 0.85rem; }
 .pub-featured-label { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem; }
 
 /* ── PUBLICACIONES ── */
-.publications { margin-bottom: 4rem; }
+.publications { margin-bottom: 4rem; max-width: 1150px; margin-left: auto; margin-right: auto; padding: 3rem 2rem 4rem; }
 .pub-list { display: flex; flex-direction: column; }
 .pub-item { display: grid; grid-template-columns: 5rem 1fr auto; gap: 0 2rem; align-items: start; padding: 1.8rem 1rem; border-bottom: 1px solid var(--rule-light); text-decoration: none; color: inherit; transition: background 0.2s; margin: 0 -1rem; }
 .pub-item:first-child { border-top: 1px solid var(--rule-light); }
@@ -613,6 +613,13 @@ body {
     --cab-gap: 3px;
     --cab-line: 1.5px;
     --cab-color: var(--black);
+
+    /* ── ESTANTERÍA DE CDs ── */
+    --shelf-w: 160px;
+    --shelf-depth: 100px;
+    --cd-h: 18px;
+    --cd-gap: 1px;
+    --cd-count: 10;
 }
 
 .cabinet-section {
@@ -622,18 +629,19 @@ body {
     perspective: 4000px;
     perspective-origin: 50% -30%;
     overflow: visible;
-    transform: scale(0.9);
+    transform: none;
     transform-origin: top center;
     margin-bottom: -6%;
+    cursor: grab;
+    transition: perspective 0.3s ease, transform 0.3s ease;
 }
 
 /* Cuerpo — solo estructura, sin relleno */
+/* Posición y transform gestionados por las reglas del .room (arriba) */
 .cabinet {
-    position: relative;
     width: var(--cab-w);
     transform-style: preserve-3d;
-    transform: rotateX(0deg) rotateY(-22deg);
-    cursor: grab;
+    cursor: inherit;
     user-select: none;
 }
 
@@ -750,10 +758,11 @@ body {
     transform: scaleY(1.08) translateY(-6px);
 }
 
-/* Zoom de cámara: acercado al interior del cajón */
-.cabinet-section:has(.cab-drawer--focused) {
+/* Zoom de cámara: acercado al interior del cajón o estantería */
+.cabinet-section:has(.cab-drawer--focused),
+.cabinet-section:has(.cd-shelf--focused) {
     perspective: 1200px;
-    perspective-origin: 50% 40%;
+    perspective-origin: 50% 0%;
 }
 
 /* Frontal — wireframe: fondo transparent, solo borde */
@@ -808,6 +817,12 @@ body {
 .cab-drawer--focused .cab-drawer-front {
     opacity: 0 !important;
     pointer-events: none;
+}
+
+/* En zoom: cursor pointer en carpetas para que sean clicables */
+.cab-drawer--focused .cab-folder,
+.cab-drawer--focused .cab-folder-tab {
+    cursor: pointer !important;
 }
 
 /* Interior cajón */
@@ -887,7 +902,7 @@ body {
     transition: opacity 0.5s ease calc(var(--folder-index, 0) * 0.15s),
                 transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.cab-folder.dimmed { opacity: 0.35 !important; pointer-events: none; }
+.cab-folder.dimmed { opacity: 0.08 !important; pointer-events: none; transition: opacity 0.2s ease; }
 .cab-folder.active .cab-folder-tab {
     background: var(--black);
     color: var(--white);
@@ -978,6 +993,223 @@ body {
     color: var(--white);
 }
 
+/* ── ROOM — contenedor 3D: toda la habitación ── */
+:root {
+    --room-w: 300px;   /* = --cab-w */
+    --room-d: 120px;   /* profundidad de la habitación (eje Z) */
+    --room-h: 590px;   /* altura de la habitación (3 cajones + gaps) */
+}
+
+.room {
+    position: relative;
+    width: var(--room-w);
+    height: var(--room-h);
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(-22deg);
+    transform-origin: center center;
+    user-select: none;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+.room > * {
+    pointer-events: all;
+}
+
+/* El cabinet: posición gestionada por JS (roomObjects) */
+.cabinet {
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+}
+
+/* ── PARED DERECHA DE CDs ── */
+.cd-wall {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 4px;
+    transform-style: preserve-3d;
+    transform-origin: left bottom;
+}
+
+/* ── ESTANTERÍA DE CDs — WIREFRAME ── */
+.cd-shelf {
+    position: relative;
+    width: var(--shelf-w);
+    /* Altura: 10 CDs × (28px + 2px gap) = 300px — aprox mitad del armario */
+    height: calc(var(--cd-count) * (var(--cd-h) + var(--cd-gap)));
+    transform-style: preserve-3d;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Torre oculta cuando otra está en zoom */
+.cd-shelf--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scaleY(0.85);
+}
+
+/* Torre en foco */
+.cd-shelf--focused {
+    transform: scaleY(1.05) translateY(-4px);
+}
+
+/* Tapa superior del shelf */
+.cd-shelf::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: var(--shelf-w);
+    height: var(--shelf-depth);
+    background: transparent;
+    border-top: var(--cab-line) dashed var(--cab-color);
+    border-left: var(--cab-line) solid var(--cab-color);
+    border-right: var(--cab-line) solid var(--cab-color);
+    border-bottom: var(--cab-line) dashed var(--cab-color);
+    transform-origin: top left;
+    transform: rotateX(-90deg);
+}
+
+/* Cara lateral derecha del shelf */
+.cd-shelf::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: var(--shelf-depth);
+    height: 100%;
+    background: transparent;
+    border-top: var(--cab-line) solid var(--cab-color);
+    border-bottom: var(--cab-line) solid var(--cab-color);
+    border-left: var(--cab-line) solid var(--cab-color);
+    border-right: var(--cab-line) dashed var(--cab-color);
+    opacity: 0.9;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+}
+
+/* Aristas ocultas traseras del shelf */
+.cd-shelf-edges {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform-style: preserve-3d;
+}
+.cd-shelf-edge-back-left {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 100%;
+    border-left: var(--cab-line) dashed var(--cab-color);
+    opacity: 0.45;
+    transform: translateZ(calc(-1 * var(--shelf-depth)));
+}
+.cd-shelf-edge-back-right {
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 100%;
+    border-left: var(--cab-line) dashed var(--cab-color);
+    opacity: 0.45;
+    transform: translateZ(calc(-1 * var(--shelf-depth)));
+}
+.cd-shelf-edge-back-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0;
+    border-top: var(--cab-line) dashed var(--cab-color);
+    opacity: 0.45;
+    transform: translateZ(calc(-1 * var(--shelf-depth)));
+}
+.cd-shelf-edge-depth-left {
+    position: absolute;
+    top: 0; left: 0;
+    width: var(--shelf-depth);
+    height: 100%;
+    border-top: var(--cab-line) dashed var(--cab-color);
+    border-bottom: var(--cab-line) dashed var(--cab-color);
+    opacity: 0.45;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+}
+
+/* Borde frontal/lateral del shelf (marco del cuerpo) */
+.cd-shelf-body {
+    position: absolute;
+    inset: 0;
+    border: var(--cab-line) solid var(--cab-color);
+    transform-style: preserve-3d;
+    overflow: visible;
+}
+
+/* ── CD SLOT — cada ranura de jewel case ── */
+.cd-slot {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    height: var(--cd-h);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--cab-color);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover: el CD sube hacia la cámara (gestionado por JS, esta regla es fallback) */
+.cd-shelf--focused .cd-slot.dimmed {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Frente del CD — el canto visible con el título */
+.cd-front {
+    position: absolute;
+    inset: 0;
+    border: var(--cab-line) solid var(--cab-color);
+    background: transparent;
+    transform-origin: bottom left;
+    transform: translateZ(0px);
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    overflow: hidden;
+}
+
+/* Título en el canto */
+.cd-spine-text {
+    font-family: var(--font-mono);
+    font-size: 0.42rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cab-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+}
+
+/* Cara superior del CD (grosor) */
+.cd-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: var(--shelf-depth);
+    background: transparent;
+    border-left: var(--cab-line) solid var(--cab-color);
+    border-right: var(--cab-line) solid var(--cab-color);
+    border-top: var(--cab-line) solid var(--cab-color);
+    transform-origin: top left;
+    transform: rotateX(-90deg);
+    opacity: 0.6;
+}
+
+/* Estado: shelf en foco */
+.cd-shelf.shelf-focused {
+    /* el transform lo gestiona JS igual que --focused del cabinet */
+}
+
 /* ── FOOTER ── */
 .footer { border-top: 1px solid var(--rule); margin: 0; padding: 1rem 3rem; }
 .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
@@ -1015,4 +1247,85 @@ body {
     .toc { padding: 1.5rem; }
     .related-posts { padding: 0 1.5rem 3rem; }
     .back-to-top { bottom: 1rem; right: 1rem; }
+}
+
+/* ── PANEL INFO CD ── */
+#cd-info-panel {
+    position: fixed;
+    left: 14rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 100;
+}
+#cd-info-panel.visible {
+    opacity: 1;
+}
+#cd-info-cover-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    border: var(--cab-line) solid var(--cab-color);
+    overflow: hidden;
+    background: transparent;
+}
+#cd-info-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+#cd-info-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        var(--cab-color) 4px,
+        var(--cab-color) 5px
+    );
+    opacity: 0.15;
+    display: none;
+}
+#cd-info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+#cd-info-artist {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cab-color);
+    opacity: 0.6;
+}
+#cd-info-album {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: var(--cab-color);
+}
+
+/* ── ETIQUETA NOMBRE EN ESTANTERÍA DE CDs ── */
+.cd-shelf-label {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cab-color);
+    opacity: 0.5;
+    white-space: nowrap;
+    pointer-events: none;
 }
