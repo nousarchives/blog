@@ -1,7 +1,7 @@
 const POSTS = [
   {
     "title": "Nostalgia, la emoción inasible",
-    "tldr": "Ensayo del video de la nostalgia del canal de youtube",
+    "tldr": "",
     "date": "2026-06-29",
     "type": "ensayo",
     "tags": [
