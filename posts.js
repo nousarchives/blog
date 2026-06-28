@@ -15,6 +15,21 @@ const POSTS = [
     "url": "angel/nostalgia.html"
   },
   {
+    "title": "Citrini & Citadel - Agent Disruption",
+    "tldr": "",
+    "date": "2026-02-28",
+    "type": "articulo",
+    "tags": [
+      "ia",
+      "ml"
+    ],
+    "readtime": "4 min",
+    "wordcount": 769,
+    "author": "Ángel Allepuz",
+    "authorSlug": "angel",
+    "url": "angel/Citrini & Citadel - Agent Disruption.html"
+  },
+  {
     "title": "Referencias",
     "tldr": "Papers, artículos, libros y cursos que he consumido y considero importantes recordar.",
     "date": "2025-11-29",

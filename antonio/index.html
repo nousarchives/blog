@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="../i18n.js"></script>
 </head>
 <body>
     <nav class="topnav">
-        <span class="nav-left">EST. ENE 24</span>
+        <span class="nav-left" data-i18n="nav.established">EST. ENE 24</span>
         <a href="../" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
             </span>
         </a>
         <div class="nav-links">
-            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
-            <a href="../archivo.html">Archivo</a>
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
+            <a href="../archivo.html" data-i18n="nav.archive">Archivo</a>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
             <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
         </div>
@@ -36,7 +38,7 @@
 
     <section class="author-posts-section">
         <div class="section-header">
-            <span class="section-label">Todas las entradas</span>
+            <span class="section-label" data-i18n="section.allposts">Todas las entradas</span>
             <div class="section-rule"></div>
         </div>
         <div id="author-pub-list"></div>
@@ -44,10 +46,10 @@
 
     <footer class="footer">
         <div class="footer-bottom">
-            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="../LICENSE">MIT</a></span>
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="../LICENSE">MIT</a></span>
         </div>
     </footer>
-    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>
+    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba" data-i18n-aria="backtotop">↑</button>
 
     <div class="na-scrollbar" aria-hidden="true">
         <svg id="na-svg"
@@ -68,10 +70,12 @@
             const countLabel = document.getElementById('post-count');
             const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
             if (countLabel) {
-                countLabel.textContent = myPosts.length + ' ' + (myPosts.length === 1 ? 'entrada' : 'entradas');
+                const word = myPosts.length === 1 ? window.i18n.t('author.entries.one') : window.i18n.t('author.entries.other');
+                countLabel.textContent = myPosts.length + ' ' + word;
             }
             if (myPosts.length === 0) {
-                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p></div>';
+                const emptyLines = window.i18n.t('empty.author').split('\n');
+                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>' + emptyLines.join('<br>') + '</p></div>';
                 return;
             }
             const listContainer = document.createElement('div');
@@ -106,7 +110,7 @@
     </script>
 
     <script>
-        // Dark mode (aplicar antes de pintar para evitar flash)
+        // Dark mode (apply before paint to avoid flash)
         (function() {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -114,7 +118,7 @@
             }
         })();
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode toggle
+            // Dark mode toggle button
             const btn = document.getElementById('dark-toggle');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -123,7 +127,7 @@
                     localStorage.setItem('theme', isDark ? 'light' : 'dark');
                 });
             }
-            // Volver arriba
+            // Back to top button
             const backBtn = document.getElementById('back-to-top');
             if (backBtn) {
                 window.addEventListener('scroll', function() {
@@ -133,7 +137,7 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
-            // Scrollbar nA — thumb se mueve en X dentro del viewBox real (115 → 1872)
+            // nA scrollbar — thumb moves along X within the real viewBox (115 → 1872)
             const naThumb = document.getElementById('na-thumb-rect');
             if (naThumb) {
                 const TRACK_START = 115;
@@ -152,7 +156,7 @@
                 window.addEventListener('resize', updateNaThumb);
                 updateNaThumb();
             }
-            // Animación navbar: nousArchives ↔ n_A
+            // Navbar animation: nousArchives ↔ n_A
             const navWordmark = document.getElementById('nav-wordmark');
             if (navWordmark) {
                 const THRESHOLD = 80;
