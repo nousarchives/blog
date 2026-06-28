@@ -1,18 +1,18 @@
 const POSTS = [
   {
-    "title": "El título de tu entrada",
-    "tldr": "Una o dos frases que resuman de qué va.",
-    "date": "2026-02-22",
-    "type": "articulo",
+    "title": "Nostalgia, la emoción inasible",
+    "tldr": "La nostalgia se escapa de toda definición — un recorrido por La La Land, Edward Hopper y La Grande Belleza para intentar atraparla.",
+    "date": "2026-06-29",
+    "type": "ensayo",
     "tags": [
       "cine",
       "literatura"
     ],
-    "readtime": "8 min",
-    "wordcount": 1791,
+    "readtime": "10 min",
+    "wordcount": 2093,
     "author": "Ángel Allepuz",
     "authorSlug": "angel",
-    "url": "angel/Half-Life-1.html"
+    "url": "angel/nostalgia.html"
   },
   {
     "title": "Referencias",
