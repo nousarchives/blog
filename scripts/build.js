@@ -77,7 +77,7 @@ function buildTocHTML(headings) {
     }).join('\n            ');
     return `
     <nav class="toc">
-        <div class="toc-label">Índice</div>
+        <div class="toc-label" data-i18n="section.toc">Índice</div>
         <ol class="toc-list">
             ${items}
         </ol>
@@ -123,7 +123,7 @@ function relatedPostsHTML(currentPost, allPosts) {
     return `
     <section class="related-posts">
         <div class="section-header">
-            <span class="section-label">También en NousArchives</span>
+            <span class="section-label" data-i18n="section.related">También en NousArchives</span>
             <div class="section-rule"></div>
         </div>
         <div class="related-grid">
@@ -145,6 +145,7 @@ function htmlHead(title, depth = 1) {
     <link rel="stylesheet" href="${rel}style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="${rel}i18n.js"></script>
 </head>`;
 }
 
@@ -152,15 +153,16 @@ function htmlHead(title, depth = 1) {
 function authorNav(depth = 1) {
     const rel = '../'.repeat(depth);
     return `    <nav class="topnav">
-        <span class="nav-left">EST. ENE 24</span>
+        <span class="nav-left" data-i18n="nav.established">EST. ENE 24</span>
         <a href="${rel}" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
             </span>
         </a>
         <div class="nav-links">
-            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
-            <a href="${rel}archivo.html">Archivo</a>
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
+            <a href="${rel}archivo.html" data-i18n="nav.archive">Archivo</a>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
             <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
         </div>
@@ -172,7 +174,7 @@ function authorFooter(depth = 1) {
     const rel = '../'.repeat(depth);
     return `    <footer class="footer">
         <div class="footer-bottom">
-            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="${rel}LICENSE">MIT</a></span>
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="${rel}LICENSE">MIT</a></span>
         </div>
     </footer>`;
 }
@@ -257,7 +259,7 @@ const naScrollbar = `
         </svg>
     </div>`;
 
-const backToTopBtn = `    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>`;
+const backToTopBtn = `    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba" data-i18n-aria="backtotop">↑</button>`;
 
 // ── ARTICLE TEMPLATE ─────────────────────────────────────────────────────────
 function articleTemplate(fm, htmlContent, authorSlug, tocHTML, relatedHTML) {
@@ -288,7 +290,7 @@ ${authorNav(1)}
                 <span>·</span>
                 <span>${fm.readtime}</span>
                 <span>·</span>
-                <span>${fm.wordcount} palabras</span>
+                <span>${fm.wordcount} <span data-i18n="article.words">palabras</span></span>
             </div>
             <h1 class="article-title">${fm.title}</h1>
             ${fm.tldr ? `<p class="article-subtitle">${fm.tldr}</p>` : ''}
@@ -342,7 +344,7 @@ function authorPageTemplate(slug) {
     const openTopicsSection = author.openTopics ? `
     <section class="open-topics-section">
         <div class="section-header">
-            <span class="section-label">Current Open Topics</span>
+            <span class="section-label" data-i18n="section.opentopics">Current Open Topics</span>
             <div class="section-rule"></div>
         </div>
         <div class="open-topics-grid">
@@ -379,7 +381,7 @@ ${watermarkDiv}
 ${openTopicsSection}
     <section class="author-posts-section">
         <div class="section-header">
-            <span class="section-label">Todas las entradas</span>
+            <span class="section-label" data-i18n="section.allposts">Todas las entradas</span>
             <div class="section-rule"></div>
         </div>
         <div id="author-pub-list"></div>
@@ -396,10 +398,12 @@ ${naScrollbar}
             const countLabel = document.getElementById('post-count');
             const myPosts = POSTS.filter(p => p.authorSlug === CURRENT_AUTHOR_SLUG);
             if (countLabel) {
-                countLabel.textContent = myPosts.length + ' ' + (myPosts.length === 1 ? 'entrada' : 'entradas');
+                const word = myPosts.length === 1 ? window.i18n.t('author.entries.one') : window.i18n.t('author.entries.other');
+                countLabel.textContent = myPosts.length + ' ' + word;
             }
             if (myPosts.length === 0) {
-                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>Todavía no hay nada por aquí.<br>Pero el silencio también dice algo.</p></div>';
+                const emptyLines = window.i18n.t('empty.author').split('\\n');
+                pubList.innerHTML = '<div class="pub-empty"><span class="pub-empty-glyph">∅</span><p>' + emptyLines.join('<br>') + '</p></div>';
                 return;
             }
             const listContainer = document.createElement('div');
@@ -442,21 +446,22 @@ function archivoPageTemplate() {
     return `${htmlHead('Archivo', 0)}
 <body>
     <nav class="topnav">
-        <a href="./" class="nav-left">← NousArchives</a>
+        <a href="./" class="nav-left" data-i18n="nav.back">← NousArchives</a>
         <a href="./" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
             </span>
         </a>
         <div class="nav-links">
-            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
         </div>
     </nav>
 
     <header class="hero" style="padding-bottom:0;">
-        <h1 class="hero-title" style="font-size:clamp(2.5rem,7vw,5rem);">Archivo</h1>
-        <div class="hero-meta" style="padding-bottom:3rem;">Todas las entradas por orden cronológico</div>
+        <h1 class="hero-title" style="font-size:clamp(2.5rem,7vw,5rem);" data-i18n="archive.title">Archivo</h1>
+        <div class="hero-meta" style="padding-bottom:3rem;" data-i18n="archive.subtitle">Todas las entradas por orden cronológico</div>
     </header>
 
     <main class="content" style="padding-bottom:5rem;">
@@ -465,7 +470,7 @@ function archivoPageTemplate() {
 
     <footer class="footer">
         <div class="footer-bottom">
-            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="LICENSE">MIT</a></span>
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="LICENSE">MIT</a></span>
         </div>
     </footer>
 ${backToTopBtn}
@@ -480,8 +485,9 @@ ${naScrollbar}
             const groups = {};
             POSTS.forEach(post => {
                 const d = new Date(post.date);
-                const key = isNaN(d) ? 'Sin fecha' : d.getFullYear() + '-' + String(d.getMonth()).padStart(2,'0');
-                const label = isNaN(d) ? 'Sin fecha' : d.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+                const noDate = window.i18n.t('archive.nodate');
+                const key = isNaN(d) ? 'nodate' : d.getFullYear() + '-' + String(d.getMonth()).padStart(2,'0');
+                const label = isNaN(d) ? noDate : d.toLocaleDateString(window.i18n.lang() === 'en' ? 'en-US' : 'es-ES', { month: 'long', year: 'numeric' });
                 if (!groups[key]) groups[key] = { label, posts: [] };
                 groups[key].posts.push(post);
             });

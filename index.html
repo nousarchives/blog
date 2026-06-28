@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="i18n.js"></script>
     <script>
         (function() {
             const saved = localStorage.getItem('theme');
@@ -20,15 +21,16 @@
 <body>
 
     <nav class="topnav">
-        <span class="nav-left">EST. ENE 24</span>
+        <span class="nav-left" data-i18n="nav.established">EST. ENE 24</span>
         <a href="/" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
             </span>
         </a>
         <div class="nav-links">
-            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
-            <a href="archivo.html">Archivo</a>
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
+            <a href="archivo.html" data-i18n="nav.archive">Archivo</a>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
             <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
         </div>
@@ -37,7 +39,7 @@
     <main class="content">
 
         <div class="hero-meta-large">
-            <span>Volumen I</span>
+            <span data-i18n="hero.volume">Volumen I</span>
         </div>
 
         <div class="home-logo">
@@ -140,29 +142,29 @@
                 <!-- Cajón 1: Publicaciones -->
                 <div class="cab-drawer" id="drawer-posts" data-drawer="posts">
                     <div class="cab-drawer-front">
-                        <div class="cab-drawer-label">Publicaciones</div>
+                        <div class="cab-drawer-label" data-i18n="drawer.posts">Publicaciones</div>
                         <div class="cab-drawer-handle"></div>
                     </div>
                     <div class="cab-drawer-interior">
                         <div class="cab-folders" id="folders-posts">
                             <a class="cab-folder" data-tag="ml" href="#">
-                                <div class="cab-folder-tab">ML/AI</div>
+                                <div class="cab-folder-tab" data-i18n="folder.ml">ML/AI</div>
                                 <div class="cab-folder-body"></div>
                             </a>
                             <a class="cab-folder" data-tag="guion" href="#">
-                                <div class="cab-folder-tab">Guión</div>
+                                <div class="cab-folder-tab" data-i18n="folder.guion">Guión</div>
                                 <div class="cab-folder-body"></div>
                             </a>
                             <a class="cab-folder" data-tag="cine" href="#">
-                                <div class="cab-folder-tab">Cine</div>
+                                <div class="cab-folder-tab" data-i18n="folder.cine">Cine</div>
                                 <div class="cab-folder-body"></div>
                             </a>
                             <a class="cab-folder" data-tag="economia" href="#">
-                                <div class="cab-folder-tab">Economía</div>
+                                <div class="cab-folder-tab" data-i18n="folder.economia">Economía</div>
                                 <div class="cab-folder-body"></div>
                             </a>
                             <a class="cab-folder" data-tag="musica" href="#">
-                                <div class="cab-folder-tab">Música</div>
+                                <div class="cab-folder-tab" data-i18n="folder.musica">Música</div>
                                 <div class="cab-folder-body"></div>
                             </a>
                         </div>
@@ -172,7 +174,7 @@
                 <!-- Cajón 2: YouTube -->
                 <div class="cab-drawer" id="drawer-yt" data-drawer="yt">
                     <div class="cab-drawer-front">
-                        <div class="cab-drawer-label">YouTube</div>
+                        <div class="cab-drawer-label" data-i18n="drawer.yt">YouTube</div>
                         <div class="cab-drawer-handle"></div>
                     </div>
                     <div class="cab-drawer-interior">
@@ -226,7 +228,7 @@
                 <!-- Cajón 3: Autores -->
                 <div class="cab-drawer" id="drawer-authors" data-drawer="authors">
                     <div class="cab-drawer-front">
-                        <div class="cab-drawer-label">Autores</div>
+                        <div class="cab-drawer-label" data-i18n="drawer.authors">Autores</div>
                         <div class="cab-drawer-handle"></div>
                     </div>
                     <div class="cab-drawer-interior">
@@ -234,19 +236,19 @@
                             <a class="cab-folder cab-folder--author" href="angel/" data-slug="angel">
                                 <div class="cab-folder-tab cab-folder-tab--name">Ángel Allepuz</div>
                                 <div class="cab-folder-body">
-                                    <span class="cab-author-count" data-slug="angel">— entradas</span>
+                                    <span class="cab-author-count" data-slug="angel" data-i18n="author.entries.empty">— entradas</span>
                                 </div>
                             </a>
                             <a class="cab-folder cab-folder--author" href="antonio/" data-slug="antonio">
                                 <div class="cab-folder-tab cab-folder-tab--name">Antonio Susarte</div>
                                 <div class="cab-folder-body">
-                                    <span class="cab-author-count" data-slug="antonio">— entradas</span>
+                                    <span class="cab-author-count" data-slug="antonio" data-i18n="author.entries.empty">— entradas</span>
                                 </div>
                             </a>
                             <a class="cab-folder cab-folder--author" href="javi/" data-slug="javi">
                                 <div class="cab-folder-tab cab-folder-tab--name">Javier Guerrero</div>
                                 <div class="cab-folder-body">
-                                    <span class="cab-author-count" data-slug="javi">— entradas</span>
+                                    <span class="cab-author-count" data-slug="javi" data-i18n="author.entries.empty">— entradas</span>
                                 </div>
                             </a>
                         </div>
@@ -264,7 +266,7 @@
             <div class="pub-list" id="pub-list"></div>
             <div class="pub-empty" id="no-results" style="display:none;">
                 <span class="pub-empty-glyph">∅</span>
-                <p>Nada en esta sección todavía.</p>
+                <p data-i18n="posts.empty">Nada en esta sección todavía.</p>
             </div>
         </section>
 
@@ -272,11 +274,11 @@
 
     <footer class="footer">
         <div class="footer-bottom">
-            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="LICENSE">MIT</a> · Diseñado por Ángel Allepuz</span>
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="LICENSE">MIT</a> · <span data-i18n="footer.design">Diseñado por Ángel Allepuz</span></span>
         </div>
     </footer>
 
-    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>
+    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba" data-i18n-aria="backtotop">↑</button>
 
 
     <script src="posts.js"></script>
@@ -302,7 +304,7 @@
                     el.className = 'pub-item-featured';
                     el.innerHTML = `
                         <div class="pub-center">
-                            <div class="pub-featured-label">Última entrada</div>
+                            <div class="pub-featured-label">${window.i18n.t('posts.featured')}</div>
                             <span class="pub-title">${post.title}</span>
                             <span class="pub-tldr">${post.tldr}</span>
                             <div class="pub-tags">${tagsHTML}</div>
@@ -718,7 +720,9 @@
                 document.querySelectorAll('.cab-author-count').forEach(el => {
                     const slug = el.dataset.slug;
                     const count = POSTS.filter(p => p.authorSlug === slug).length;
-                    el.textContent = `${count} ${count === 1 ? 'entrada' : 'entradas'}`;
+                    const word = count === 1 ? window.i18n.t('author.entries.one') : window.i18n.t('author.entries.other');
+                    el.textContent = `${count} ${word}`;
+                    el.removeAttribute('data-i18n'); // counter owns its text now
                 });
             }
 

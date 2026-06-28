@@ -8,24 +8,26 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="i18n.js"></script>
 </head>
 <body>
     <nav class="topnav">
-        <a href="./" class="nav-left">← NousArchives</a>
+        <a href="./" class="nav-left" data-i18n="nav.back">← NousArchives</a>
         <a href="./" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
             </span>
         </a>
         <div class="nav-links">
-            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro">◐</button>
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
             <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
         </div>
     </nav>
 
     <header class="hero" style="padding-bottom:0;">
-        <h1 class="hero-title" style="font-size:clamp(2.5rem,7vw,5rem);">Archivo</h1>
-        <div class="hero-meta" style="padding-bottom:3rem;">Todas las entradas por orden cronológico</div>
+        <h1 class="hero-title" style="font-size:clamp(2.5rem,7vw,5rem);" data-i18n="archive.title">Archivo</h1>
+        <div class="hero-meta" style="padding-bottom:3rem;" data-i18n="archive.subtitle">Todas las entradas por orden cronológico</div>
     </header>
 
     <main class="content" style="padding-bottom:5rem;">
@@ -34,10 +36,10 @@
 
     <footer class="footer">
         <div class="footer-bottom">
-            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · Código bajo <a href="LICENSE">MIT</a></span>
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="LICENSE">MIT</a></span>
         </div>
     </footer>
-    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>
+    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba" data-i18n-aria="backtotop">↑</button>
 
     <div class="na-scrollbar" aria-hidden="true">
         <svg id="na-svg"
@@ -56,12 +58,13 @@
             if (typeof POSTS === 'undefined') return;
             const container = document.getElementById('archivo-list');
 
-            // Agrupar por año-mes
+            // Group by year-month
             const groups = {};
             POSTS.forEach(post => {
                 const d = new Date(post.date);
-                const key = isNaN(d) ? 'Sin fecha' : d.getFullYear() + '-' + String(d.getMonth()).padStart(2,'0');
-                const label = isNaN(d) ? 'Sin fecha' : d.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+                const noDate = window.i18n.t('archive.nodate');
+                const key = isNaN(d) ? 'nodate' : d.getFullYear() + '-' + String(d.getMonth()).padStart(2,'0');
+                const label = isNaN(d) ? noDate : d.toLocaleDateString(window.i18n.lang() === 'en' ? 'en-US' : 'es-ES', { month: 'long', year: 'numeric' });
                 if (!groups[key]) groups[key] = { label, posts: [] };
                 groups[key].posts.push(post);
             });
@@ -104,7 +107,7 @@
     </script>
 
     <script>
-        // Dark mode (aplicar antes de pintar para evitar flash)
+        // Dark mode (apply before paint to avoid flash)
         (function() {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -112,7 +115,7 @@
             }
         })();
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode toggle
+            // Dark mode toggle button
             const btn = document.getElementById('dark-toggle');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -121,7 +124,7 @@
                     localStorage.setItem('theme', isDark ? 'light' : 'dark');
                 });
             }
-            // Volver arriba
+            // Back to top button
             const backBtn = document.getElementById('back-to-top');
             if (backBtn) {
                 window.addEventListener('scroll', function() {
@@ -131,7 +134,7 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
-            // Scrollbar nA — thumb se mueve en X dentro del viewBox real (115 → 1872)
+            // nA scrollbar — thumb moves along X within the real viewBox (115 → 1872)
             const naThumb = document.getElementById('na-thumb-rect');
             if (naThumb) {
                 const TRACK_START = 115;
@@ -150,7 +153,7 @@
                 window.addEventListener('resize', updateNaThumb);
                 updateNaThumb();
             }
-            // Animación navbar: nousArchives ↔ n_A
+            // Navbar animation: nousArchives ↔ n_A
             const navWordmark = document.getElementById('nav-wordmark');
             if (navWordmark) {
                 const THRESHOLD = 80;

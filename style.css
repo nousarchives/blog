@@ -133,6 +133,25 @@ body {
 .nav-links a:hover { opacity: 0.4; }
 .nav-links a.active { border-bottom: 1px solid var(--black); padding-bottom: 1px; }
 
+/* ── LANGUAGE TOGGLE BUTTON ── */
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--rule-light);
+    color: var(--grey);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+}
+.lang-toggle:hover { border-color: var(--black); color: var(--black); }
+
 /* ── DARK MODE TOGGLE BUTTON ── */
 .dark-toggle {
     background: none;
