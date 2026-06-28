@@ -8,11 +8,11 @@ Blog colaborativo estático. Autores: Ángel Allepuz, Javi Guerrero, Antonio Sus
 
 Cada autor tiene su propia rama:
 
-| Autor   | Rama      |
-|---------|-----------|
-| Ángel   | `angel`   |
-| Javi    | `javi`    |
-| Antonio | `antonio` |
+| Autor            | Rama                |
+|------------------|---------------------|
+| Ángel Allepuz    | `angel-allepuz`     |
+| Javier Guerrero  | `javier-guerrero`   |
+| Antonio Susarte  | `antonio-susarte`   |
 
 Escribe tu artículo en tu rama, dentro de tu carpeta (`angel/`, `javi/`, `antonio/`).
 
