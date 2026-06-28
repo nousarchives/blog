@@ -1,4 +1,4 @@
-name: Publicar entradas
+name: Publish posts
 
 on:
   pull_request:
@@ -30,20 +30,20 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Instalar dependencias
+      - name: Install dependencies
         run: npm install
 
-      - name: Convertir Markdown → HTML y regenerar posts.js
+      - name: Build Markdown → HTML and regenerate posts.js
         run: node scripts/build.js
 
-      - name: Commit y Push
+      - name: Commit and push
         run: |
           git config user.name "NousArchives Bot"
           git config user.email "bot@nousarchives.github.io"
           git add -A
           if ! git diff --staged --quiet; then
-            git commit -m "build: publicar entradas [skip ci]"
+            git commit -m "build: publish posts [skip ci]"
             git push
           else
-            echo "Nada que actualizar."
+            echo "Nothing to update."
           fi

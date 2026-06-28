@@ -6,7 +6,7 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ── TOKENS ── */
+/* ── DESIGN TOKENS ── */
 :root {
     --black: #0c0b09;
     --white: #f4f1eb;
@@ -21,7 +21,7 @@
     --accent: #0c0b09;
 }
 
-/* ── DARK MODE ── */
+/* ── DARK MODE OVERRIDES ── */
 [data-theme="dark"] {
     --black: #f0ece3;
     --white: #141210;
@@ -51,10 +51,10 @@
 
 html {
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none; /* Firefox — hides native scrollbar */
 }
 
-html::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+html::-webkit-scrollbar { display: none; } /* Chrome/Safari — hides native scrollbar */
 
 body {
     background-color: var(--white);
@@ -66,7 +66,7 @@ body {
     padding-left: 48px;
 }
 
-/* ── CUSTOM SCROLLBAR nA — SVG ── */
+/* ── CUSTOM SCROLLBAR nA — SVG sidebar ── */
 .na-scrollbar {
     position: fixed;
     left: 0;
@@ -81,9 +81,9 @@ body {
 }
 
 .na-scrollbar svg {
-    /* El SVG es horizontal (ancho = 100vh, alto = 48px).
-       Lo rotamos 90° para que quede vertical en el sidebar.
-       transform-origin en el centro → queda centrado. */
+    /* The SVG is horizontal (width = 100vh, height = 48px).
+       Rotating 90° makes it vertical in the sidebar.
+       transform-origin at center keeps it centered. */
     width: 100vh;
     height: 48px;
     transform: rotate(90deg);
@@ -95,7 +95,7 @@ body {
 
 
 
-/* ── BARRA DE PROGRESO ── */
+/* ── READING PROGRESS BAR ── */
 .progress-bar {
     position: fixed;
     top: 0;
@@ -107,7 +107,7 @@ body {
     transition: width 0.1s linear;
 }
 
-/* ── NAV ── */
+/* ── NAVIGATION ── */
 .topnav {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -127,13 +127,13 @@ body {
 .nav-left { color: var(--grey); text-decoration: none; transition: opacity 0.2s; }
 .nav-left:hover { opacity: 0.5; }
 .nav-center { display: flex; justify-content: center; text-decoration: none; }
-/* .nav-logo styles are in the NAV LOGO ANIMADO section above */
+/* .nav-logo styles are in the ANIMATED NAV WORDMARK section below */
 .nav-links { display: flex; gap: 1.5rem; align-items: center; justify-content: flex-end; }
 .nav-links a { color: var(--black); text-decoration: none; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; transition: opacity 0.2s; }
 .nav-links a:hover { opacity: 0.4; }
 .nav-links a.active { border-bottom: 1px solid var(--black); padding-bottom: 1px; }
 
-/* ── DARK TOGGLE ── */
+/* ── DARK MODE TOGGLE BUTTON ── */
 .dark-toggle {
     background: none;
     border: 1px solid var(--rule-light);
@@ -151,7 +151,7 @@ body {
 }
 .dark-toggle:hover { border-color: var(--black); color: var(--black); }
 
-/* ── VOLVER ARRIBA ── */
+/* ── BACK TO TOP BUTTON ── */
 .back-to-top {
     position: fixed;
     bottom: 2rem;
@@ -177,7 +177,7 @@ body {
 
 /* ── HERO ── */
 
-/* ── NAV WORDMARK ANIMADO ── */
+/* ── ANIMATED NAV WORDMARK ── */
 .nav-center {
     display: flex;
     align-items: center;
@@ -195,21 +195,21 @@ body {
     letter-spacing: 0;
 }
 
-/* n — bold */
+/* "n" — bold weight */
 .ht-n {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     display: inline-block;
 }
 
-/* ous — colapsa con transición */
+/* "ous" — collapses on scroll */
 .ht-ous {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     display: inline-block;
     overflow: hidden;
-    width: auto;        /* ancho natural, no fijo */
-    max-width: 3em;     /* tope generoso */
+    width: auto;        /* natural width, not fixed */
+    max-width: 3em;     /* generous cap */
     opacity: 1;
     transition: max-width 0.4s ease, opacity 0.25s ease;
 }
@@ -218,7 +218,7 @@ body {
     opacity: 0;
 }
 
-/* línea del logo */
+/* logo separator line */
 .ht-line {
     display: inline-block;
     height: 1.5px;
@@ -237,7 +237,7 @@ body {
     opacity: 1;
 }
 
-/* A — regular */
+/* "A" — regular weight */
 .ht-A {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -249,7 +249,7 @@ body {
     margin-left: -0.1em;
 }
 
-/* rchives — colapsa al añadir .collapsed */
+/* "rchives" — collapses when .collapsed is added */
 .ht-rchives {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -265,7 +265,7 @@ body {
     opacity: 0;
 }
 
-/* ── MANIFIESTO ── */
+/* ── MANIFESTO SECTION ── */
 .manifiesto { background: var(--black); color: #f4f1eb; padding: 5rem 3rem; transition: background-color 0.3s, color 0.3s; }
 .manifiesto-inner { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
 .manifiesto-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--grey-light); border-bottom: 1px solid #333; padding-bottom: 1.5rem; width: 100%; text-align: center; }
@@ -275,20 +275,20 @@ body {
 .manifiesto-point { font-family: var(--font-body); font-size: 0.8rem; color: #aaa; line-height: 1.6; text-align: center; }
 .manifiesto-point::before { content: '→ '; font-family: var(--font-mono); color: var(--grey-light); }
 
-/* ── CONTENT ── */
+/* ── MAIN CONTENT WRAPPER ── */
 .content { max-width: 850px; margin: 0 auto; padding: 0 0.25rem; }
 
-/* ── SECTION HEADER ── */
+/* ── SECTION HEADER / DIVIDER ── */
 .section-header { display: flex; align-items: center; gap: 1.5rem; margin: 4rem 0 2.5rem; }
 .section-header-left { display: flex; flex-direction: column; gap: 0.4rem; white-space: nowrap; }
 .section-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--grey); white-space: nowrap; display: inline-flex; align-items: baseline; gap: 0; }
 .hero-meta-large { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--black); display: flex; gap: 0.6rem; align-items: baseline; justify-content: center; margin-bottom: 0.3rem; margin-top: 0.5rem; }
 
-/* Logo encima del armario — queda fuera del flujo */
+/* Logo above the cabinet — out of flow, hidden by default */
 .home-logo { display: none; }
 
 
-/* Logo en la cara superior del armario (tapa) */
+/* Logo on the cabinet top face (lid) */
 .cab-top-logo {
     position: absolute;
     top: 0; left: 0;
@@ -313,13 +313,13 @@ body {
 .section-rule { flex: 1; height: 1px; background: var(--rule-light); }
 
 
-/* ── TAGS / FILTRO ── */
+/* ── TAG FILTER ── */
 .tags-filter { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
 .tag-btn { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--rule-light); padding: 0.35rem 0.9rem; background: none; color: var(--grey); cursor: pointer; transition: all 0.2s; -webkit-appearance: none; }
 .tag-btn:hover { border-color: var(--black); color: var(--black); }
 .tag-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
 
-/* ── PUBLICACIONES — FEATURED ── */
+/* ── POSTS — FEATURED ── */
 .pub-item-featured {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -339,7 +339,7 @@ body {
 .pub-item-featured .pub-tldr { font-size: 0.85rem; }
 .pub-featured-label { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem; }
 
-/* ── PUBLICACIONES ── */
+/* ── POST LIST ── */
 .publications { margin-bottom: 4rem; max-width: 1150px; margin-left: auto; margin-right: auto; padding: 3rem 2rem 4rem; }
 .pub-list { display: flex; flex-direction: column; }
 .pub-item { display: grid; grid-template-columns: 5rem 1fr auto; gap: 0 2rem; align-items: start; padding: 1.8rem 1rem; border-bottom: 1px solid var(--rule-light); text-decoration: none; color: inherit; transition: background 0.2s; margin: 0 -1rem; }
@@ -363,12 +363,12 @@ body {
 .pub-type.ensayo     { border-color: #555; color: #555; }
 .pub-readtime { font-family: var(--font-mono); font-size: 0.52rem; color: var(--grey); letter-spacing: 0.1em; }
 
-/* ── EMPTY STATE ── */
+/* ── EMPTY STATE (no posts) ── */
 .pub-empty { text-align: center; padding: 5rem 0 3rem; border-top: 1px solid var(--rule-light); }
 .pub-empty-glyph { font-family: var(--font-display); font-size: 3.5rem; font-style: italic; color: var(--grey-light); display: block; margin-bottom: 1rem; }
 .pub-empty p { font-style: italic; color: var(--grey); font-size: 0.9rem; }
 
-/* ── YOUTUBE LAZY SUSAN ── */
+/* ── YOUTUBE CAROUSEL (lazy susan) ── */
 .yt-carousel-section {
     margin-bottom: 4rem;
 }
@@ -488,7 +488,7 @@ body {
 }
 .yt-btn:hover { border-color: var(--black); }
 
-/* ── AUTORES — 3 columnas ── */
+/* ── AUTHORS GRID — 3 columns ── */
 .authors-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--rule); margin-bottom: 4rem; }
 .author-column { padding: 2.5rem 2rem 3rem; border-right: 1px solid var(--rule); display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: background 0.25s; overflow: hidden; }
 .author-column:last-child { border-right: none; }
@@ -502,7 +502,7 @@ body {
 .author-column-count { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); }
 .author-arrow { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0; transform: translateX(-6px); transition: all 0.25s; }
 
-/* ── ARTICLE PAGE ── */
+/* ── ARTICLE PAGE LAYOUT ── */
 .article-header { max-width: 760px; margin: 0 auto; padding: 4rem 3rem 3rem; border-bottom: 1px solid var(--rule-light); }
 .article-meta-top { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem; }
 .article-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
@@ -510,7 +510,7 @@ body {
 .article-byline { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); display: flex; gap: 1.5rem; flex-wrap: wrap; }
 .article-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
 
-/* ── TABLA DE CONTENIDOS ── */
+/* ── TABLE OF CONTENTS ── */
 .toc {
     max-width: 760px;
     margin: 0 auto;
@@ -525,7 +525,7 @@ body {
 .toc-list li a { font-family: var(--font-body); font-size: 0.85rem; color: var(--grey); text-decoration: none; transition: color 0.15s; }
 .toc-list li a:hover { color: var(--black); }
 
-/* ── ARTICLE BODY ── */
+/* ── ARTICLE BODY TYPOGRAPHY ── */
 .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 3rem 5rem; }
 .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem; letter-spacing: -0.01em; }
 .article-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 2rem 0 0.8rem; font-style: italic; }
@@ -535,7 +535,7 @@ body {
 .article-body li { font-size: 0.97rem; line-height: 1.8; color: #222; margin-bottom: 0.4rem; }
 .article-nota { font-family: var(--font-mono); font-size: 0.68rem; color: var(--grey); border-top: 1px solid var(--rule-light); padding-top: 1.5rem; margin-top: 3rem; letter-spacing: 0.05em; line-height: 1.7; }
 
-/* ── ARTÍCULOS RELACIONADOS ── */
+/* ── RELATED POSTS ── */
 .related-posts { max-width: 760px; margin: 0 auto; padding: 0 3rem 4rem; }
 .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .related-item { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.5rem; background: var(--cream); text-decoration: none; color: inherit; transition: background 0.2s; }
@@ -544,7 +544,7 @@ body {
 .related-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; line-height: 1.3; }
 .related-item .pub-tldr { font-size: 0.75rem; color: var(--grey); line-height: 1.5; }
 
-/* ── AUTHOR PAGE ── */
+/* ── AUTHOR PAGE LAYOUT ── */
 .author-hero { padding: 5rem 3rem 4rem; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.8fr; gap: 5rem; align-items: end; border-bottom: 1px solid var(--rule-light); }
 .author-hero-initial { font-family: var(--font-display); font-size: clamp(8rem, 18vw, 14rem); font-weight: 900; line-height: 0.85; letter-spacing: -0.04em; }
 .author-hero-right { padding-bottom: 0.5rem; }
@@ -557,7 +557,7 @@ body {
 .nav-icon-github:hover { opacity: 0.4; }
 .author-posts-section { max-width: 1100px; margin: 0 auto; padding: 0 3rem 5rem; }
 
-/* ── ÁNGEL — DIVINE MACHINERY ── */
+/* ── ANGEL — DIVINE MACHINERY WATERMARK ── */
 .angel-watermark {
     position: fixed;
     inset: 0;
@@ -597,7 +597,7 @@ body {
     z-index: 100;
 }
 
-/* ── CURRENT OPEN TOPICS ── */
+/* ── OPEN TOPICS SECTION ── */
 .open-topics-section { max-width: 1100px; margin: 0 auto; padding: 0 3rem 3rem; }
 .open-topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 1.5rem; }
 .open-topic-category { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem; font-weight: 400; }
@@ -605,16 +605,16 @@ body {
 .open-topic-list li { font-family: var(--font-body); font-size: 0.88rem; line-height: 1.6; color: var(--black); padding-left: 1.2em; position: relative; }
 .open-topic-list li::before { content: '—'; position: absolute; left: 0; color: var(--grey); }
 
-/* ── ARCHIVADOR 3D — WIREFRAME ── */
+/* ── 3D FILING CABINET — WIREFRAME ── */
 :root {
     --cab-w: 300px;
     --cab-depth: 200px;
-    --cab-dh: 190px;      /* cajones cuadrados — más altura */
+    --cab-dh: 190px;      /* drawer height — taller than standard */
     --cab-gap: 3px;
     --cab-line: 1.5px;
     --cab-color: var(--black);
 
-    /* ── ESTANTERÍA DE CDs ── */
+    /* ── CD SHELF TOKENS ── */
     --shelf-w: 160px;
     --shelf-depth: 100px;
     --cd-h: 18px;
@@ -636,8 +636,7 @@ body {
     transition: perspective 0.3s ease, transform 0.3s ease;
 }
 
-/* Cuerpo — solo estructura, sin relleno */
-/* Posición y transform gestionados por las reglas del .room (arriba) */
+/* Structure only — no fill. Position and transform managed by .room rules. */
 .cabinet {
     width: var(--cab-w);
     transform-style: preserve-3d;
@@ -645,7 +644,7 @@ body {
     user-select: none;
 }
 
-/* Cara superior del armario — bordes visibles sólidos, aristas ocultas discontinuas */
+/* Cabinet top face — visible edges solid, hidden edges dashed */
 .cabinet::before {
     content: '';
     position: absolute;
@@ -653,7 +652,7 @@ body {
     width: var(--cab-w);
     height: var(--cab-depth);
     background: transparent;
-    /* top/left/right sólidos (aristas de la tapa visibles), bottom discontinuo (arista trasera oculta) */
+    /* top/left/right solid (visible lid edges), bottom dashed (hidden rear edge) */
     border-top: var(--cab-line) dashed var(--cab-color);
     border-left: var(--cab-line) solid var(--cab-color);
     border-right: var(--cab-line) solid var(--cab-color);
@@ -662,12 +661,12 @@ body {
     transform: rotateX(-90deg);
 }
 
-/* Cara lateral derecha — pivota desde el borde derecho hacia atrás en Z */
+/* Right side face — pivots from right edge backward along Z */
 .cabinet::after {
     content: '';
     position: absolute;
     top: 0;
-    left: 100%;   /* borde derecho del cabinet */
+    left: 100%;   /* right edge of the cabinet */
     width: var(--cab-depth);
     height: 100%;
     background: transparent;
@@ -680,7 +679,7 @@ body {
     transform: rotateY(90deg);
 }
 
-/* ── Aristas ocultas (líneas discontinuas) ── */
+/* ── Hidden edges (dashed lines) ── */
 .cab-hidden-edges {
     position: absolute;
     inset: 0;
@@ -688,7 +687,7 @@ body {
     transform-style: preserve-3d;
 }
 
-/* Arista vertical trasera izquierda */
+/* Rear left vertical edge */
 .cab-edge-back-left {
     position: absolute;
     top: 0; left: 0;
@@ -699,7 +698,7 @@ body {
     transform: translateZ(calc(-1 * var(--cab-depth)));
 }
 
-/* Arista vertical trasera derecha */
+/* Rear right vertical edge */
 .cab-edge-back-right {
     position: absolute;
     top: 0; right: 0;
@@ -710,7 +709,7 @@ body {
     transform: translateZ(calc(-1 * var(--cab-depth)));
 }
 
-/* Arista horizontal inferior trasera */
+/* Rear bottom horizontal edge */
 .cab-edge-back-bottom {
     position: absolute;
     bottom: 0; left: 0; right: 0;
@@ -720,7 +719,7 @@ body {
     transform: translateZ(calc(-1 * var(--cab-depth)));
 }
 
-/* Arista de profundidad izquierda — va del frente al fondo a lo largo del borde izq */
+/* Left depth edge — runs front-to-back along the left border */
 .cab-edge-depth-left {
     position: absolute;
     top: 0; left: 0;
@@ -736,7 +735,7 @@ body {
     transform: rotateY(90deg);
 }
 
-/* Cajón wrapper */
+/* Drawer wrapper */
 .cab-drawer {
     position: relative;
     width: 100%;
@@ -746,26 +745,26 @@ body {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Cajones ocultos cuando hay uno en zoom */
+/* Drawers hidden when one is zoomed */
 .cab-drawer--hidden {
     opacity: 0;
     pointer-events: none;
     transform: scaleY(0.85);
 }
 
-/* Cajón en foco — se expande y sube para dar sensación de zoom */
+/* Focused drawer — expands and rises to give a zoom feel */
 .cab-drawer--focused {
     transform: scaleY(1.08) translateY(-6px);
 }
 
-/* Zoom de cámara: acercado al interior del cajón o estantería */
+/* Camera zoom: when focused on a drawer or shelf interior */
 .cabinet-section:has(.cab-drawer--focused),
 .cabinet-section:has(.cd-shelf--focused) {
     perspective: 1200px;
     perspective-origin: 50% 0%;
 }
 
-/* Frontal — wireframe: fondo transparent, solo borde */
+/* Drawer front face — wireframe: transparent fill, border only */
 .cab-drawer-front {
     position: absolute;
     inset: 0;
@@ -785,7 +784,7 @@ body {
     z-index: 2;
 }
 
-/* Cara superior del frontal — da grosor al cajón */
+/* Front top face — gives the drawer thickness */
 .cab-drawer-front::before {
     content: '';
     position: absolute;
@@ -798,34 +797,34 @@ body {
     transform: rotateX(90deg);
 }
 
-/* Cara lateral del frontal — eliminada: la cubre cabinet::after */
+/* Front side face — removed: covered by cabinet::after */
 .cab-drawer-front::after {
     content: none;
 }
 
-/* Hover cajón cerrado */
+/* Hover on closed drawer */
 .cab-drawer:not(.open):hover .cab-drawer-front {
     transform: translateZ(16px);
 }
 
-/* Cajón abierto — frontal sale hacia pantalla */
+/* Open drawer — front slides toward the camera */
 .cab-drawer.open .cab-drawer-front {
     transform: translateZ(var(--cab-depth));
     opacity: 0.25;
 }
-/* Cajón en zoom — frontal completamente invisible y sin eventos */
+/* Zoomed drawer — front fully invisible and non-interactive */
 .cab-drawer--focused .cab-drawer-front {
     opacity: 0 !important;
     pointer-events: none;
 }
 
-/* En zoom: cursor pointer en carpetas para que sean clicables */
+/* Zoomed: pointer cursor on folders so they're clickable */
 .cab-drawer--focused .cab-folder,
 .cab-drawer--focused .cab-folder-tab {
     cursor: pointer !important;
 }
 
-/* Interior cajón */
+/* Drawer interior */
 .cab-drawer-interior {
     position: absolute;
     inset: 0;
@@ -842,7 +841,7 @@ body {
     pointer-events: all;
 }
 
-/* Tirador — rectángulo wireframe */
+/* Drawer handle — wireframe rectangle */
 .cab-drawer-handle {
     width: 70px;
     height: 20px;
@@ -861,7 +860,7 @@ body {
     opacity: 0.4;
 }
 
-/* Etiqueta */
+/* Drawer label */
 .cab-drawer-label {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
@@ -871,7 +870,7 @@ body {
     color: var(--cab-color);
 }
 
-/* ── CARPETAS ── */
+/* ── FOLDERS ── */
 .cab-folders {
     position: absolute;
     inset: 0;
@@ -908,7 +907,7 @@ body {
     color: var(--white);
 }
 
-/* Pestaña — única zona clicable de la carpeta */
+/* Tab — the only clickable area of the folder */
 .cab-folder-tab {
     pointer-events: all;
     cursor: pointer;
@@ -943,7 +942,7 @@ body {
     text-transform: none;
 }
 
-/* Cuerpo carpeta — no clicable, solo decorativo */
+/* Folder body — not clickable, decorative only */
 .cab-folder-body {
     flex: 1;
     border: var(--cab-line) solid var(--cab-color);
@@ -984,20 +983,20 @@ body {
     color: var(--cab-color) !important;
 }
 
-/* Dark mode — líneas blancas */
+/* Dark mode — white lines */
 [data-theme="dark"] {
-    --cab-color: var(--black);  /* --black en dark = #f0ece3 (claro) */
+    --cab-color: var(--black);  /* --black in dark mode = #f0ece3 (light) */
 }
 [data-theme="dark"] .cab-folder.active .cab-folder-tab {
     background: var(--black);
     color: var(--white);
 }
 
-/* ── ROOM — contenedor 3D: toda la habitación ── */
+/* ── ROOM — 3D container for the whole scene ── */
 :root {
     --room-w: 300px;   /* = --cab-w */
-    --room-d: 120px;   /* profundidad de la habitación (eje Z) */
-    --room-h: 590px;   /* altura de la habitación (3 cajones + gaps) */
+    --room-d: 120px;   /* room depth (Z axis) */
+    --room-h: 590px;   /* room height (3 drawers + gaps) */
 }
 
 .room {
@@ -1015,14 +1014,14 @@ body {
     pointer-events: all;
 }
 
-/* El cabinet: posición gestionada por JS (roomObjects) */
+/* Cabinet: position managed by JS (roomObjects) */
 .cabinet {
     position: absolute !important;
     bottom: 0;
     left: 0;
 }
 
-/* ── PARED DERECHA DE CDs ── */
+/* ── CD RIGHT WALL ── */
 .cd-wall {
     position: absolute;
     bottom: 0;
@@ -1035,11 +1034,11 @@ body {
     transform-origin: left bottom;
 }
 
-/* ── ESTANTERÍA DE CDs — WIREFRAME ── */
+/* ── CD SHELF — WIREFRAME ── */
 .cd-shelf {
     position: relative;
     width: var(--shelf-w);
-    /* Altura: 10 CDs × (28px + 2px gap) = 300px — aprox mitad del armario */
+    /* Height: 10 CDs × (28px + 2px gap) = 300px — approx half the cabinet */
     height: calc(var(--cd-count) * (var(--cd-h) + var(--cd-gap)));
     transform-style: preserve-3d;
     cursor: pointer;
@@ -1047,19 +1046,19 @@ body {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Torre oculta cuando otra está en zoom */
+/* Tower hidden when another is zoomed */
 .cd-shelf--hidden {
     opacity: 0;
     pointer-events: none;
     transform: scaleY(0.85);
 }
 
-/* Torre en foco */
+/* Focused tower */
 .cd-shelf--focused {
     transform: scaleY(1.05) translateY(-4px);
 }
 
-/* Tapa superior del shelf */
+/* Shelf top face (lid) */
 .cd-shelf::before {
     content: '';
     position: absolute;
@@ -1075,7 +1074,7 @@ body {
     transform: rotateX(-90deg);
 }
 
-/* Cara lateral derecha del shelf */
+/* Shelf right side face */
 .cd-shelf::after {
     content: '';
     position: absolute;
@@ -1093,7 +1092,7 @@ body {
     transform: rotateY(90deg);
 }
 
-/* Aristas ocultas traseras del shelf */
+/* Shelf rear hidden edges */
 .cd-shelf-edges {
     position: absolute;
     inset: 0;
@@ -1136,7 +1135,7 @@ body {
     transform: rotateY(90deg);
 }
 
-/* Borde frontal/lateral del shelf (marco del cuerpo) */
+/* Shelf front/side border (body frame) */
 .cd-shelf-body {
     position: absolute;
     inset: 0;
@@ -1145,7 +1144,7 @@ body {
     overflow: visible;
 }
 
-/* ── CD SLOT — cada ranura de jewel case ── */
+/* ── CD SLOT — each jewel case slot ── */
 .cd-slot {
     position: absolute;
     left: 6px;
@@ -1158,13 +1157,13 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover: el CD sube hacia la cámara (gestionado por JS, esta regla es fallback) */
+/* Hover: CD rises toward camera (managed by JS; this rule is a fallback) */
 .cd-shelf--focused .cd-slot.dimmed {
     opacity: 0.3;
     pointer-events: none;
 }
 
-/* Frente del CD — el canto visible con el título */
+/* CD front face — the visible spine with the title */
 .cd-front {
     position: absolute;
     inset: 0;
@@ -1178,7 +1177,7 @@ body {
     overflow: hidden;
 }
 
-/* Título en el canto */
+/* Spine title text */
 .cd-spine-text {
     font-family: var(--font-mono);
     font-size: 0.42rem;
@@ -1191,7 +1190,7 @@ body {
     pointer-events: none;
 }
 
-/* Cara superior del CD (grosor) */
+/* CD top face (thickness) */
 .cd-top {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -1205,12 +1204,11 @@ body {
     opacity: 0.6;
 }
 
-/* Estado: shelf en foco */
+/* Focused shelf state — transform managed by JS, same as cabinet --focused */
 .cd-shelf.shelf-focused {
-    /* el transform lo gestiona JS igual que --focused del cabinet */
 }
 
-/* ── FOOTER ── */
+/* ── SITE FOOTER ── */
 .footer { border-top: 1px solid var(--rule); margin: 0; padding: 1rem 3rem; }
 .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
 .footer-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; color: inherit; }
@@ -1220,7 +1218,7 @@ body {
 .footer-bottom { display: flex; justify-content: center; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); }
 .footer-bottom a { color: var(--grey); }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE BREAKPOINTS ── */
 @media (max-width: 900px) {
     .manifiesto-lines { grid-template-columns: 1fr; }
     .authors-grid { grid-template-columns: 1fr; }
@@ -1249,7 +1247,7 @@ body {
     .back-to-top { bottom: 1rem; right: 1rem; }
 }
 
-/* ── PANEL INFO CD ── */
+/* ── CD INFO PANEL ── */
 #cd-info-panel {
     position: fixed;
     left: 14rem;
@@ -1313,7 +1311,7 @@ body {
     color: var(--cab-color);
 }
 
-/* ── ETIQUETA NOMBRE EN ESTANTERÍA DE CDs ── */
+/* ── CD SHELF NAME LABEL ── */
 .cd-shelf-label {
     position: absolute;
     bottom: calc(100% + 8px);

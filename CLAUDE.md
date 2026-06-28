@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Push back on me. Don't agree without thinking. Challenge what I say every time we talk. That said, if you genuinely think I'm right, tell me why.
+
+Always cite your sources. Don't make up data if you don't know something — say you don't know or that you couldn't find it.
+
+Be skeptical of everything you read online.
+
 ## Commands
 
 ```bash
@@ -18,6 +24,7 @@ NousArchives is a collaborative static blog. Authors write Markdown files; a Nod
 ### Build pipeline (`scripts/build.js`)
 
 The build script is the core of the project. It:
+
 1. Scans each author directory (`angel/`, `javi/`, `antonio/`) for `.md` files
 2. Parses YAML frontmatter with `gray-matter` and converts Markdown to HTML with `marked`
 3. Generates individual `.html` article pages alongside the source `.md` files
@@ -42,7 +49,7 @@ date: YYYY-MM-DD
 type: articulo|comentario|respuesta|ensayo
 tags: [ia, cine, literatura, musica, ml, derecho]
 readtime: 8 min
-author: Author Name       # auto-filled by build.js
+author: Author Name # auto-filled by build.js
 authorSlug: angel|javi|antonio
 ---
 ```
@@ -52,6 +59,7 @@ authorSlug: angel|javi|antonio
 ### CI/CD (`.github/workflows/publish.yml`)
 
 Pushes to `main` that touch author Markdown files trigger the pipeline:
+
 1. `npm install` + `node scripts/build.js`
 2. The bot auto-commits generated `.html` and `posts.js` with `[skip ci]` in the message to prevent loops
 3. GitHub Pages (`static.yml`) serves the resulting static files

@@ -46,7 +46,7 @@ const AUTHORS = {
 const ROOT = path.join(__dirname, '..');
 const posts = [];
 
-// ── UTILIDADES ────────────────────────────────────────────────────────────────
+// ── UTILITIES ─────────────────────────────────────────────────────────────────
 
 function calcReadtime(text) {
     const words = text.trim().split(/\s+/).length;
@@ -84,7 +84,7 @@ function buildTocHTML(headings) {
     </nav>`;
 }
 
-// Inyecta IDs en los headings del HTML generado para que los enlaces del ToC funcionen
+// Injects IDs into headings in the generated HTML so ToC links work
 function injectHeadingIds(html) {
     return html.replace(/<h([23])>([^<]+)<\/h\1>/g, (match, level, text) => {
         const id = text.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
@@ -132,7 +132,7 @@ function relatedPostsHTML(currentPost, allPosts) {
     </section>`;
 }
 
-// ── CABECERA HTML COMÚN ──────────────────────────────────────────────────────
+// ── SHARED HTML HEAD ─────────────────────────────────────────────────────────
 function htmlHead(title, depth = 1) {
     const rel = '../'.repeat(depth);
     return `<!DOCTYPE html>
@@ -148,7 +148,7 @@ function htmlHead(title, depth = 1) {
 </head>`;
 }
 
-// ── NAV ───────────────────────────────────────────────────────────────────────
+// ── NAV BAR ───────────────────────────────────────────────────────────────────
 function authorNav(depth = 1) {
     const rel = '../'.repeat(depth);
     return `    <nav class="topnav">
@@ -167,7 +167,7 @@ function authorNav(depth = 1) {
     </nav>`;
 }
 
-// ── FOOTER ────────────────────────────────────────────────────────────────────
+// ── SITE FOOTER ───────────────────────────────────────────────────────────────
 function authorFooter(depth = 1) {
     const rel = '../'.repeat(depth);
     return `    <footer class="footer">
@@ -177,10 +177,10 @@ function authorFooter(depth = 1) {
     </footer>`;
 }
 
-// ── SCRIPT COMPARTIDO ─────────────────────────────────────────────────────────
+// ── SHARED CLIENT SCRIPT ──────────────────────────────────────────────────────
 const sharedScript = `
     <script>
-        // Dark mode (aplicar antes de pintar para evitar flash)
+        // Dark mode (apply before paint to avoid flash)
         (function() {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -188,7 +188,7 @@ const sharedScript = `
             }
         })();
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode toggle
+            // Dark mode toggle button
             const btn = document.getElementById('dark-toggle');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -197,7 +197,7 @@ const sharedScript = `
                     localStorage.setItem('theme', isDark ? 'light' : 'dark');
                 });
             }
-            // Volver arriba
+            // Back to top button
             const backBtn = document.getElementById('back-to-top');
             if (backBtn) {
                 window.addEventListener('scroll', function() {
@@ -207,7 +207,7 @@ const sharedScript = `
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
-            // Scrollbar nA — thumb se mueve en X dentro del viewBox real (115 → 1872)
+            // nA scrollbar — thumb moves along X within the real viewBox (115 → 1872)
             const naThumb = document.getElementById('na-thumb-rect');
             if (naThumb) {
                 const TRACK_START = 115;
@@ -226,7 +226,7 @@ const sharedScript = `
                 window.addEventListener('resize', updateNaThumb);
                 updateNaThumb();
             }
-            // Animación navbar: nousArchives ↔ n_A
+            // Navbar animation: nousArchives ↔ n_A
             const navWordmark = document.getElementById('nav-wordmark');
             if (navWordmark) {
                 const THRESHOLD = 80;
@@ -259,7 +259,7 @@ const naScrollbar = `
 
 const backToTopBtn = `    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">↑</button>`;
 
-// ── TEMPLATE ARTÍCULO ────────────────────────────────────────────────────────
+// ── ARTICLE TEMPLATE ─────────────────────────────────────────────────────────
 function articleTemplate(fm, htmlContent, authorSlug, tocHTML, relatedHTML) {
     const author = AUTHORS[authorSlug];
     const tagsHTML = (fm.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('');
@@ -325,11 +325,11 @@ ${sharedScript}
 </html>`;
 }
 
-// ── TEMPLATE PÁGINA DE AUTOR ─────────────────────────────────────────────────
+// ── AUTHOR PAGE TEMPLATE ─────────────────────────────────────────────────────
 function authorPageTemplate(slug) {
     const author = AUTHORS[slug];
 
-    // Watermark (solo si el autor tiene imágenes configuradas)
+    // Watermark (only if the author has images configured)
     const watermarkDiv = author.watermarkImages
         ? `\n    <div class="angel-watermark"><img id="angel-watermark-img" src="" alt=""></div>` : '';
 
@@ -356,7 +356,7 @@ function authorPageTemplate(slug) {
         </div>
     </section>` : '';
 
-    // Script watermark (solo si el autor tiene imágenes)
+    // Watermark script (only if the author has images)
     const watermarkScript = author.watermarkImages ? `
             const watermarkImg = document.getElementById('angel-watermark-img');
             if (watermarkImg) {
@@ -437,7 +437,7 @@ ${sharedScript}
 </html>`;
 }
 
-// ── PÁGINA /archivo ───────────────────────────────────────────────────────────
+// ── /archivo PAGE ────────────────────────────────────────────────────────────
 function archivoPageTemplate() {
     return `${htmlHead('Archivo', 0)}
 <body>
@@ -476,7 +476,7 @@ ${naScrollbar}
             if (typeof POSTS === 'undefined') return;
             const container = document.getElementById('archivo-list');
 
-            // Agrupar por año-mes
+            // Group by year-month
             const groups = {};
             POSTS.forEach(post => {
                 const d = new Date(post.date);
@@ -527,12 +527,12 @@ ${sharedScript}
 </html>`;
 }
 
-// ── PROCESADO DE AUTORES ─────────────────────────────────────────────────────
+// ── AUTHOR PROCESSING ────────────────────────────────────────────────────────
 Object.keys(AUTHORS).forEach(slug => {
     const authorDir = path.join(ROOT, slug);
     if (!fs.existsSync(authorDir)) {
         fs.mkdirSync(authorDir);
-        console.log(`📁 Creado directorio: ${slug}/`);
+        console.log(`📁 Created directory: ${slug}/`);
     }
 
     fs.writeFileSync(path.join(authorDir, 'index.html'), authorPageTemplate(slug));
@@ -551,12 +551,12 @@ Object.keys(AUTHORS).forEach(slug => {
             fm = parsed.data;
             body = parsed.content;
         } catch (e) {
-            console.warn(`⚠️  Frontmatter inválido en ${slug}/${file}: ${e.message}`);
+            console.warn(`⚠️  Invalid frontmatter in ${slug}/${file}: ${e.message}`);
             return;
         }
 
         if (!fm.title) {
-            console.warn(`⚠️  Sin título en ${slug}/${file}, saltando.`);
+            console.warn(`⚠️  No title in ${slug}/${file}, skipping.`);
             return;
         }
 
@@ -567,7 +567,7 @@ Object.keys(AUTHORS).forEach(slug => {
         if (!fm.author) fm.author = AUTHORS[slug]?.name || slug;
         fm.authorSlug = slug;
 
-        // Readtime y wordcount automáticos (override si el autor lo especificó)
+        // Readtime and wordcount auto-calculated (author can override in frontmatter)
         const wordcount = body.trim().split(/\s+/).length;
         fm.wordcount = wordcount;
         if (!fm.readtime) fm.readtime = calcReadtime(body);
@@ -585,7 +585,7 @@ Object.keys(AUTHORS).forEach(slug => {
             url:        `${slug}/${file.replace('.md', '.html')}`,
         });
 
-        console.log(`✅ ${slug}/${file} → ${file.replace('.md', '.html')} (${fm.wordcount} palabras, ${fm.readtime})`);
+        console.log(`✅ ${slug}/${file} → ${file.replace('.md', '.html')} (${fm.wordcount} words, ${fm.readtime})`);
     });
 
     // Limpieza: borrar .html sin .md correspondiente
@@ -594,12 +594,12 @@ Object.keys(AUTHORS).forEach(slug => {
         const mdPath = path.join(authorDir, file.replace('.html', '.md'));
         if (!fs.existsSync(mdPath)) {
             fs.unlinkSync(path.join(authorDir, file));
-            console.log(`🗑️  Eliminado: ${slug}/${file} (su .md no existe)`);
+            console.log(`🗑️  Deleted: ${slug}/${file} (no matching .md)`);
         }
     });
 });
 
-// ── ORDENAR Y GENERAR HTMLS DE ARTÍCULOS (necesita todos los posts para relacionados) ──
+// ── SORT AND GENERATE ARTICLE HTML (needs all posts loaded first for related posts) ──
 posts.sort((a, b) => {
     const da = new Date(a.date);
     const db = new Date(b.date);
@@ -632,14 +632,14 @@ posts.forEach(postMeta => {
     fs.writeFileSync(outputPath, articleTemplate(fm, htmlContent, slug, tocHTML, relatedHTML));
 });
 
-// ── GUARDAR posts.js ──────────────────────────────────────────────────────────
+// ── WRITE posts.js ────────────────────────────────────────────────────────────
 fs.writeFileSync(
     path.join(ROOT, 'posts.js'),
     `const POSTS = ${JSON.stringify(posts, null, 2)};\n`
 );
 
-// ── GENERAR /archivo ──────────────────────────────────────────────────────────
+// ── GENERATE /archivo ─────────────────────────────────────────────────────────
 fs.writeFileSync(path.join(ROOT, 'archivo.html'), archivoPageTemplate());
 
-console.log(`\n📦 posts.js actualizado con ${posts.length} entrada(s).`);
-console.log(`📅 archivo.html generado.`);
+console.log(`\n📦 posts.js updated with ${posts.length} post(s).`);
+console.log(`📅 archivo.html generated.`);
