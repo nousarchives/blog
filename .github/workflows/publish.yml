@@ -1,7 +1,8 @@
 name: Publicar entradas
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: [main]
     paths:
       - "angel/*.md"
@@ -13,6 +14,7 @@ on:
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -28,25 +30,19 @@ jobs:
         with:
           node-version: "20"
 
-      # CAMBIO CLAVE: 'npm install' en lugar de 'npm ci'
-      # Esto permite que npm arregle el lockfile automáticamente si es viejo o inconsistente
-      - name: Instalar y sincronizar dependencias
+      - name: Instalar dependencias
         run: npm install
 
       - name: Convertir Markdown → HTML y regenerar posts.js
         run: node scripts/build.js
 
-      - name: Commit y Push (Incluye correcciones de dependencias)
+      - name: Commit y Push
         run: |
           git config user.name "NousArchives Bot"
           git config user.email "bot@nousarchives.github.io"
-          
-          # Añadimos todo, incluido el nuevo package-lock.json generado
           git add -A
-          
-          # Solo hacemos commit si realmente hay cambios
           if ! git diff --staged --quiet; then
-            git commit -m "build: publicar entradas y actualizar dependencias [skip ci]"
+            git commit -m "build: publicar entradas [skip ci]"
             git push
           else
             echo "Nada que actualizar."
