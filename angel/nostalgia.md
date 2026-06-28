@@ -1,6 +1,6 @@
 ---
 title: "Nostalgia, la emoción inasible"
-tldr: La nostalgia se escapa de toda definición — un recorrido por La La Land, Edward Hopper y La Grande Belleza para intentar atraparla.
+tldr: Ensayo del video de la nostalgia del canal de youtube
 date: 2026-06-29
 type: ensayo
 tags: [cine, literatura]
