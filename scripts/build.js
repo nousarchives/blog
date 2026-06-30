@@ -45,6 +45,7 @@ const AUTHORS = {
 
 const ROOT = path.join(__dirname, '..');
 const posts = [];
+const postsVersion = Date.now();
 
 // ── UTILITIES ─────────────────────────────────────────────────────────────────
 
@@ -390,7 +391,7 @@ ${openTopicsSection}
 ${authorFooter(1)}
 ${backToTopBtn}
 ${naScrollbar}
-    <script src="../posts.js"></script>
+    <script src="../posts.js?v=${postsVersion}"></script>
     <script>
         const CURRENT_AUTHOR_SLUG = "${slug}";
         function renderAuthorPage() {
@@ -475,7 +476,7 @@ function archivoPageTemplate() {
     </footer>
 ${backToTopBtn}
 ${naScrollbar}
-    <script src="posts.js"></script>
+    <script src="posts.js?v=${postsVersion}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof POSTS === 'undefined') return;
