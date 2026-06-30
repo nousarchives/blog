@@ -154,7 +154,7 @@ function htmlHead(title, depth = 1) {
 function authorNav(depth = 1) {
     const rel = '../'.repeat(depth);
     return `    <nav class="topnav">
-        <span class="nav-left" data-i18n="nav.established">EST. ENE 24</span>
+        <span class="nav-left" data-i18n="nav.established">EST. NOV 25</span>
         <a href="${rel}" class="nav-center" aria-label="nous Archives">
             <span class="nav-wordmark" id="nav-wordmark">
                 <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>

@@ -1,6 +1,6 @@
 const TRANSLATIONS = {
     es: {
-        'nav.established':      'EST. ENE 24',
+        'nav.established':      'EST. NOV 25',
         'nav.darkmode':         'Modo oscuro',
         'nav.archive':          'Archivo',
         'nav.back':             '← NousArchives',
@@ -33,7 +33,7 @@ const TRANSLATIONS = {
         'empty.author':         'Todavía no hay nada por aquí.\nPero el silencio también dice algo.',
     },
     en: {
-        'nav.established':      'EST. JAN 24',
+        'nav.established':      'EST. NOV 25',
         'nav.darkmode':         'Dark mode',
         'nav.archive':          'Archive',
         'nav.back':             '← NousArchives',
