@@ -26,23 +26,61 @@
             <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
         </div>
     </nav>
-    <header class="author-hero">
-        <div class="author-hero-initial">Á</div>
-        <div class="author-hero-right">
-            <h1 class="author-hero-name">Ángel Allepuz</h1>
-            <p class="author-hero-bio"><span data-l="es">Ingeniero de Telecomunicaciones en Madrid. De día, sistemas con LLMs en producción para una gran empresa. El resto del tiempo, demostrando que no hace falta ser una gran empresa para usarlos.</span><span data-l="en">Telecom engineer in Madrid. By day, LLM systems in production for a large enterprise. The rest of the time, showing you don't need to be one to use them.</span></p>
-            <div class="author-hero-meta"><span id="post-count">0 entradas</span><a href="https://www.linkedin.com/in/angelallepuz/" target="_blank" class="author-social">LinkedIn ↗</a><a href="https://github.com/allepuzz" target="_blank" class="author-social">GitHub ↗</a></div>
-        </div>
-    </header>
 
-    <section class="manifiesto author-thesis">
-        <div class="manifiesto-inner">
-            <span class="manifiesto-label"><span data-l="es">Tesis</span><span data-l="en">Thesis</span></span>
-            <p class="manifiesto-text"><span data-l="es"><strong>AI should be open.</strong> Modelos pequeños sobre máquinas pequeñas: baratos, locales y al alcance de cualquiera, no solo de quien puede pagar una API.</span><span data-l="en"><strong>AI should be open.</strong> Small models on small machines: cheap, local and within anyone's reach, not just whoever can pay for an API.</span></p>
-            <div class="manifiesto-lines">
-                <p class="manifiesto-point"><span data-l="es">Pequeño sobre pequeño: un modelo de 3B en una Raspberry Pi.</span><span data-l="en">Small on small: a 3B model on a Raspberry Pi.</span></p>
-                <p class="manifiesto-point"><span data-l="es">Para quien no tiene presupuesto de IA: el campo.</span><span data-l="en">For those with no AI budget: the field.</span></p>
-                <p class="manifiesto-point"><span data-l="es">Con datos públicos y un portátil.</span><span data-l="en">With public data and a laptop.</span></p>
+    <section class="term-hero" id="term-hero">
+        <h1 class="sr-only">Ángel Allepuz Conesa</h1>
+        <p class="sr-only">AI should be open. Open models on small machines. AI is a commodity like water: we all should be able to drink it.</p>
+        <div class="term-stage" aria-hidden="true"><canvas id="term-canvas"></canvas></div>
+    </section>
+    <div class="term-links"><span id="post-count">0 entradas</span><a href="https://www.linkedin.com/in/angelallepuz/" target="_blank" class="author-social">LinkedIn ↗</a><a href="https://github.com/allepuzz" target="_blank" class="author-social">GitHub ↗</a></div>
+    <script>window.TERM_HERO = {"fullName":"Ángel Allepuz Conesa","namePrompt":"angel@nousarchives:~$ whoami","nameWords":["Ángel","Allepuz","Conesa"],"thesisPrompt":"angel@nousarchives:~$ cat thesis.txt","thesisArt":["AI should","be open"],"thesisText":["Open models on small machines.","AI is a commodity like water:","we all should be able to drink it."]};</script>
+    <script src="../term-hero.js"></script>
+
+    <section class="open-topics-section">
+        <div class="section-header">
+            <span class="section-label" data-i18n="section.stack">Stack</span>
+            <div class="section-rule"></div>
+        </div>
+        <div class="open-topics-grid stack-grid">
+            
+            <div class="open-topic-group">
+                <h3 class="open-topic-category"><span data-l="es">Lenguajes</span><span data-l="en">Languages</span></h3>
+                <ul class="open-topic-list">
+                    <li>Python</li>
+                    <li>TypeScript / JavaScript</li>
+                    <li>SQL</li>
+                    <li>Go</li>
+                </ul>
+            </div>
+            <div class="open-topic-group">
+                <h3 class="open-topic-category">IA / ML</h3>
+                <ul class="open-topic-list">
+                    <li>Agentes · tool calling · MCP</li>
+                    <li>RAG</li>
+                    <li>Evaluation harnesses</li>
+                    <li><span data-l="es">Generación estructurada (GBNF / JSON schema)</span><span data-l="en">Structured generation (GBNF / JSON schema)</span></li>
+                    <li>PEFT / LoRA</li>
+                    <li>PyTorch</li>
+                </ul>
+            </div>
+            <div class="open-topic-group">
+                <h3 class="open-topic-category"><span data-l="es">Local y edge</span><span data-l="en">Local & edge</span></h3>
+                <ul class="open-topic-list">
+                    <li>llama.cpp · GGUF</li>
+                    <li>Ollama</li>
+                    <li><span data-l="es">Cuantización</span><span data-l="en">Quantization</span></li>
+                    <li>whisper.cpp</li>
+                    <li>Raspberry Pi · ESP32</li>
+                </ul>
+            </div>
+            <div class="open-topic-group">
+                <h3 class="open-topic-category">Infra</h3>
+                <ul class="open-topic-list">
+                    <li>Docker · Kubernetes · Helm</li>
+                    <li>Terraform · ArgoCD</li>
+                    <li>AWS · GCP · Azure</li>
+                    <li>GitHub Actions</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -108,55 +146,6 @@
         </div>
     </section>
 
-    <section class="open-topics-section">
-        <div class="section-header">
-            <span class="section-label" data-i18n="section.stack">Stack</span>
-            <div class="section-rule"></div>
-        </div>
-        <div class="open-topics-grid stack-grid">
-            
-            <div class="open-topic-group">
-                <h3 class="open-topic-category"><span data-l="es">Lenguajes</span><span data-l="en">Languages</span></h3>
-                <ul class="open-topic-list">
-                    <li>Python</li>
-                    <li>TypeScript / JavaScript</li>
-                    <li>SQL</li>
-                    <li>Go</li>
-                </ul>
-            </div>
-            <div class="open-topic-group">
-                <h3 class="open-topic-category">IA / ML</h3>
-                <ul class="open-topic-list">
-                    <li>Agentes · tool calling · MCP</li>
-                    <li>RAG</li>
-                    <li>Evaluation harnesses</li>
-                    <li><span data-l="es">Generación estructurada (GBNF / JSON schema)</span><span data-l="en">Structured generation (GBNF / JSON schema)</span></li>
-                    <li>PEFT / LoRA</li>
-                    <li>PyTorch</li>
-                </ul>
-            </div>
-            <div class="open-topic-group">
-                <h3 class="open-topic-category"><span data-l="es">Local y edge</span><span data-l="en">Local & edge</span></h3>
-                <ul class="open-topic-list">
-                    <li>llama.cpp · GGUF</li>
-                    <li>Ollama</li>
-                    <li><span data-l="es">Cuantización</span><span data-l="en">Quantization</span></li>
-                    <li>whisper.cpp</li>
-                    <li>Raspberry Pi · ESP32</li>
-                </ul>
-            </div>
-            <div class="open-topic-group">
-                <h3 class="open-topic-category">Infra</h3>
-                <ul class="open-topic-list">
-                    <li>Docker · Kubernetes · Helm</li>
-                    <li>Terraform · ArgoCD</li>
-                    <li>AWS · GCP · Azure</li>
-                    <li>GitHub Actions</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
     <section class="author-posts-section">
         <div class="section-header">
             <span class="section-label" data-i18n="section.allposts">Todas las entradas</span>
@@ -183,7 +172,7 @@
             <rect id="na-thumb-rect" x="115" y="648" width="300" height="8" rx="4" fill="currentColor" opacity="0.7"/>
         </svg>
     </div>
-    <script src="../posts.js?v=1791395678096"></script>
+    <script src="../posts.js?v=1791397037307"></script>
     <script>
         const CURRENT_AUTHOR_SLUG = "angel";
         function renderAuthorPage() {

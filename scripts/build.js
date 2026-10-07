@@ -9,22 +9,15 @@ const AUTHORS = {
     angel: {
         name: 'Ángel Allepuz',
         initial: 'Á',
-        bio: {
-            es: 'Ingeniero de Telecomunicaciones en Madrid. De día, sistemas con LLMs en producción para una gran empresa. El resto del tiempo, demostrando que no hace falta ser una gran empresa para usarlos.',
-            en: 'Telecom engineer in Madrid. By day, LLM systems in production for a large enterprise. The rest of the time, showing you don\'t need to be one to use them.',
-        },
         bodyClass: 'angel-page',
-        thesis: {
-            label: { es: 'Tesis', en: 'Thesis' },
-            text: {
-                es: '<strong>AI should be open.</strong> Modelos pequeños sobre máquinas pequeñas: baratos, locales y al alcance de cualquiera, no solo de quien puede pagar una API.',
-                en: '<strong>AI should be open.</strong> Small models on small machines: cheap, local and within anyone\'s reach, not just whoever can pay for an API.',
-            },
-            points: [
-                { es: 'Pequeño sobre pequeño: un modelo de 3B en una Raspberry Pi.', en: 'Small on small: a 3B model on a Raspberry Pi.' },
-                { es: 'Para quien no tiene presupuesto de IA: el campo.',           en: 'For those with no AI budget: the field.' },
-                { es: 'Con datos públicos y un portátil.',                          en: 'With public data and a laptop.' },
-            ],
+        // Terminal hero (term-hero.js): name in box-drawing letters that scrambles into the thesis on scroll
+        terminalHero: {
+            fullName: 'Ángel Allepuz Conesa',
+            namePrompt: 'angel@nousarchives:~$ whoami',
+            nameWords: ['Ángel', 'Allepuz', 'Conesa'],
+            thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
+            thesisArt: ['AI should', 'be open'],
+            thesisText: ['Open models on small machines.', 'AI is a commodity like water:', 'we all should be able to drink it.'],
         },
         projects: [
             {
@@ -416,17 +409,25 @@ function authorPageTemplate(slug) {
     const l10n = v => typeof v === 'string' ? v
         : `<span data-l="es">${v.es}</span><span data-l="en">${v.en}</span>`;
 
-    // Thesis band (only if the author has one configured) — reuses .manifiesto
-    const thesisSection = author.thesis ? `
-    <section class="manifiesto author-thesis">
-        <div class="manifiesto-inner">
-            <span class="manifiesto-label">${l10n(author.thesis.label)}</span>
-            <p class="manifiesto-text">${l10n(author.thesis.text)}</p>
-            <div class="manifiesto-lines">
-                ${author.thesis.points.map(pt => `<p class="manifiesto-point">${l10n(pt)}</p>`).join('\n                ')}
-            </div>
+    // Terminal hero (only if configured) — replaces the classic initial + bio hero
+    const th = author.terminalHero;
+    const heroHTML = th ? `
+    <section class="term-hero" id="term-hero">
+        <h1 class="sr-only">${th.fullName}</h1>
+        <p class="sr-only">${th.thesisArt.join(' ')}. ${th.thesisText.join(' ')}</p>
+        <div class="term-stage" aria-hidden="true"><canvas id="term-canvas"></canvas></div>
+    </section>
+    <div class="term-links"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
+    <script>window.TERM_HERO = ${JSON.stringify(th)};</script>
+    <script src="../term-hero.js"></script>` : `
+    <header class="author-hero">
+        <div class="author-hero-initial">${author.initial}</div>
+        <div class="author-hero-right">
+            <h1 class="author-hero-name">${author.name}</h1>
+            <p class="author-hero-bio">${l10n(author.bio)}</p>
+            <div class="author-hero-meta"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
         </div>
-    </section>` : '';
+    </header>`;
 
     // Projects (only if the author has them configured)
     const projectsSection = author.projects ? `
@@ -478,17 +479,9 @@ function authorPageTemplate(slug) {
     return `${htmlHead(author.name, 1)}
 <body${author.bodyClass ? ` class="${author.bodyClass}"` : ''}>
 ${authorNav(1)}
-    <header class="author-hero">
-        <div class="author-hero-initial">${author.initial}</div>
-        <div class="author-hero-right">
-            <h1 class="author-hero-name">${author.name}</h1>
-            <p class="author-hero-bio">${l10n(author.bio)}</p>
-            <div class="author-hero-meta"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
-        </div>
-    </header>
-${thesisSection}
-${projectsSection}
+${heroHTML}
 ${stackSection}
+${projectsSection}
 ${openTopicsSection}
     <section class="author-posts-section">
         <div class="section-header">

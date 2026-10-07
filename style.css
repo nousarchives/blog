@@ -635,8 +635,24 @@ html[lang="en"] [data-l="es"] { display: none; }
 .projects-section { max-width: 1100px; margin: 0 auto; padding: 0 3rem 1rem; }
 .project-fact { font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.7; color: var(--black); border-left: 1px solid var(--black); padding: 0.15rem 0 0.15rem 0.9rem; margin: 0.3rem 0 0.2rem; max-width: 640px; }
 .project-claim { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); }
-.author-thesis { position: relative; z-index: 1; max-width: 1100px; margin: 3rem auto 0; }
-@media (max-width: 768px) { .author-thesis { padding: 3.5rem 1.5rem; } .manifiesto-lines { grid-template-columns: 1fr; } }
+
+/* ── TERMINAL HERO (term-hero.js) ── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.term-hero { position: relative; z-index: 1; height: 260vh; }
+.term-stage { position: sticky; top: 0; height: 100vh; max-width: 1000px; margin: 0 auto; padding: 0 1rem; display: flex; flex-direction: column; justify-content: center; }
+.term-stage canvas { display: block; }
+.term-hero.term-static { height: auto; }
+.term-hero.term-static .term-stage { position: static; height: auto; padding: 4rem 1rem; gap: 3rem; }
+.term-links { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 0 1rem 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+.term-links::before { content: '$'; color: var(--black); }
+
+/* ── ANGEL — centred ASCII section headers: ────┤ LABEL ├──── ── */
+.angel-page .section-header { gap: 0; justify-content: center; }
+.angel-page .section-header::before,
+.angel-page .section-rule { flex: 1; height: auto; background: none; overflow: hidden; white-space: nowrap; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1; color: var(--grey); }
+.angel-page .section-header::before { content: '┤────────────────────────────────────────────────────────────────────────────────'; direction: rtl; text-align: left; }
+.angel-page .section-rule::before { content: '├────────────────────────────────────────────────────────────────────────────────'; }
+.angel-page .section-label { padding: 0 0.8rem; }
 .project-link { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
 .project-item:hover .project-link { color: var(--black); }
 .stack-grid { grid-template-columns: repeat(4, 1fr); }
