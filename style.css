@@ -657,6 +657,7 @@ html[lang="en"] [data-l="es"] { display: none; }
 .tree li { font-size: 0.8rem; line-height: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tree li::before { content: '├── '; color: var(--grey); }
 .tree li:last-child::before { content: '└── '; }
+.stack-tree-left { justify-content: start; column-gap: 6rem; }
 @media (max-width: 900px) { .stack-tree { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) {
     .stack-tree { grid-template-columns: 1fr; }

@@ -15,6 +15,7 @@ const AUTHORS = {
             fullName: 'Ángel Allepuz Conesa',
             namePrompt: 'angel@nousarchives:~$ whoami',
             nameWords: ['Ángel', 'Allepuz', 'Conesa'],
+            nameTagline: 'ML / DevOps Engineer',
             thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
             thesisArt: ['AI should', 'be open'],
             thesisText: ['Open models on cheap machines.', 'AI is a commodity like water.', 'We all should be able to drink it.'],
@@ -68,6 +69,18 @@ const AUTHORS = {
                 },
                 stack: ['Python', 'scikit-learn', 'statsmodels', 'pandas'],
             },
+        ],
+        certs: [
+            { label: 'certs', items: [
+                'Google Cloud · Professional Cloud Architect',
+                'Google Cloud · Associate Cloud Engineer',
+                'AWS · AI Practitioner',
+                'GitHub Actions',
+            ] },
+            { label: { es: 'idiomas', en: 'spoken' }, items: [
+                { es: 'Inglés · Cambridge C1', en: 'English · Cambridge C1' },
+                { es: 'Español · nativo', en: 'Spanish · native' },
+            ] },
         ],
         stack: [
             { label: { es: 'lenguajes', en: 'languages' }, items: ['Python', 'TypeScript / JavaScript', 'SQL', 'Go'] },
@@ -423,6 +436,7 @@ function authorPageTemplate(slug) {
     const heroHTML = th ? `
     <section class="term-hero" id="term-hero">
         <h1 class="sr-only">${th.fullName}</h1>
+        <p class="sr-only">${th.nameTagline}</p>
         <p class="sr-only">${th.thesisArt.join(' ')}. ${th.thesisText.join(' ')}</p>
         <div class="term-stage" aria-hidden="true"><canvas id="term-canvas"></canvas></div>
     </section>
@@ -467,17 +481,25 @@ function authorPageTemplate(slug) {
     </section>` : '';
 
     // Stack (only if the author has it configured)
-    const stackSection = author.stack ? `
-    <section class="open-topics-section">${sectionHeader('section.stack', 'Stack', 'Stack')}
-        <div class="stack-tree">
-            ${author.stack.map(({ label, items }) => `
+    // `tree`-style columns: [{ label, items }]
+    const treeColumns = (groups, extraClass = '') => `
+        <div class="stack-tree${extraClass}">
+            ${groups.map(({ label, items }) => `
             <div class="tree">
                 <h3 class="tree-root">${l10n(label)}/</h3>
                 <ul>
                     ${items.map(item => `<li>${l10n(item)}</li>`).join('\n                    ')}
                 </ul>
             </div>`).join('')}
-        </div>
+        </div>`;
+
+    const stackSection = author.stack ? `
+    <section class="open-topics-section">${sectionHeader('section.stack', 'Stack', 'Stack')}${treeColumns(author.stack)}
+    </section>` : '';
+
+    // Certifications + spoken languages (only if configured)
+    const certsSection = author.certs ? `
+    <section class="open-topics-section">${sectionHeader('section.certs', 'Certificaciones', 'Certifications')}${treeColumns(author.certs, ' stack-tree-left')}
     </section>` : '';
 
     return `${htmlHead(author.name, 1)}
@@ -485,6 +507,7 @@ function authorPageTemplate(slug) {
 ${authorNav(1)}
 ${heroHTML}
 ${stackSection}
+${certsSection}
 ${projectsSection}
 ${openTopicsSection}
     <section class="author-posts-section">${sectionHeader('section.allposts', 'Entradas', 'All posts')}

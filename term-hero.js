@@ -1,14 +1,14 @@
 // ── TERMINAL HERO + TITLES ───────────────────────────────────────────────────
 // Draws text in box-drawing "ASCII" letters on a terminal grid.
 //  · Hero (#term-hero): the name, which on scroll scrambles into the thesis.
-//    Config: window.TERM_HERO = { namePrompt, nameWords, thesisPrompt, thesisArt, thesisText }
+//    Config: window.TERM_HERO = { namePrompt, nameWords, nameTagline, thesisPrompt, thesisArt, thesisText }
 //  · Titles (.term-title[data-es][data-en]): section titles, centred between rails.
 // Box characters are drawn as real line segments (not font glyphs), so the grid
 // connects perfectly regardless of which fonts the system has.
 (function () {
     const HERO_COLS = 48;
     const HERO_ROWS = 16;
-    const TITLE_COLS = 96;
+    const TITLE_COLS = 112;
 
     // 3-row box font. Each glyph: 3 strings of equal width.
     // Non-box helpers for K: ╱ ╲ arms that stop at the letter's top/baseline (cell centre),
@@ -19,6 +19,7 @@
         C: ['╭──', '│  ', '╰──'],
         D: ['┌─╮', '│ │', '└─╯'],
         E: ['┌──', '├─ ', '└──'],
+        F: ['┌──', '├─ ', '╵  '],
         G: ['╭──', '│╶┐', '╰─╯'],
         H: ['╷ ╷', '├─┤', '╵ ╵'],
         I: ['╷', '│', '╵'],
@@ -204,7 +205,10 @@
             { text: w, kind: 'art', rail: true, accentRow: /[^\u0000-\u007f]/.test(w) },
             ...(i < list.length - 1 ? [{ text: '' }] : []),
         ]);
-        const frameA = buildFrame([{ text: cfg.namePrompt, kind: 'prompt' }, { text: '' }, ...words(cfg.nameWords)]);
+        const frameA = buildFrame([
+            { text: cfg.namePrompt, kind: 'prompt' }, { text: '' },
+            ...words(cfg.nameWords), { text: '' }, { text: cfg.nameTagline || '' },
+        ]);
         const frameB = buildFrame([
             { text: cfg.thesisPrompt, kind: 'prompt' }, { text: '' },
             ...words(cfg.thesisArt), { text: '' },
