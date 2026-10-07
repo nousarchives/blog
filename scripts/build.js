@@ -9,8 +9,64 @@ const AUTHORS = {
     angel: {
         name: 'Ángel Allepuz',
         initial: 'Á',
-        bio: 'A collection of my thoughts and experiments.',
+        bio: {
+            es: 'Ingeniero de Telecomunicaciones en Madrid. Construyo sistemas de ML: modelos pequeños, datos reales y la maquinaria que los hace fiables. Aquí, los proyectos y lo que pienso mientras los hago.',
+            en: 'Telecom engineer based in Madrid. I build ML systems: small models, real data, and the machinery that makes them reliable. Here: the projects, and what I think while building them.',
+        },
         bodyClass: 'angel-page',
+        projects: [
+            {
+                title: 'π-chón',
+                year: '2026',
+                kind: 'Hardware + LLM',
+                url: 'https://github.com/allepuzz/pichon',
+                desc: {
+                    es: 'Un diario hablado que sale en papel. Lo dictas de noche; un LLM local en una Raspberry Pi 5 lo destila; a las 9:00 un ESP32 lo imprime en una térmica de 58 mm. Sin nube, sin APIs de terceros.',
+                    en: 'A spoken diary that comes out on paper. You dictate at night; a local LLM on a Raspberry Pi 5 distills it; at 9:00 an ESP32 prints it on a 58 mm thermal printer. No cloud, no third-party APIs.',
+                },
+                fact: {
+                    es: '7 modelos probados, de 2B a 9B parámetros. Ninguno resolvía la tarea solo; el harness sí, sobre el de 3B.',
+                    en: '7 models tested, from 2B to 9B parameters. None solved the task alone; the harness did, on the 3B one.',
+                },
+                stack: ['Python', 'C++', 'Ollama', 'whisper.cpp', 'Flask', 'Raspberry Pi 5', 'ESP32'],
+            },
+            {
+                title: 'citrus-scout',
+                year: '2026',
+                kind: 'MLOps',
+                url: 'https://github.com/allepuzz/citrus-scout',
+                desc: {
+                    es: 'Pipeline MLOps para detectar plagas y enfermedades en cítricos a partir de imagen de dron, pensado para cooperativas de la Región de Murcia (28.442 ha de limonero).',
+                    en: 'MLOps pipeline for pest and disease detection in citrus groves from drone imagery, aimed at cooperatives in the Region of Murcia (28,442 ha of lemon trees).',
+                },
+                fact: {
+                    es: 'Fase 0: entrena, evalúa, calibra, cuantifica incertidumbre y muestra dónde mira el modelo. Se mide PPV a prevalencia real, no accuracy. El cuello de botella ahora son los datos UAV reales.',
+                    en: 'Phase 0: trains, evaluates, calibrates, quantifies uncertainty and shows where the model looks. Measured by PPV at real prevalence, not accuracy. The bottleneck now is real UAV data.',
+                },
+                stack: ['Python', 'PyTorch', 'Grad-CAM', 'W&B', 'DVC', 'uv'],
+            },
+            {
+                title: 'Mar Menor Health Predictor',
+                year: 'TFG',
+                kind: 'ML',
+                url: 'https://github.com/allepuzz/Mar-Menor-Health-Predictor',
+                desc: {
+                    es: 'Mi TFG. Predicción de clorofila-α, nitratos y fosfatos en el Mar Menor con datos de la UPCT y la Fundación Canal Mar Menor (12 boyas, desde 2019), y comparación con los umbrales legales.',
+                    en: 'My bachelor\'s thesis. Forecasting chlorophyll-α, nitrates and phosphates in the Mar Menor lagoon with data from UPCT and Fundación Canal Mar Menor (12 buoys, since 2019), checked against legal thresholds.',
+                },
+                fact: {
+                    es: 'Random Forest con lags y validación de ventana expansiva. MSE en clorofila-α: 1,211 frente a 3,671 (SARIMA) y 5,316 (regresión lineal).',
+                    en: 'Random Forest with lag features and expanding-window validation. Chlorophyll-α MSE: 1.211 vs 3.671 (SARIMA) and 5.316 (linear regression).',
+                },
+                stack: ['Python', 'scikit-learn', 'statsmodels', 'pandas'],
+            },
+        ],
+        stack: {
+            'ML': ['PyTorch', 'scikit-learn', 'statsmodels', 'pandas / numpy'],
+            'LLM local': ['Ollama', 'llama3.2 · qwen2.5', 'whisper.cpp', 'Flask'],
+            'Hardware': ['Raspberry Pi 5', 'ESP32 · Arduino C++', 'UART', { es: 'Soldadura a mano', en: 'Hand soldering' }],
+            'MLOps': ['uv', 'DVC', 'Weights & Biases', 'Colab'],
+        },
         socialLinks: [
             { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/angelallepuz/' },
             { label: 'GitHub ↗',   url: 'https://github.com/allepuzz' },
@@ -332,10 +388,6 @@ ${sharedScript}
 function authorPageTemplate(slug) {
     const author = AUTHORS[slug];
 
-    // Watermark (only if the author has images configured)
-    const watermarkDiv = author.watermarkImages
-        ? `\n    <div class="angel-watermark"><img id="angel-watermark-img" src="" alt=""></div>` : '';
-
     // Social links en el hero
     const socialLinksHTML = author.socialLinks
         ? author.socialLinks.map(l => `<a href="${l.url}" target="_blank" class="author-social">${l.label}</a>`).join('')
@@ -359,26 +411,69 @@ function authorPageTemplate(slug) {
         </div>
     </section>` : '';
 
-    // Watermark script (only if the author has images)
-    const watermarkScript = author.watermarkImages ? `
-            const watermarkImg = document.getElementById('angel-watermark-img');
-            if (watermarkImg) {
-                const imgs = ${JSON.stringify(author.watermarkImages)};
-                watermarkImg.src = imgs[Math.floor(Math.random() * imgs.length)];
-            }` : '';
+    // Bilingual strings: { es, en } → two spans toggled by html[lang] in style.css
+    const l10n = v => typeof v === 'string' ? v
+        : `<span data-l="es">${v.es}</span><span data-l="en">${v.en}</span>`;
+
+    // Projects (only if the author has them configured)
+    const projectsSection = author.projects ? `
+    <section class="projects-section">
+        <div class="section-header">
+            <span class="section-label" data-i18n="section.projects">Proyectos</span>
+            <div class="section-rule"></div>
+        </div>
+        <div class="pub-list">
+            ${author.projects.map((p, i) => `
+            <a href="${p.url}" target="_blank" class="pub-item project-item">
+                <div class="pub-left">
+                    <span class="pub-author">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="pub-date">${p.year}</span>
+                </div>
+                <div class="pub-center">
+                    <span class="pub-title">${p.title}</span>
+                    <span class="pub-tldr">${l10n(p.desc)}</span>
+                    <p class="project-fact">${l10n(p.fact)}</p>
+                    <div class="pub-tags">${p.stack.map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
+                </div>
+                <div class="pub-right">
+                    <span class="pub-type articulo">${p.kind}</span>
+                    <span class="project-link">GitHub ↗</span>
+                </div>
+            </a>`).join('')}
+        </div>
+    </section>` : '';
+
+    // Stack (only if the author has it configured)
+    const stackSection = author.stack ? `
+    <section class="open-topics-section">
+        <div class="section-header">
+            <span class="section-label" data-i18n="section.stack">Stack</span>
+            <div class="section-rule"></div>
+        </div>
+        <div class="open-topics-grid stack-grid">
+            ${Object.entries(author.stack).map(([category, items]) => `
+            <div class="open-topic-group">
+                <h3 class="open-topic-category">${category}</h3>
+                <ul class="open-topic-list">
+                    ${items.map(item => `<li>${l10n(item)}</li>`).join('\n                    ')}
+                </ul>
+            </div>`).join('')}
+        </div>
+    </section>` : '';
 
     return `${htmlHead(author.name, 1)}
 <body${author.bodyClass ? ` class="${author.bodyClass}"` : ''}>
 ${authorNav(1)}
-${watermarkDiv}
     <header class="author-hero">
         <div class="author-hero-initial">${author.initial}</div>
         <div class="author-hero-right">
             <h1 class="author-hero-name">${author.name}</h1>
-            <p class="author-hero-bio">${author.bio}</p>
+            <p class="author-hero-bio">${l10n(author.bio)}</p>
             <div class="author-hero-meta"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
         </div>
     </header>
+${projectsSection}
+${stackSection}
 ${openTopicsSection}
     <section class="author-posts-section">
         <div class="section-header">
@@ -434,7 +529,6 @@ ${naScrollbar}
         }
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof POSTS !== 'undefined') renderAuthorPage();
-${watermarkScript}
         });
     </script>
 ${sharedScript}

@@ -42,6 +42,7 @@
 [data-theme="dark"] .manifiesto-point::before { color: #c8c3bb; }
 [data-theme="dark"] .author-column-bio { color: #888; }
 [data-theme="dark"] .pub-tldr { color: #888; }
+[data-theme="dark"] .author-hero-bio { color: #888; }
 [data-theme="dark"] .article-body p,
 [data-theme="dark"] .article-body li { color: #ccc; }
 [data-theme="dark"] .article-subtitle { color: #888; }
@@ -604,6 +605,7 @@ body {
     opacity: 0.05;
 }
 .angel-page .author-hero,
+.angel-page .projects-section,
 .angel-page .open-topics-section,
 .angel-page .author-posts-section,
 .angel-page article,
@@ -624,6 +626,20 @@ body {
 .open-topic-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
 .open-topic-list li { font-family: var(--font-body); font-size: 0.88rem; line-height: 1.6; color: var(--black); padding-left: 1.2em; position: relative; }
 .open-topic-list li::before { content: '—'; position: absolute; left: 0; color: var(--grey); }
+
+/* ── BILINGUAL INLINE CONTENT (data-l, driven by html[lang] from i18n.js) ── */
+html:not([lang="en"]) [data-l="en"],
+html[lang="en"] [data-l="es"] { display: none; }
+
+/* ── PROJECTS (portfolio) ── */
+.projects-section { max-width: 1100px; margin: 0 auto; padding: 0 3rem 1rem; }
+.project-fact { font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.7; color: var(--black); border-left: 1px solid var(--black); padding: 0.15rem 0 0.15rem 0.9rem; margin: 0.3rem 0 0.2rem; max-width: 640px; }
+.project-link { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
+.project-item:hover .project-link { color: var(--black); }
+.stack-grid { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .stack-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .projects-section, .open-topics-section { padding-left: 1.5rem; padding-right: 1.5rem; } }
+@media (max-width: 480px) { .open-topics-grid, .stack-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
 /* ── 3D FILING CABINET — WIREFRAME ── */
 :root {
