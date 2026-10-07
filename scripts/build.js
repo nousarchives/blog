@@ -10,23 +10,36 @@ const AUTHORS = {
         name: 'Ángel Allepuz',
         initial: 'Á',
         bio: {
-            es: 'Ingeniero de Telecomunicaciones en Madrid. Construyo sistemas de ML: modelos pequeños, datos reales y la maquinaria que los hace fiables. Aquí, los proyectos y lo que pienso mientras los hago.',
-            en: 'Telecom engineer based in Madrid. I build ML systems: small models, real data, and the machinery that makes them reliable. Here: the projects, and what I think while building them.',
+            es: 'Ingeniero de Telecomunicaciones en Madrid. De día, sistemas con LLMs en producción para una gran empresa. El resto del tiempo, demostrando que no hace falta ser una gran empresa para usarlos.',
+            en: 'Telecom engineer in Madrid. By day, LLM systems in production for a large enterprise. The rest of the time, showing you don\'t need to be one to use them.',
         },
         bodyClass: 'angel-page',
+        thesis: {
+            label: { es: 'Tesis', en: 'Thesis' },
+            text: {
+                es: '<strong>AI should be open.</strong> Modelos pequeños sobre máquinas pequeñas: baratos, locales y al alcance de cualquiera, no solo de quien puede pagar una API.',
+                en: '<strong>AI should be open.</strong> Small models on small machines: cheap, local and within anyone\'s reach, not just whoever can pay for an API.',
+            },
+            points: [
+                { es: 'Pequeño sobre pequeño: un modelo de 3B en una Raspberry Pi.', en: 'Small on small: a 3B model on a Raspberry Pi.' },
+                { es: 'Para quien no tiene presupuesto de IA: el campo.',           en: 'For those with no AI budget: the field.' },
+                { es: 'Con datos públicos y un portátil.',                          en: 'With public data and a laptop.' },
+            ],
+        },
         projects: [
             {
                 title: 'π-chón',
                 year: '2026',
                 kind: 'Hardware + LLM',
+                claim: { es: 'Pequeño sobre pequeño', en: 'Small on small' },
                 url: 'https://github.com/allepuzz/pichon',
                 desc: {
                     es: 'Un diario hablado que sale en papel. Lo dictas de noche; un LLM local en una Raspberry Pi 5 lo destila; a las 9:00 un ESP32 lo imprime en una térmica de 58 mm. Sin nube, sin APIs de terceros.',
                     en: 'A spoken diary that comes out on paper. You dictate at night; a local LLM on a Raspberry Pi 5 distills it; at 9:00 an ESP32 prints it on a 58 mm thermal printer. No cloud, no third-party APIs.',
                 },
                 fact: {
-                    es: '7 modelos probados, de 2B a 9B parámetros. Ninguno resolvía la tarea solo; el harness sí, sobre el de 3B.',
-                    en: '7 models tested, from 2B to 9B parameters. None solved the task alone; the harness did, on the 3B one.',
+                    es: '7 modelos abiertos probados, de 2B a 9B parámetros. Ninguno resolvía la tarea solo; el harness sí, sobre el de 3B.',
+                    en: '7 open models tested, from 2B to 9B parameters. None solved the task alone; the harness did, on the 3B one.',
                 },
                 stack: ['Python', 'C++', 'Ollama', 'whisper.cpp', 'Flask', 'Raspberry Pi 5', 'ESP32'],
             },
@@ -34,10 +47,11 @@ const AUTHORS = {
                 title: 'citrus-scout',
                 year: '2026',
                 kind: 'MLOps',
+                claim: { es: 'Para quien no paga APIs', en: 'For those who don\'t pay for APIs' },
                 url: 'https://github.com/allepuzz/citrus-scout',
                 desc: {
-                    es: 'Pipeline MLOps para detectar plagas y enfermedades en cítricos a partir de imagen de dron, pensado para cooperativas de la Región de Murcia (28.442 ha de limonero).',
-                    en: 'MLOps pipeline for pest and disease detection in citrus groves from drone imagery, aimed at cooperatives in the Region of Murcia (28,442 ha of lemon trees).',
+                    es: 'Pipeline MLOps para detectar plagas y enfermedades en cítricos desde dron, pensado para cooperativas de la Región de Murcia (28.442 ha de limonero), donde hoy la inspección se hace a pie y por muestreo.',
+                    en: 'MLOps pipeline for pest and disease detection in citrus groves from drone imagery, aimed at cooperatives in the Region of Murcia (28,442 ha of lemon trees), where scouting is still done on foot and by sampling.',
                 },
                 fact: {
                     es: 'Fase 0: entrena, evalúa, calibra, cuantifica incertidumbre y muestra dónde mira el modelo. Se mide PPV a prevalencia real, no accuracy. El cuello de botella ahora son los datos UAV reales.',
@@ -49,10 +63,11 @@ const AUTHORS = {
                 title: 'Mar Menor Health Predictor',
                 year: 'TFG',
                 kind: 'ML',
+                claim: { es: 'Datos públicos, un portátil', en: 'Public data, one laptop' },
                 url: 'https://github.com/allepuzz/Mar-Menor-Health-Predictor',
                 desc: {
-                    es: 'Mi TFG. Predicción de clorofila-α, nitratos y fosfatos en el Mar Menor con datos de la UPCT y la Fundación Canal Mar Menor (12 boyas, desde 2019), y comparación con los umbrales legales.',
-                    en: 'My bachelor\'s thesis. Forecasting chlorophyll-α, nitrates and phosphates in the Mar Menor lagoon with data from UPCT and Fundación Canal Mar Menor (12 buoys, since 2019), checked against legal thresholds.',
+                    es: 'Mi TFG. Predicción de clorofila-α, nitratos y fosfatos en el Mar Menor con datos públicos de la UPCT y la Fundación Canal Mar Menor, contrastada con los umbrales legales. Todo entrenado en un portátil.',
+                    en: 'My bachelor\'s thesis. Forecasting chlorophyll-α, nitrates and phosphates in the Mar Menor lagoon from public UPCT and Fundación Canal Mar Menor data, checked against legal thresholds. All trained on a laptop.',
                 },
                 fact: {
                     es: 'Random Forest con lags y validación de ventana expansiva. MSE en clorofila-α: 1,211 frente a 3,671 (SARIMA) y 5,316 (regresión lineal).',
@@ -61,31 +76,17 @@ const AUTHORS = {
                 stack: ['Python', 'scikit-learn', 'statsmodels', 'pandas'],
             },
         ],
-        stack: {
-            'ML': ['PyTorch', 'scikit-learn', 'statsmodels', 'pandas / numpy'],
-            'LLM local': ['Ollama', 'llama3.2 · qwen2.5', 'whisper.cpp', 'Flask'],
-            'Hardware': ['Raspberry Pi 5', 'ESP32 · Arduino C++', 'UART', { es: 'Soldadura a mano', en: 'Hand soldering' }],
-            'MLOps': ['uv', 'DVC', 'Weights & Biases', 'Colab'],
-        },
+        stack: [
+            { label: { es: 'Lenguajes', en: 'Languages' }, items: ['Python', 'TypeScript / JavaScript', 'SQL', 'Go'] },
+            { label: 'IA / ML', items: ['Agentes · tool calling · MCP', 'RAG', 'Evaluation harnesses', { es: 'Generación estructurada (GBNF / JSON schema)', en: 'Structured generation (GBNF / JSON schema)' }, 'PEFT / LoRA', 'PyTorch'] },
+            { label: { es: 'Local y edge', en: 'Local & edge' }, items: ['llama.cpp · GGUF', 'Ollama', { es: 'Cuantización', en: 'Quantization' }, 'whisper.cpp', 'Raspberry Pi · ESP32'] },
+            { label: 'Infra', items: ['Docker · Kubernetes · Helm', 'Terraform · ArgoCD', 'AWS · GCP · Azure', 'GitHub Actions'] },
+        ],
         socialLinks: [
             { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/angelallepuz/' },
             { label: 'GitHub ↗',   url: 'https://github.com/allepuzz' },
         ],
         watermarkImages: ['dm1.jpg','dm2.jpg','dm3.jpg','dm4.jpg','dm5.jpg','dm6.png'],
-        openTopics: {
-            'AI / ML': [
-                '¿Pueden los LLMs razonar de verdad o solo reconocen patrones sofisticados?',
-                'Interpretabilidad mecánica: entender qué ocurre dentro de los transformers',
-                'Agentes autónomos y los límites de la planificación emergente',
-                'Alineación: el problema de especificar lo que realmente queremos',
-            ],
-            'Consciencia': [
-                'El problema difícil de la consciencia y por qué la neurociencia no lo resuelve sola',
-                '¿Puede una máquina ser consciente? El test de Turing revisitado',
-                'Qualia, experiencia subjetiva y el abismo explicativo',
-                'Panpsiquismo, IIT y otras teorías no convencionales',
-            ],
-        },
     },
     javi: {
         name: 'Javi',
@@ -415,6 +416,18 @@ function authorPageTemplate(slug) {
     const l10n = v => typeof v === 'string' ? v
         : `<span data-l="es">${v.es}</span><span data-l="en">${v.en}</span>`;
 
+    // Thesis band (only if the author has one configured) — reuses .manifiesto
+    const thesisSection = author.thesis ? `
+    <section class="manifiesto author-thesis">
+        <div class="manifiesto-inner">
+            <span class="manifiesto-label">${l10n(author.thesis.label)}</span>
+            <p class="manifiesto-text">${l10n(author.thesis.text)}</p>
+            <div class="manifiesto-lines">
+                ${author.thesis.points.map(pt => `<p class="manifiesto-point">${l10n(pt)}</p>`).join('\n                ')}
+            </div>
+        </div>
+    </section>` : '';
+
     // Projects (only if the author has them configured)
     const projectsSection = author.projects ? `
     <section class="projects-section">
@@ -430,6 +443,7 @@ function authorPageTemplate(slug) {
                     <span class="pub-date">${p.year}</span>
                 </div>
                 <div class="pub-center">
+                    ${p.claim ? `<span class="project-claim">${l10n(p.claim)}</span>` : ''}
                     <span class="pub-title">${p.title}</span>
                     <span class="pub-tldr">${l10n(p.desc)}</span>
                     <p class="project-fact">${l10n(p.fact)}</p>
@@ -451,9 +465,9 @@ function authorPageTemplate(slug) {
             <div class="section-rule"></div>
         </div>
         <div class="open-topics-grid stack-grid">
-            ${Object.entries(author.stack).map(([category, items]) => `
+            ${author.stack.map(({ label, items }) => `
             <div class="open-topic-group">
-                <h3 class="open-topic-category">${category}</h3>
+                <h3 class="open-topic-category">${l10n(label)}</h3>
                 <ul class="open-topic-list">
                     ${items.map(item => `<li>${l10n(item)}</li>`).join('\n                    ')}
                 </ul>
@@ -472,6 +486,7 @@ ${authorNav(1)}
             <div class="author-hero-meta"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
         </div>
     </header>
+${thesisSection}
 ${projectsSection}
 ${stackSection}
 ${openTopicsSection}
