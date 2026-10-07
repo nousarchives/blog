@@ -17,7 +17,7 @@ const AUTHORS = {
             nameWords: ['Ángel', 'Allepuz', 'Conesa'],
             thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
             thesisArt: ['AI should', 'be open'],
-            thesisText: ['Open models on cheap machines.', 'AI is a commodity like water:', 'we all should be able to drink it.'],
+            thesisText: ['Open models on cheap machines.', 'AI is a commodity like water.', 'We all should be able to drink it.'],
         },
         projects: [
             {
