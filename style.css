@@ -643,9 +643,12 @@ html[lang="en"] [data-l="es"] { display: none; }
 .term-stage canvas { display: block; }
 .term-hero.term-static { height: auto; }
 .term-hero.term-static .term-stage { position: static; height: auto; padding: 4rem 1rem; gap: 3rem; }
-.term-links { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 0 1rem 2rem; display: flex; justify-content: center; align-items: baseline; gap: 2.5rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); }
+.term-links { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 0 1rem 2rem; display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 1.2rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); }
 .term-links::before { content: '$'; color: var(--black); }
 .term-links .author-social { font-size: inherit; letter-spacing: inherit; color: var(--black); }
+.term-links .author-social { gap: 0.7rem; }
+.social-icon { width: 1.6em; height: 1.6em; flex-shrink: 0; }
+.author-hero-meta .social-icon { width: 1.3em; height: 1.3em; }
 
 /* ── ANGEL — centred ASCII section headers: ────┤ LABEL ├──── ── */
 .angel-page .section-header { gap: 0; justify-content: center; }
