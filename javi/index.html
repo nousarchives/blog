@@ -64,9 +64,10 @@
             <rect id="na-thumb-rect" x="115" y="648" width="300" height="8" rx="4" fill="currentColor" opacity="0.7"/>
         </svg>
     </div>
-    <script src="../posts.js?v=1791397911599"></script>
+    <script src="../posts.js?v=1791398567871"></script>
     <script>
         const CURRENT_AUTHOR_SLUG = "javi";
+        const PANEL_POSTS = false;
         function renderAuthorPage() {
             const pubList = document.getElementById('author-pub-list');
             const countLabel = document.getElementById('post-count');
@@ -81,8 +82,21 @@
                 return;
             }
             const listContainer = document.createElement('div');
-            listContainer.className = 'pub-list';
+            listContainer.className = PANEL_POSTS ? 'term-panels' : 'pub-list';
             myPosts.forEach(post => {
+                if (PANEL_POSTS) {
+                    const file = post.url.split('/').pop();
+                    listContainer.innerHTML += `
+                    <a href="${file}" class="term-panel">
+                        <span class="term-panel-title">${post.title}</span>
+                        <span class="term-panel-badge">[${post.type || ''}]</span>
+                        <span class="term-panel-meta"># ${post.date} · ${post.readtime}</span>
+                        ${post.tldr ? '<p class="term-panel-desc">' + post.tldr + '</p>' : ''}
+                        <div class="term-panel-tags">${post.tags.map(t => '<span>[' + t + ']</span>').join('')}</div>
+                        <span class="term-panel-foot">${file} ↗</span>
+                    </a>`;
+                    return;
+                }
                 const tagsHTML = post.tags.map(t => '<span class="pub-tag">' + t + '</span>').join('');
                 const postUrl = post.url.split('/').pop();
                 const typeLabel = post.type ? post.type.charAt(0).toUpperCase() + post.type.slice(1) : '';

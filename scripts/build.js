@@ -70,10 +70,10 @@ const AUTHORS = {
             },
         ],
         stack: [
-            { label: { es: 'Lenguajes', en: 'Languages' }, items: ['Python', 'TypeScript / JavaScript', 'SQL', 'Go'] },
-            { label: 'IA / ML', items: ['Agentes · tool calling · MCP', 'RAG', 'Evaluation harnesses', { es: 'Generación estructurada (GBNF / JSON schema)', en: 'Structured generation (GBNF / JSON schema)' }, 'PEFT / LoRA', 'PyTorch'] },
-            { label: { es: 'Local y edge', en: 'Local & edge' }, items: ['llama.cpp · GGUF', 'Ollama', { es: 'Cuantización', en: 'Quantization' }, 'whisper.cpp', 'Raspberry Pi · ESP32'] },
-            { label: 'Infra', items: ['Docker · Kubernetes · Helm', 'Terraform · ArgoCD', 'AWS · GCP · Azure', 'GitHub Actions'] },
+            { label: { es: 'lenguajes', en: 'languages' }, items: ['Python', 'TypeScript / JavaScript', 'SQL', 'Go'] },
+            { label: { es: 'ia-ml', en: 'ai-ml' }, items: ['Agentes · tool calling · MCP', 'RAG', 'Evaluation harnesses', { es: 'Salida estructurada · GBNF', en: 'Structured output · GBNF' }, 'PEFT / LoRA', 'PyTorch'] },
+            { label: 'local-edge', items: ['llama.cpp · GGUF', 'Ollama', { es: 'Cuantización', en: 'Quantization' }, 'whisper.cpp', 'Raspberry Pi · ESP32'] },
+            { label: 'infra', items: ['Docker · K8s · Helm', 'Terraform · ArgoCD', 'AWS · GCP · Azure', 'GitHub Actions'] },
         ],
         socialLinks: [
             { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/angelallepuz/', icon: 'linkedin' },
@@ -424,7 +424,7 @@ function authorPageTemplate(slug) {
         <p class="sr-only">${th.thesisArt.join(' ')}. ${th.thesisText.join(' ')}</p>
         <div class="term-stage" aria-hidden="true"><canvas id="term-canvas"></canvas></div>
     </section>
-    <div class="term-links"><span id="post-count">0 entradas</span>${socialLinksHTML}</div>
+    <div class="term-links">${socialLinksHTML}</div>
     <script>window.TERM_HERO = ${JSON.stringify(th)};</script>
     <script src="../term-hero.js"></script>` : `
     <header class="author-hero">
@@ -443,24 +443,16 @@ function authorPageTemplate(slug) {
             <span class="section-label" data-i18n="section.projects">Proyectos</span>
             <div class="section-rule"></div>
         </div>
-        <div class="pub-list">
+        <div class="term-panels">
             ${author.projects.map((p, i) => `
-            <a href="${p.url}" target="_blank" class="pub-item project-item">
-                <div class="pub-left">
-                    <span class="pub-author">${String(i + 1).padStart(2, '0')}</span>
-                    <span class="pub-date">${p.year}</span>
-                </div>
-                <div class="pub-center">
-                    ${p.claim ? `<span class="project-claim">${l10n(p.claim)}</span>` : ''}
-                    <span class="pub-title">${p.title}</span>
-                    <span class="pub-tldr">${l10n(p.desc)}</span>
-                    <p class="project-fact">${l10n(p.fact)}</p>
-                    <div class="pub-tags">${p.stack.map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
-                </div>
-                <div class="pub-right">
-                    <span class="pub-type articulo">${p.kind}</span>
-                    <span class="project-link">GitHub ↗</span>
-                </div>
+            <a href="${p.url}" target="_blank" class="term-panel">
+                <span class="term-panel-title">${String(i + 1).padStart(2, '0')} · ${p.title}</span>
+                <span class="term-panel-badge">[${p.kind}]</span>
+                <span class="term-panel-meta"># ${p.claim ? l10n(p.claim) + ' · ' : ''}${p.year}</span>
+                <p class="term-panel-desc">${l10n(p.desc)}</p>
+                <p class="term-panel-fact">${l10n(p.fact)}</p>
+                <div class="term-panel-tags">${p.stack.map(t => `<span>[${t.toLowerCase()}]</span>`).join('')}</div>
+                <span class="term-panel-foot">${p.url.replace('https://', '')} ↗</span>
             </a>`).join('')}
         </div>
     </section>` : '';
@@ -472,11 +464,11 @@ function authorPageTemplate(slug) {
             <span class="section-label" data-i18n="section.stack">Stack</span>
             <div class="section-rule"></div>
         </div>
-        <div class="open-topics-grid stack-grid">
+        <div class="stack-tree">
             ${author.stack.map(({ label, items }) => `
-            <div class="open-topic-group">
-                <h3 class="open-topic-category">${l10n(label)}</h3>
-                <ul class="open-topic-list">
+            <div class="tree">
+                <h3 class="tree-root">${l10n(label)}/</h3>
+                <ul>
                     ${items.map(item => `<li>${l10n(item)}</li>`).join('\n                    ')}
                 </ul>
             </div>`).join('')}
@@ -504,6 +496,7 @@ ${naScrollbar}
     <script src="../posts.js?v=${postsVersion}"></script>
     <script>
         const CURRENT_AUTHOR_SLUG = "${slug}";
+        const PANEL_POSTS = ${!!th};
         function renderAuthorPage() {
             const pubList = document.getElementById('author-pub-list');
             const countLabel = document.getElementById('post-count');
@@ -518,8 +511,21 @@ ${naScrollbar}
                 return;
             }
             const listContainer = document.createElement('div');
-            listContainer.className = 'pub-list';
+            listContainer.className = PANEL_POSTS ? 'term-panels' : 'pub-list';
             myPosts.forEach(post => {
+                if (PANEL_POSTS) {
+                    const file = post.url.split('/').pop();
+                    listContainer.innerHTML += \`
+                    <a href="\${file}" class="term-panel">
+                        <span class="term-panel-title">\${post.title}</span>
+                        <span class="term-panel-badge">[\${post.type || ''}]</span>
+                        <span class="term-panel-meta"># \${post.date} · \${post.readtime}</span>
+                        \${post.tldr ? '<p class="term-panel-desc">' + post.tldr + '</p>' : ''}
+                        <div class="term-panel-tags">\${post.tags.map(t => '<span>[' + t + ']</span>').join('')}</div>
+                        <span class="term-panel-foot">\${file} ↗</span>
+                    </a>\`;
+                    return;
+                }
                 const tagsHTML = post.tags.map(t => '<span class="pub-tag">' + t + '</span>').join('');
                 const postUrl = post.url.split('/').pop();
                 const typeLabel = post.type ? post.type.charAt(0).toUpperCase() + post.type.slice(1) : '';
