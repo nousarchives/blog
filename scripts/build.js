@@ -718,10 +718,13 @@ Object.keys(AUTHORS).forEach(slug => {
         fm.wordcount = wordcount;
         if (!fm.readtime) fm.readtime = calcReadtime(body);
 
+        // gray-matter parses YYYY-MM-DD into a Date; keep it as the plain string everywhere
+        if (fm.date instanceof Date) fm.date = fm.date.toISOString().slice(0, 10);
+
         posts.push({
             title:      fm.title,
             tldr:       fm.tldr || '',
-            date:       fm.date ? (fm.date instanceof Date ? fm.date.toISOString().slice(0, 10) : String(fm.date)) : '',
+            date:       fm.date ? String(fm.date) : '',
             type:       fm.type || 'articulo',
             tags:       fm.tags,
             readtime:   fm.readtime,

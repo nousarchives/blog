@@ -1326,6 +1326,13 @@ html[lang="en"] [data-l="es"] { display: none; }
     .related-posts { padding: 0 1.5rem 3rem; }
     .back-to-top { bottom: 1rem; right: 1rem; }
 }
+/* Mobile nav: wordmark on top, toggles + links spread on a second row */
+@media (max-width: 700px) {
+    .topnav { grid-template-columns: 1fr; row-gap: 0.7rem; padding: 0.7rem 1rem; }
+    .nav-left { display: none; }
+    .nav-links { justify-content: center; flex-wrap: wrap; gap: 0.5rem 1.1rem; }
+    .nav-links a { font-size: 0.6rem; letter-spacing: 0.1em; white-space: nowrap; }
+}
 
 /* ── CD INFO PANEL ── */
 #cd-info-panel {

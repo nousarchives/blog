@@ -227,7 +227,9 @@
 
         let width = 0, cw = 0, ch = 0, ctx = null;
         function resize() {
-            width = canvas.parentElement.clientWidth;
+            // Content width of the stage (clientWidth includes its padding)
+            const stage = canvas.parentElement, cs = getComputedStyle(stage);
+            width = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
             cw = width / HERO_COLS; ch = cw * 2;
             ctx = sizeCanvas(canvas, width, cw, ch, HERO_ROWS);
         }
