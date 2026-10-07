@@ -17,7 +17,7 @@ const AUTHORS = {
             nameWords: ['Ángel', 'Allepuz', 'Conesa'],
             thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
             thesisArt: ['AI should', 'be open'],
-            thesisText: ['Open models on small machines.', 'AI is a commodity like water:', 'we all should be able to drink it.'],
+            thesisText: ['Open models on cheap machines.', 'AI is a commodity like water:', 'we all should be able to drink it.'],
         },
         projects: [
             {
@@ -96,6 +96,8 @@ const AUTHORS = {
 const ROOT = path.join(__dirname, '..');
 const posts = [];
 const postsVersion = Date.now();
+const assetVersion = file => require('crypto').createHash('md5')
+    .update(fs.readFileSync(path.join(ROOT, file))).digest('hex').slice(0, 8);
 
 // ── UTILITIES ─────────────────────────────────────────────────────────────────
 
@@ -193,10 +195,10 @@ function htmlHead(title, depth = 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title} — NousArchives</title>
     <link rel="icon" type="image/jpeg" href="${rel}logo_color.jpg">
-    <link rel="stylesheet" href="${rel}style.css">
+    <link rel="stylesheet" href="${rel}style.css?v=${assetVersion('style.css')}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <script src="${rel}i18n.js"></script>
+    <script src="${rel}i18n.js?v=${assetVersion('i18n.js')}"></script>
 </head>`;
 }
 
@@ -426,7 +428,7 @@ function authorPageTemplate(slug) {
     </section>
     <div class="term-links">${socialLinksHTML}</div>
     <script>window.TERM_HERO = ${JSON.stringify(th)};</script>
-    <script src="../term-hero.js"></script>` : `
+    <script src="../term-hero.js?v=${assetVersion('term-hero.js')}"></script>` : `
     <header class="author-hero">
         <div class="author-hero-initial">${author.initial}</div>
         <div class="author-hero-right">
@@ -436,13 +438,20 @@ function authorPageTemplate(slug) {
         </div>
     </header>`;
 
+    // Section header: classic label + rule, or a box-letter canvas title on terminal pages
+    const sectionHeader = (key, es, en) => th ? `
+        <div class="term-title" data-es="${es}" data-en="${en}">
+            <h2 class="sr-only">${l10n({ es, en })}</h2>
+            <canvas aria-hidden="true"></canvas>
+        </div>` : `
+        <div class="section-header">
+            <span class="section-label" data-i18n="${key}">${es}</span>
+            <div class="section-rule"></div>
+        </div>`;
+
     // Projects (only if the author has them configured)
     const projectsSection = author.projects ? `
-    <section class="projects-section">
-        <div class="section-header">
-            <span class="section-label" data-i18n="section.projects">Proyectos</span>
-            <div class="section-rule"></div>
-        </div>
+    <section class="projects-section">${sectionHeader('section.projects', 'Proyectos', 'Projects')}
         <div class="term-panels">
             ${author.projects.map((p, i) => `
             <a href="${p.url}" target="_blank" class="term-panel">
@@ -459,11 +468,7 @@ function authorPageTemplate(slug) {
 
     // Stack (only if the author has it configured)
     const stackSection = author.stack ? `
-    <section class="open-topics-section">
-        <div class="section-header">
-            <span class="section-label" data-i18n="section.stack">Stack</span>
-            <div class="section-rule"></div>
-        </div>
+    <section class="open-topics-section">${sectionHeader('section.stack', 'Stack', 'Stack')}
         <div class="stack-tree">
             ${author.stack.map(({ label, items }) => `
             <div class="tree">
@@ -482,11 +487,7 @@ ${heroHTML}
 ${stackSection}
 ${projectsSection}
 ${openTopicsSection}
-    <section class="author-posts-section">
-        <div class="section-header">
-            <span class="section-label" data-i18n="section.allposts">Todas las entradas</span>
-            <div class="section-rule"></div>
-        </div>
+    <section class="author-posts-section">${sectionHeader('section.allposts', 'Entradas', 'All posts')}
         <div id="author-pub-list"></div>
     </section>
 

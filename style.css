@@ -679,13 +679,9 @@ html[lang="en"] [data-l="es"] { display: none; }
 .social-icon { width: 1.6em; height: 1.6em; flex-shrink: 0; }
 .author-hero-meta .social-icon { width: 1.3em; height: 1.3em; }
 
-/* ── ANGEL — centred ASCII section headers: ────┤ LABEL ├──── ── */
-.angel-page .section-header { gap: 0; justify-content: center; }
-.angel-page .section-header::before,
-.angel-page .section-rule { flex: 1; height: auto; background: none; overflow: hidden; white-space: nowrap; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1; color: var(--grey); }
-.angel-page .section-header::before { content: '┤────────────────────────────────────────────────────────────────────────────────'; direction: rtl; text-align: left; }
-.angel-page .section-rule::before { content: '├────────────────────────────────────────────────────────────────────────────────'; }
-.angel-page .section-label { padding: 0 0.8rem; }
+/* ── SECTION TITLES in box letters (term-hero.js draws them) ── */
+.term-title { margin: 5rem 0 3rem; }
+.term-title canvas { display: block; }
 @media (max-width: 768px) { .projects-section, .open-topics-section { padding-left: 1.5rem; padding-right: 1.5rem; } }
 @media (max-width: 480px) { .open-topics-grid { grid-template-columns: 1fr; gap: 2rem; } }
 
