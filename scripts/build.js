@@ -15,10 +15,10 @@ const AUTHORS = {
             fullName: 'Ángel Allepuz Conesa',
             namePrompt: 'angel@nousarchives:~$ whoami',
             nameWords: ['Ángel', 'Allepuz', 'Conesa'],
-            nameTagline: 'ML / DevOps Engineer',
+            nameTagline: 'MLOps / DevOps Engineer',
             thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
             thesisArt: ['AI should', 'be open'],
-            thesisText: ['Open models on cheap machines.', 'AI is a commodity like water.', 'We all should be able to drink it.'],
+            thesisText: ['Open models on cheap machines.', 'Prediction is a commodity like water.', 'We all should be able to drink it.'],
         },
         projects: [
             {

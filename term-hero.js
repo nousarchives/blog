@@ -206,7 +206,7 @@
             ...(i < list.length - 1 ? [{ text: '' }] : []),
         ]);
         const frameA = buildFrame([
-            { text: cfg.namePrompt, kind: 'prompt' }, { text: '' },
+            { text: cfg.namePrompt, kind: 'prompt' },
             ...words(cfg.nameWords), { text: '' }, { text: cfg.nameTagline || '' },
         ]);
         const frameB = buildFrame([
