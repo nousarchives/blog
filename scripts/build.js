@@ -18,7 +18,7 @@ const AUTHORS = {
             nameTagline: 'MLOps / DevOps Engineer',
             thesisPrompt: 'angel@nousarchives:~$ cat thesis.txt',
             thesisArt: ['AI should', 'be open'],
-            thesisText: ['Open models on cheap machines.', 'Prediction is a commodity like water.', 'We all should be able to drink it.'],
+            thesisText: ['Open models. Private data. On cheap machines.', 'Prediction is a commodity like water.', 'We all should be able to drink it.'],
         },
         projects: [
             {
