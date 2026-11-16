@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowing a Thing by Its Powers — NousArchives</title>
+    <link rel="icon" type="image/jpeg" href="../../logo_color.jpg">
+    <link rel="stylesheet" href="../../style.css?v=57087227">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="../../i18n.js?v=03bb388a"></script>
+</head>
+<body class="custom-page angel-page">
+    <div class="progress-bar" id="progress-bar"></div>
+    <nav class="topnav">
+        <span class="nav-left" data-i18n="nav.established">EST. NOV 25</span>
+        <a href="../../" class="nav-center" aria-label="nous Archives">
+            <span class="nav-wordmark" id="nav-wordmark">
+                <span class="ht-n">n</span><span class="ht-ous">ous</span><span class="ht-line" aria-hidden="true"></span><span class="ht-A">A</span><span class="ht-rchives">rchives</span>
+            </span>
+        </a>
+        <div class="nav-links">
+            <button class="lang-toggle" id="lang-toggle" onclick="window.i18n.toggle()">EN</button>
+            <button class="dark-toggle" id="dark-toggle" aria-label="Modo oscuro" data-i18n-aria="nav.darkmode">◐</button>
+            <a href="../../archivo.html" data-i18n="nav.archive">Archivo</a>
+            <a href="https://youtube.com/@NousArchives" target="_blank">YouTube ↗</a>
+            <a href="https://github.com/nousarchives/blog" target="_blank">GitHub ↗</a>
+        </div>
+    </nav>
+<!--
+  Interactive summary of the paper "Knowing a Thing by Its Powers".
+  Source of this page. build.js wraps it with the shared head, nav and footer into index.html.
+  The prose is taken from the paper (version 29), shortened. The charts are drawn by paper.js
+  from data.js, which is generated from the result files of the experiment.
+-->
+<link rel="stylesheet" href="paper.css?v=8e0c6dbe">
+
+<main class="kp" lang="en">
+
+    <header class="kp-hero">
+        <div class="kp-meta">
+            <a href="../">Ángel Allepuz</a><span>·</span><span>Paper</span><span>·</span><span>November 2026</span>
+        </div>
+        <h1 class="kp-title">Knowing a Thing by Its Powers</h1>
+        <p class="kp-subtitle">Does the way a transformer ingests an object condition how it generalizes?</p>
+        <p class="kp-lede">This page is a guided summary of the paper. Scroll to read it, and the figures fill in as you go.</p>
+        <div class="kp-actions">
+            <a class="kp-btn" href="knowing-a-thing-by-its-powers.pdf">Read the full paper (PDF)</a>
+            <span class="kp-hint" aria-hidden="true">Scroll ↓</span>
+        </div>
+    </header>
+
+    <!-- 01 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-prose" id="question">
+        <div class="kp-label"><span>01</span> The question</div>
+        <p class="kp-big">When a language model builds a representation of a word, does it carry the idea the word stands for?</p>
+        <p>In the terms of the English philosopher John Locke, the idea of a colour and the idea of a substance such as a poppy are different kinds of ideas. The first is a simple idea, of one quality. The second is built from many qualities (the colour of the poppy, its smell, the height of its stem), and Locke understood these as powers. They are how the thing acts on other things and on whoever observes it.</p>
+        <blockquote class="kp-quote">
+            <p>The powers observed in a substance “depend on it, and flow from it”.</p>
+            <cite>Locke, Essay II.xxxi.13</cite>
+        </blockquote>
+        <p>Knowledge of a substance is built from its observed interactions, and those interactions are the effects of an internal constitution that cannot be observed, which Locke calls the real essence.</p>
+        <p>This experiment isolates that question outside language. It compares an object represented by its identifier with an object represented by what it has been observed to do.</p>
+    </section>
+
+    <!-- 02 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-prose" id="stored-row">
+        <div class="kp-label"><span>02</span> The stored row</div>
+        <p>In the standard design, every identifier that appears in the data (a word, an entity, a node in a graph) is assigned a row of numbers in a table. The identifier is the name, and the object is what it names.</p>
+        <p>In a transformer trained this way, the row of an identifier is updated only by the training examples whose input contains that identifier. An example in which the identifier does not appear does not correct its row.</p>
+        <p class="kp-big">The general thesis is that the way a model ingests its information conditions how it generalizes.</p>
+    </section>
+
+    <!-- 03 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-scrolly" id="change" data-figure="arch">
+        <figure class="kp-figure">
+            <div class="kp-fig-head">Figure 1</div>
+            <div class="kp-fig-body" id="kp-arch">
+                <svg class="kp-arch" viewBox="0 0 640 360" role="img" aria-label="TR looks up a stored row for the object A. OV computes the vector of A by reading the interactions in which A has been observed. Both models end in a head with the same architecture.">
+                    <defs>
+                        <marker id="kp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L10,5 L0,10 z"/></marker>
+                        <clipPath id="kp-arch-clip"><rect x="0" y="0" width="640" height="360"/></clipPath>
+                    </defs>
+                    <g clip-path="url(#kp-arch-clip)">
+                        <text x="160" y="24" text-anchor="middle" class="h">TR (stored row)</text>
+                        <text x="480" y="24" text-anchor="middle" class="h">OV (vector read from interactions)</text>
+                        <line x1="320" y1="8" x2="320" y2="352" class="mid"/>
+                        <text x="160" y="52" text-anchor="middle">Query (A, <tspan font-style="italic">r</tspan><tspan font-size="0.72em" dy="4">2</tspan><tspan dy="-4">&#8203;</tspan>, B)</text>
+                        <path d="M160 59 V76" class="ln"/>
+                        <text x="480" y="52" text-anchor="middle">Query (A, <tspan font-style="italic">r</tspan><tspan font-size="0.72em" dy="4">2</tspan><tspan dy="-4">&#8203;</tspan>, B)</text>
+                        <path d="M480 59 V76" class="ln"/>
+                        <rect x="75" y="80" width="170" height="54" rx="4" class="b"/><text x="160" y="103" text-anchor="middle">Object table</text>
+                        <text x="160" y="122" text-anchor="middle" class="s">One stored row per object</text>
+                        <path d="M160 134 V224" class="ln"/>
+                        <rect x="95" y="228" width="130" height="30" rx="4" class="g"/><text x="160" y="248" text-anchor="middle">Vector of A</text>
+                        <rect x="370" y="80" width="220" height="80" rx="4" class="b"/><text x="480" y="99" text-anchor="middle" class="s">Observed interactions of A</text>
+                        <text x="480" y="119" text-anchor="middle">(A, <tspan font-style="italic">r</tspan><tspan font-size="0.72em" dy="4">1</tspan><tspan dy="-4">&#8203;</tspan>, C) → yes</text>
+                        <text x="480" y="136" text-anchor="middle">(D, <tspan font-style="italic">r</tspan><tspan font-size="0.72em" dy="4">3</tspan><tspan dy="-4">&#8203;</tspan>, A) → no</text>
+                        <text x="480" y="153" text-anchor="middle">(A, <tspan font-style="italic">r</tspan><tspan font-size="0.72em" dy="4">5</tspan><tspan dy="-4">&#8203;</tspan>, E) → yes</text>
+                        <path d="M480 160 V176" class="ln"/>
+                        <rect x="395" y="180" width="170" height="26" rx="4" class="b"/><text x="480" y="198" text-anchor="middle" class="s">Reader</text>
+                        <path d="M480 206 V224" class="ln"/>
+                        <rect x="415" y="228" width="130" height="30" rx="4" class="g"/><text x="480" y="248" text-anchor="middle">Vector of A</text>
+                        <path d="M160 258 V286" class="ln"/><path d="M480 258 V286" class="ln"/>
+                        <rect x="35" y="290" width="250" height="58" rx="4" class="b"/><text x="160" y="313" text-anchor="middle">Head</text>
+                        <text x="160" y="335" text-anchor="middle" class="s">2 transformer layers → P(yes)</text>
+                        <rect x="355" y="290" width="250" height="58" rx="4" class="b"/><text x="480" y="313" text-anchor="middle">Head</text>
+                        <text x="480" y="335" text-anchor="middle" class="s">2 transformer layers → P(yes)</text>
+                    </g>
+                </svg>
+            </div>
+            <figcaption>Figure 1. TR and OV answering the query (A, r<sub>2</sub>, B). TR looks up a stored row for A. OV computes the vector of A by reading the interactions in which A has been observed (three examples shown).</figcaption>
+        </figure>
+        <div class="kp-steps">
+            <div class="kp-label"><span>03</span> A single architectural change</div>
+            <div class="kp-step" data-reveal="0.5">
+                <h3>TR, the standard transformer</h3>
+                <p>A transformer whose object vectors are stored in an embedding table. It keeps for each object a stored row of numbers that is adjusted during training.</p>
+            </div>
+            <div class="kp-step" data-reveal="1">
+                <h3>OV, the object vector transformer</h3>
+                <p>In OV, the object table is removed and replaced by a reader. Whenever OV needs the vector of an object, it reads the interactions in which that object has been observed and computes the vector from them.</p>
+                <p>OV cannot store a vector for an object; it must infer it from evidence.</p>
+            </div>
+            <div class="kp-step" data-reveal="1">
+                <h3>The only difference</h3>
+                <p>Since this is the only difference between the two models, differences in their behaviour can be attributed to this design decision.</p>
+                <p>The two heads have the same architecture but belong to separate models, trained separately. The vector of B is obtained in the same way. Interactions between A and B are never read.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-prose" id="world">
+        <div class="kp-label"><span>04</span> A world whose constitution is known</div>
+        <p>Each object has a constitution, a few hidden numbers that no model sees, and for each relation a fixed law turns the constitutions of two objects into the outcome of their interaction. The models see only outcomes, as an observer in Locke's account sees only powers.</p>
+        <dl class="kp-tiles">
+            <div><dt>Objects</dt><dd>200</dd></div>
+            <div><dt>Hidden numbers in each constitution</dt><dd>4</dd></div>
+            <div><dt>Relations</dt><dd>6</dd></div>
+            <div><dt>Interactions</dt><dd>238,800</dd></div>
+        </dl>
+        <p>What a model predicts is one outcome. It receives two objects and a relation, written (A, r, B), and predicts whether the outcome of that interaction is yes or no. It produces no text. Of the interactions between two known objects, the models are trained on a fraction p, from 0.5% to 10%.</p>
+        <p>Models are evaluated on two test splits. Unseen pairs are interactions between two known objects that were never observed together in that relation. New objects are the remaining interactions of a new object, of which only 8 were observed.</p>
+        <p>TR and OV are compared together with two standard baselines, an MLP and a bilinear factorization (FAC). Both keep a stored row for each object.</p>
+    </section>
+
+    <!-- 05 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-scrolly" id="generalization" data-figure="curves">
+        <figure class="kp-figure">
+            <div class="kp-fig-head">Figure 2</div>
+            <div class="kp-filters" role="group" aria-label="Test split">
+                <button type="button" class="is-on" data-split="test_par" aria-pressed="true">Unseen pairs</button>
+                <button type="button" data-split="test_obj" aria-pressed="false">New objects</button>
+            </div>
+            <div class="kp-legend" data-legend></div>
+            <div class="kp-fig-body" data-chart></div>
+            <figcaption>Figure 2. Test accuracy of the four models against the number of training interactions, from p = 0.5% to 10%, with 95% confidence intervals over 5 seeds.</figcaption>
+            <details class="kp-table"><summary>Data table</summary><div data-table></div></details>
+        </figure>
+        <div class="kp-steps">
+            <div class="kp-label"><span>05</span> Generalization</div>
+            <div class="kp-step" data-reveal-x="1846" data-focus="TR,OV">
+                <h3>With little data OV overfits and falls behind TR</h3>
+                <p>At p = 0.5% TR is ahead of OV by 5.7 points on unseen pairs and by 4.4 on new objects.</p>
+                <p>At the smallest sizes OV overfits. Its test accuracy falls during training while its training accuracy stays at 1.00.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="3372" data-focus="TR,OV">
+                <h3>With enough training data OV is more accurate than TR</h3>
+                <p>From p = 2% OV is more accurate than TR. On unseen pairs it is ahead in every seed, by 4.4, 2.9 and 2.0 points at p = 2%, 5% and 10%, and on new objects by 2.8, 3.1 and 1.8 points.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="15584" data-focus="TR,OV">
+                <h3>TR needs about 1.6 times more data to reach the same error</h3>
+                <p>The ratio ρ is the number of times more data TR needs to match OV. It is 1.59 on unseen pairs, with a bootstrap interval from 1.41 to 1.79.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="15584">
+                <h3>With the largest training sets a simple factorization is more accurate than both</h3>
+                <p>FAC is the most accurate model from p = 5%, and from p = 0.5% the MLP stays within 1.2 points of TR on unseen pairs.</p>
+                <p>OV remains ahead of the MLP from p = 2%, by 3.4, 1.9 and 0.8 points on unseen pairs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 06 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-scrolly" id="long-training" data-figure="long">
+        <figure class="kp-figure">
+            <div class="kp-fig-head">Figure 3</div>
+            <div class="kp-legend" data-legend></div>
+            <div class="kp-fig-body" data-chart></div>
+            <figcaption>Figure 3. Test accuracy on unseen pairs during 50,000 steps of training at p = 2%. The line is the mean of 5 seeds, and the band is the range between their minimum and maximum, not a confidence interval.</figcaption>
+            <details class="kp-table"><summary>Data table</summary><div data-table></div></details>
+        </figure>
+        <div class="kp-steps">
+            <div class="kp-label"><span>06</span> Long training</div>
+            <div class="kp-step" data-reveal-x="20000">
+                <h3>Is the gap only a matter of training time?</h3>
+                <p>The main experiment trains every model for 20,000 steps. Here TR and OV are trained for 50,000 steps with weight decay 0.1 at p = 2%, to test whether a gap is only a matter of training time.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="50000">
+                <h3>The gap does not close with more training</h3>
+                <p>After 50,000 steps at p = 2%, TR reaches 0.801 on unseen pairs and OV 0.825. OV is ahead in the five seeds, by 2.4 points on average, with a 95% interval from 0.9 to 3.9.</p>
+                <p>On new objects the difference is 1.0 points and its interval includes zero.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-scrolly" id="mechanism" data-figure="probe">
+        <figure class="kp-figure">
+            <div class="kp-fig-head">Probe of the constitution</div>
+            <div class="kp-legend" data-legend></div>
+            <div class="kp-fig-body" data-chart></div>
+            <figcaption>R² of the linear probe from each model's object vectors towards the constitution, against the number of training interactions. Mean of 5 seeds. Drawn from the table of Section 6.4 of the paper, which also gives the result of the intervention.</figcaption>
+            <details class="kp-table"><summary>Data table</summary><div data-table></div></details>
+        </figure>
+        <div class="kp-steps">
+            <div class="kp-label"><span>07</span> Mechanism</div>
+            <div class="kp-step" data-reveal-x="1846" data-focus="TR,OV">
+                <h3>What do the vectors contain?</h3>
+                <p>Because the world is constructed, its constitution is known to whoever built it, which never happens with real data.</p>
+                <p>A probe, a simple model trained to read a quantity from the numbers inside another model, checks whether each model's object vectors contain the constitution.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="15584" data-focus="TR,OV">
+                <h3>OV's vectors contain more of the constitution, and the model uses it</h3>
+                <p>OV's vectors contain more of the constitution than TR's stored rows at every training size.</p>
+                <p>An intervention edits an object's vector so that it encodes the constitution of another object, and checks whether the predictions change as the laws dictate. From p = 2% OV's predictions follow the edit by 12 to 15 points, against 2 points at most for TR.</p>
+            </div>
+            <div class="kp-step" data-reveal-x="15584">
+                <h3>Two observations qualify it</h3>
+                <p>The result is not exclusive to OV. FAC's stored rows score higher than OV's vectors at every training size, and FAC and the MLP follow the edit as well.</p>
+                <p>And a vector that contains more of the constitution does not by itself give better generalization. At p = 1% OV's vectors score 0.20 against 0.01 for TR's stored rows, and OV is the less accurate of the two.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 08 ─────────────────────────────────────────────────────────── -->
+    <section class="kp-prose" id="discussion">
+        <div class="kp-label"><span>08</span> What the experiment shows</div>
+        <p>The stored row and the vector read by OV are trained on the same interactions. From p = 2% the vector read by OV recovers more of the constitution, the model applies the laws to it, and TR needs about 1.6 times more data to reach the same error on unseen pairs.</p>
+        <p>The experiment itself shows two limits of this result. With little data OV overfits and falls behind TR, although its vectors already contain more of the constitution. And FAC, a model with stored rows and a strongly constrained form, recovers the constitution as well as OV and is more accurate than both transformers with the two largest training sets.</p>
+        <p class="kp-big">What conditions generalization here is therefore not the stored row as such, but how much structure the model is required to give to the representation of an object.</p>
+        <p>Reading the observed interactions is one way of requiring it, and a low dimension with a bilinear form is another.</p>
+    </section>
+
+    <section class="kp-prose" id="limits">
+        <div class="kp-label"><span>09</span> Limits</div>
+        <ul class="kp-list">
+            <li><strong>A small synthetic world with binary outcomes.</strong> There are 200 objects, a constitution of 4 numbers, 6 relations and small models.</li>
+            <li><strong>No real data, no benchmark and no language.</strong> Nothing here shows that the design gives better predictions on a real task. Nor is anything here a direct claim about language models.</li>
+            <li><strong>Few seeds and one setting of weight decay.</strong> With that setting OV overfits at the smallest sizes, so its results there may understate what the design can do.</li>
+            <li><strong>More than one difference in cost.</strong> OV has 50,688 more parameters than TR, and it reads up to 64 interactions for each object of a query, so it also computes more.</li>
+            <li><strong>A world favourable to inference.</strong> A positive result shows that the inductive bias of OV pays off when outcomes have that structure, not that real data has it.</li>
+        </ul>
+        <p>The question that motivated this work, whether language models represent substances differently from simple ideas, remains open. This project is a first step.</p>
+    </section>
+
+    <section class="kp-end">
+        <a class="kp-btn" href="knowing-a-thing-by-its-powers.pdf">Read the full paper (PDF)</a>
+        <p>The paper gives the related work, the training details, the probes and the intervention, the first version of the experiment and the references.</p>
+        <p class="kp-ack">This project is independent work. It was not submitted to MIT or assessed by it, and I am not enrolled in the course. It follows the format of the final project of MIT 6.7960 Deep Learning (Fall 2024), whose materials are openly available on MIT OpenCourseWare.</p>
+    </section>
+</main>
+
+<script src="data.js?v=47007e91"></script>
+<script src="paper.js?v=1ccf92d1"></script>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <span><span data-i18n="footer.content">Contenido bajo</span> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> · <span data-i18n="footer.code">Código bajo</span> <a href="../../LICENSE">MIT</a></span>
+        </div>
+    </footer>
+    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba" data-i18n-aria="backtotop">↑</button>
+
+    <div class="na-scrollbar" aria-hidden="true">
+        <svg id="na-svg"
+             viewBox="115 470 1757 188"
+             preserveAspectRatio="xMidYMid meet"
+             xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,1080) scale(0.1,-0.1)" fill="currentColor" opacity="0.5">
+                <path d="M18272 5803 c-11 -27 -295 -844 -304 -872 -4 -12 -97 -14 -639 -13 -349 1 -4061 9 -8249 18 -4188 8 -7638 17 -7667 20 l-52 5 -3 247 c-3 230 -4 250 -25 287 -44 84 -104 115 -216 115 -87 0 -131 -16 -186 -66 l-39 -35 -14 43 -15 43 -71 3 -72 3 2 -347 3 -346 90 -2 90 -1 5 225 c6 261 12 285 84 320 50 24 66 25 111 6 57 -24 60 -37 65 -306 l5 -245 945 -2 c520 -1 3798 -9 7285 -18 7118 -17 8644 -19 8652 -11 3 3 24 61 48 128 l41 123 210 0 209 0 41 -125 41 -125 61 -3 60 -3 -45 128 c-25 70 -67 191 -94 268 -27 77 -82 235 -122 350 l-74 210 -75 3 c-74 3 -75 2 -86 -25z m173 -325 c43 -128 80 -239 83 -245 3 -10 -36 -13 -173 -13 -137 0 -176 3 -173 13 3 6 40 117 83 245 43 127 83 232 90 232 6 0 47 -105 90 -232z"/>
+            </g>
+            <rect id="na-thumb-rect" x="115" y="648" width="300" height="8" rx="4" fill="currentColor" opacity="0.7"/>
+        </svg>
+    </div>
+
+    <script>
+        // Dark mode (apply before paint to avoid flash)
+        (function() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark mode toggle button
+            const btn = document.getElementById('dark-toggle');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+                    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+                });
+            }
+            // Back to top button
+            const backBtn = document.getElementById('back-to-top');
+            if (backBtn) {
+                window.addEventListener('scroll', function() {
+                    backBtn.classList.toggle('visible', window.scrollY > 600);
+                });
+                backBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            // nA scrollbar — thumb moves along X within the real viewBox (115 → 1872)
+            const naThumb = document.getElementById('na-thumb-rect');
+            if (naThumb) {
+                const TRACK_START = 115;
+                const TRACK_END = 1872;
+                const TRACK_LEN = TRACK_END - TRACK_START;
+                function updateNaThumb() {
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    if (maxScroll <= 0) return;
+                    const ratio = window.scrollY / maxScroll;
+                    const thumbW = Math.max(80, TRACK_LEN * (window.innerHeight / document.documentElement.scrollHeight));
+                    const pos = TRACK_START + ratio * (TRACK_LEN - thumbW);
+                    naThumb.setAttribute('x', pos.toFixed(1));
+                    naThumb.setAttribute('width', thumbW.toFixed(1));
+                }
+                window.addEventListener('scroll', updateNaThumb, { passive: true });
+                window.addEventListener('resize', updateNaThumb);
+                updateNaThumb();
+            }
+            // Navbar animation: nousArchives ↔ n_A
+            const navWordmark = document.getElementById('nav-wordmark');
+            if (navWordmark) {
+                const THRESHOLD = 80;
+                let isCollapsed = false;
+                function updateWordmark() {
+                    const shouldCollapse = window.scrollY > THRESHOLD;
+                    if (shouldCollapse !== isCollapsed) {
+                        isCollapsed = shouldCollapse;
+                        navWordmark.classList.toggle('collapsed', isCollapsed);
+                    }
+                }
+                window.addEventListener('scroll', updateWordmark, { passive: true });
+                updateWordmark();
+            }
+        });
+    </script>
+</body>
+</html>
