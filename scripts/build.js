@@ -22,6 +22,22 @@ const AUTHORS = {
         },
         projects: [
             {
+                title: 'Knowing a Thing by Its Powers',
+                year: '2026',
+                kind: 'Research',
+                claim: { es: 'Conocer por lo que hace', en: 'Known by what it does' },
+                url: 'https://github.com/allepuzz/knowing-a-thing-by-its-powers',
+                desc: {
+                    es: 'Un paper y un experimento controlado. Un transformer que no guarda un vector por objeto; lo calcula leyendo las interacciones en que ese objeto ha sido observado, como Locke decía que se conoce una cosa, por sus poderes. Comparado con el diseño estándar en un mundo sintético de constitución conocida.',
+                    en: 'A paper and a controlled experiment. A transformer that stores no vector for an object; it computes it by reading the interactions in which the object has been observed, the way Locke said a thing is known, by its powers. Compared with the standard design in a synthetic world whose constitution is known.',
+                },
+                fact: {
+                    es: 'Con datos suficientes acierta de 2 a 4 puntos más y el diseño estándar necesita 1,6 veces más datos. Con pocos datos pierde; con muchos, una factorización simple gana a los dos.',
+                    en: 'With enough data it is 2 to 4 points more accurate and the standard design needs 1.6 times more data. With little data it loses; with a lot, a simple factorization beats both.',
+                },
+                stack: ['Python', 'PyTorch', 'scikit-learn', 'Colab T4'],
+            },
+            {
                 title: 'π-chón',
                 year: '2026',
                 kind: 'Hardware + LLM',
