@@ -28,7 +28,7 @@ const AUTHORS = {
                 claim: { es: 'Conocer por lo que hace', en: 'Known by what it does' },
                 url: 'https://github.com/allepuzz/knowing-a-thing-by-its-powers',
                 desc: {
-                    es: 'Un paper y un experimento controlado. Un transformer que no guarda un vector por objeto; lo calcula leyendo las interacciones en que ese objeto ha sido observado, como Locke decía que se conoce una cosa, por sus poderes. Comparado con el diseño estándar en un mundo sintético de constitución conocida.',
+                    es: 'Un paper y un experimento controlado. Un transformer que no guarda un vector por objeto; lo calcula leyendo las interacciones en que ese objeto ha sido observado, como Locke decía que se conoce una cosa, por sus potencias. Comparado con el diseño estándar en un mundo sintético de constitución conocida.',
                     en: 'A paper and a controlled experiment. A transformer that stores no vector for an object; it computes it by reading the interactions in which the object has been observed, the way Locke said a thing is known, by its powers. Compared with the standard design in a synthetic world whose constitution is known.',
                 },
                 fact: {
