@@ -393,6 +393,28 @@ ${sharedScript}
 </html>`;
 }
 
+// ── CUSTOM PAGE TEMPLATE ─────────────────────────────────────────────────────
+// A post with `page: <dir>` in its frontmatter is not rendered from its Markdown body.
+// Its content lives in <author>/<dir>/content.html and is wrapped here with the shared
+// head, nav and footer into <author>/<dir>/index.html. Local .css/.js references in the
+// content get a cache-busting hash, like the shared assets.
+function customPageTemplate(fm, authorSlug, contentHTML) {
+    const dir = `${authorSlug}/${fm.page}`;
+    const content = contentHTML.replace(/(href|src)="([\w.-]+\.(?:css|js))"/g, (m, attr, file) =>
+        fs.existsSync(path.join(ROOT, dir, file)) ? `${attr}="${file}?v=${assetVersion(`${dir}/${file}`)}"` : m);
+    return `${htmlHead(fm.title, 2)}
+<body class="custom-page${authorSlug === 'angel' ? ' angel-page' : ''}">
+    <div class="progress-bar" id="progress-bar"></div>
+${authorNav(2)}
+${content}
+${authorFooter(2)}
+${backToTopBtn}
+${naScrollbar}
+${sharedScript}
+</body>
+</html>`;
+}
+
 // ── SOCIAL ICONS — outline line icons from Lucide v0.400.0 (ISC license) ──────
 const socialIcon = inner => `<svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
 const SOCIAL_ICONS = {
@@ -538,7 +560,7 @@ ${naScrollbar}
             listContainer.className = PANEL_POSTS ? 'term-panels' : 'pub-list';
             myPosts.forEach(post => {
                 if (PANEL_POSTS) {
-                    const file = post.url.split('/').pop();
+                    const file = post.url.split('/').slice(1).join('/');
                     listContainer.innerHTML += \`
                     <a href="\${file}" class="term-panel">
                         <span class="term-panel-title">\${post.title}</span>
@@ -551,7 +573,7 @@ ${naScrollbar}
                     return;
                 }
                 const tagsHTML = post.tags.map(t => '<span class="pub-tag">' + t + '</span>').join('');
-                const postUrl = post.url.split('/').pop();
+                const postUrl = post.url.split('/').slice(1).join('/');
                 const typeLabel = post.type ? post.type.charAt(0).toUpperCase() + post.type.slice(1) : '';
                 listContainer.innerHTML += \`
                     <a href="\${postUrl}" class="pub-item">
@@ -714,9 +736,20 @@ Object.keys(AUTHORS).forEach(slug => {
         fm.authorSlug = slug;
 
         // Readtime and wordcount auto-calculated (author can override in frontmatter)
-        const wordcount = body.trim().split(/\s+/).length;
+        // A custom page (frontmatter `page: <dir>`) counts the words of its content.html
+        let countedText = body;
+        if (fm.page) {
+            const contentPath = path.join(authorDir, String(fm.page), 'content.html');
+            if (!fs.existsSync(contentPath)) {
+                console.warn(`⚠️  ${slug}/${file}: page "${fm.page}" has no content.html, skipping.`);
+                return;
+            }
+            countedText = fs.readFileSync(contentPath, 'utf-8')
+                .replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
+        }
+        const wordcount = countedText.trim().split(/\s+/).length;
         fm.wordcount = wordcount;
-        if (!fm.readtime) fm.readtime = calcReadtime(body);
+        if (!fm.readtime) fm.readtime = calcReadtime(countedText);
 
         // gray-matter parses YYYY-MM-DD into a Date; keep it as the plain string everywhere
         if (fm.date instanceof Date) fm.date = fm.date.toISOString().slice(0, 10);
@@ -731,10 +764,12 @@ Object.keys(AUTHORS).forEach(slug => {
             wordcount:  fm.wordcount,
             author:     fm.author,
             authorSlug: slug,
-            url:        `${slug}/${file.replace('.md', '.html')}`,
+            url:        fm.page ? `${slug}/${fm.page}/index.html` : `${slug}/${file.replace('.md', '.html')}`,
+            // build-only fields for custom pages, stripped before writing posts.js
+            ...(fm.page ? { page: String(fm.page), source: file } : {}),
         });
 
-        console.log(`✅ ${slug}/${file} → ${file.replace('.md', '.html')} (${fm.wordcount} words, ${fm.readtime})`);
+        console.log(`✅ ${slug}/${file} → ${fm.page ? fm.page + '/index.html' : file.replace('.md', '.html')} (${fm.wordcount} words, ${fm.readtime})`);
     });
 
     // Limpieza: borrar .html sin .md correspondiente
@@ -758,6 +793,13 @@ posts.sort((a, b) => {
 });
 
 posts.forEach(postMeta => {
+    if (postMeta.page) {
+        const pageDir = path.join(ROOT, postMeta.authorSlug, postMeta.page);
+        const { data: pageFm } = matter(fs.readFileSync(path.join(ROOT, postMeta.authorSlug, postMeta.source), 'utf-8'));
+        const contentHTML = fs.readFileSync(path.join(pageDir, 'content.html'), 'utf-8');
+        fs.writeFileSync(path.join(pageDir, 'index.html'), customPageTemplate(pageFm, postMeta.authorSlug, contentHTML));
+        return;
+    }
     const [slug, filename] = postMeta.url.split('/');
     const mdFile = filename.replace('.html', '.md');
     const filePath = path.join(ROOT, slug, mdFile);
@@ -784,7 +826,7 @@ posts.forEach(postMeta => {
 // ── WRITE posts.js ────────────────────────────────────────────────────────────
 fs.writeFileSync(
     path.join(ROOT, 'posts.js'),
-    `const POSTS = ${JSON.stringify(posts, null, 2)};\n`
+    `const POSTS = ${JSON.stringify(posts.map(({ page, source, ...post }) => post), null, 2)};\n`
 );
 
 // ── GENERATE /archivo ─────────────────────────────────────────────────────────

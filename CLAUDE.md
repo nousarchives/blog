@@ -56,6 +56,10 @@ authorSlug: angel|javi|antonio
 
 `build.js` reads `authorSlug` to assign the author and infer the author's display name. The `author` field in the generated `posts.js` is set automatically.
 
+### Custom pages
+
+A post whose frontmatter has `page: <dir>` is not rendered from its Markdown body. `build.js` takes `<author>/<dir>/content.html`, wraps it with the shared head, nav and footer, and writes `<author>/<dir>/index.html`. The post is listed like any other, with that page as its URL. Styles, scripts and other assets of the page live in the same directory.
+
 ### CI/CD (`.github/workflows/publish.yml`)
 
 Pushes to `main` that touch author Markdown files trigger the pipeline:
