@@ -134,6 +134,7 @@
 
 /* ── END ── */
 .kp-end { max-width: 720px; margin: 0 auto; padding: 2rem 3rem 6rem; }
+.kp-end .kp-btn { margin: 0 0.8rem 0.8rem 0; }
 .kp-end p { font-size: 0.9rem; line-height: 1.75; color: var(--kp-soft); margin-top: 1.4rem; }
 .kp-end p.kp-ack { font-family: var(--font-mono); font-size: 0.66rem; line-height: 1.8; color: var(--kp-muted); border-top: 1px solid var(--kp-grid); padding-top: 1.2rem; margin-top: 2.2rem; }
 
