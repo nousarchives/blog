@@ -120,6 +120,7 @@ html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { displ
 .kp-fig-body svg.kp-arch { overflow: hidden; }
 .kp-arch .h { font-size: 15px; font-weight: 700; }
 .kp-arch .s { font-size: 12px; }
+.kp-arch .s[lang="es"] { font-size: 11px; }
 .kp-arch .b { fill: var(--kp-surface); stroke: var(--kp-ink); stroke-width: 1.2; }
 .kp-arch .g { fill: var(--cream); stroke: var(--kp-ink); stroke-width: 1.2; }
 .kp-arch .ln { stroke: var(--kp-ink); stroke-width: 1.2; fill: none; marker-end: url(#kp-ar); }
