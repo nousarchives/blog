@@ -761,7 +761,9 @@ Object.keys(AUTHORS).forEach(slug => {
                 return;
             }
             countedText = fs.readFileSync(contentPath, 'utf-8')
-                .replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ');
+                .replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, ' ')
+                .replace(/<(\w+)[^>]* lang="es"[^>]*>[\s\S]*?<\/\1>/g, ' ')   // a bilingual page counts one language
+                .replace(/<[^>]+>/g, ' ');
         }
         const wordcount = countedText.trim().split(/\s+/).length;
         fm.wordcount = wordcount;
