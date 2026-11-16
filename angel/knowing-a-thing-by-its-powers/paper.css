@@ -28,6 +28,9 @@
 
 .kp a { color: inherit; }
 
+/* ── LANGUAGE: every text exists in English and Spanish; <html lang> (set by the site toggle) picks one ── */
+html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { display: none; }
+
 /* ── HERO ── */
 .kp-hero { max-width: 860px; margin: 0 auto; padding: 5.5rem 3rem 4.5rem; min-height: calc(92vh - var(--kp-nav-h)); display: flex; flex-direction: column; justify-content: center; }
 .kp-meta { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--kp-muted); display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }

@@ -14,16 +14,42 @@
 
     // Fixed series order and colors (color follows the model, never its rank)
     const SERIES = {
-        TR:  { color: 'var(--s-tr)',  legend: 'TR (stored row)' },
-        OV:  { color: 'var(--s-ov)',  legend: 'OV (reads interactions)' },
-        MLP: { color: 'var(--s-mlp)', legend: 'MLP (stored row)' },
-        FAC: { color: 'var(--s-fac)', legend: 'FAC (stored row, bilinear)' },
+        TR:  { color: 'var(--s-tr)' },
+        OV:  { color: 'var(--s-ov)' },
+        MLP: { color: 'var(--s-mlp)' },
+        FAC: { color: 'var(--s-fac)' },
     };
 
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
     const lerp = (a, b, t) => a + (b - a) * t;
-    const fmtInt = v => v.toLocaleString('en-US');
-    const fmtPct = p => (Math.round(p * 1000) / 10) + '%';
+
+    // Language follows <html lang>, which the site toggle (i18n.js) sets
+    const lang = () => (document.documentElement.lang || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+    const STR = {
+        en: {
+            leg: { TR: 'TR (stored row)', OV: 'OV (reads interactions)', MLP: 'MLP (stored row)', FAC: 'FAC (stored row, bilinear)' },
+            sizeTitle: 'Training interactions (fraction p)', interactions: 'interactions', accTitle: 'Test accuracy (chance = 0.5)',
+            longTitle: 'Test accuracy on unseen pairs', stepsTitle: 'Training steps', steps: 'steps', to: 'to', probeTitle: 'R² of the linear probe',
+            edit: 'edit', pts: 'pts', tableP: 'p (interactions)', tableSteps: 'Steps', keys: 'Use the left and right arrow keys to read the values.',
+            ariaCurves: 'Line chart of test accuracy against the number of training interactions for TR, OV, MLP and FAC.',
+            ariaLong: 'Line chart of test accuracy on unseen pairs during 50,000 training steps for TR and OV.',
+            ariaProbe: 'Line chart of the R² of a linear probe towards the constitution against the number of training interactions for TR, OV, MLP and FAC.',
+        },
+        es: {
+            leg: { TR: 'TR (fila guardada)', OV: 'OV (lee las interacciones)', MLP: 'MLP (fila guardada)', FAC: 'FAC (fila guardada, bilineal)' },
+            sizeTitle: 'Interacciones de entrenamiento (fracción p)', interactions: 'interacciones', accTitle: 'Acierto de test (azar = 0,5)',
+            longTitle: 'Acierto de test en pares no vistos', stepsTitle: 'Pasos de entrenamiento', steps: 'pasos', to: 'a', probeTitle: 'R² de la sonda lineal',
+            edit: 'edición', pts: 'pts', tableP: 'p (interacciones)', tableSteps: 'Pasos', keys: 'Usa las flechas izquierda y derecha para leer los valores.',
+            ariaCurves: 'Gráfica de líneas del acierto de test frente al número de interacciones de entrenamiento para TR, OV, MLP y FAC.',
+            ariaLong: 'Gráfica de líneas del acierto de test en pares no vistos durante 50 000 pasos de entrenamiento para TR y OV.',
+            ariaProbe: 'Gráfica de líneas del R² de una sonda lineal hacia la constitución frente al número de interacciones de entrenamiento para TR, OV, MLP y FAC.',
+        },
+    };
+    const T = k => STR[lang()][k];
+    const val = x => (typeof x === 'function' ? x() : x);
+    const dec = s => (lang() === 'es' ? s.replace('.', ',') : s);
+    const fmtInt = v => (lang() === 'es' ? (v >= 10000 ? String(v).replace(/\B(?=(\d{3})+$)/g, '\u00a0') : String(v)) : v.toLocaleString('en-US'));
+    const fmtPct = p => dec(String(Math.round(p * 1000) / 10)) + (lang() === 'es' ? '\u00a0%' : '%');
 
     function svgEl(tag, attrs, parent) {
         const el = document.createElementNS(NS, tag);
@@ -68,7 +94,7 @@
 
             const old = host.querySelector('svg');
             if (old) old.remove();
-            const svg = svgEl('svg', { class: 'kp-chart', viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', tabindex: '0', 'aria-label': cfg.ariaLabel });
+            const svg = svgEl('svg', { class: 'kp-chart', viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', tabindex: '0', 'aria-label': val(cfg.ariaLabel) + ' ' + T('keys') });
             host.insertBefore(svg, tip);
 
             // grid, axes, titles
@@ -77,14 +103,14 @@
                 svgEl('line', { class: t === cfg.y.baseline ? 'kp-baseline' : 'kp-gridline', x1: m.l, x2: m.l + pw, y1: y, y2: y }, svg);
                 svgEl('text', { x: m.l - 7, y: y + 3.5, 'text-anchor': 'end' }, svg).textContent = (cfg.y.tickFmt || cfg.y.fmt)(t);
             });
-            svgEl('text', { class: 'kp-axis-title', x: 0, y: 10 }, svg).textContent = cfg.y.title;
-            cfg.x.ticks.forEach(t => {
+            svgEl('text', { class: 'kp-axis-title', x: 0, y: 10 }, svg).textContent = val(cfg.y.title);
+            val(cfg.x.ticks).forEach(t => {
                 const x = sx(t.v);
                 svgEl('line', { class: 'kp-baseline', x1: x, x2: x, y1: m.t + ph, y2: m.t + ph + 4 }, svg);
                 svgEl('text', { x, y: m.t + ph + 16, 'text-anchor': 'middle' }, svg).textContent = t.label;
                 if (t.sub && !(narrow && t.skipSubNarrow)) svgEl('text', { x, y: m.t + ph + 28, 'text-anchor': 'middle', opacity: 0.75 }, svg).textContent = t.sub;
             });
-            svgEl('text', { class: 'kp-axis-title', x: m.l + pw / 2, y: H - 3, 'text-anchor': 'middle' }, svg).textContent = cfg.x.title;
+            svgEl('text', { class: 'kp-axis-title', x: m.l + pw / 2, y: H - 3, 'text-anchor': 'middle' }, svg).textContent = val(cfg.x.title);
 
             // data, clipped by the reveal rectangle
             const clipId = cfg.id + '-clip';
@@ -224,7 +250,7 @@
                 const item = htmlEl('span', 'kp-leg', null, legendEl);
                 item.dataset.key = k;
                 htmlEl('span', 'kp-key', null, item).style.background = SERIES[k].color;
-                htmlEl('span', null, SERIES[k].legend, item);
+                htmlEl('span', null, T('leg')[k], item);
             });
         }
         function buildTable() {
@@ -232,7 +258,7 @@
             tableEl.textContent = '';
             const table = htmlEl('table', null, null, tableEl);
             const head = htmlEl('tr', null, null, htmlEl('thead', null, null, table));
-            htmlEl('th', null, cfg.table.xHead, head);
+            htmlEl('th', null, val(cfg.table.xHead), head);
             cfg.keys.forEach(k => htmlEl('th', null, k, head));
             const body = htmlEl('tbody', null, null, table);
             g.xsData.forEach((v, i) => {
@@ -269,11 +295,11 @@
     }
 
     // ── CHART DEFINITIONS ────────────────────────────────────────────────────
-    const fmt3 = v => v.toFixed(3), fmt2 = v => v.toFixed(2), fmt1 = v => v.toFixed(1);
-    const sizeTicks = D.curves.test_par.TR.map((pt, i) => ({ v: pt.n, label: fmtPct(pt.p), sub: fmtInt(pt.n), skipSubNarrow: i % 2 === 1 }));
+    const fmt3 = v => dec(v.toFixed(3)), fmt2 = v => dec(v.toFixed(2)), fmt1 = v => dec(v.toFixed(1));
+    const sizeTicks = () => D.curves.test_par.TR.map((pt, i) => ({ v: pt.n, label: fmtPct(pt.p), sub: fmtInt(pt.n), skipSubNarrow: i % 2 === 1 }));
     const sizeDomain = [950, 17400];
-    const sizeTitle = 'Training interactions (fraction p)';
-    const sizeTip = pt => `p = ${fmtPct(pt.p)} · ${fmtInt(pt.n)} interactions`;
+    const sizeTitle = () => T('sizeTitle');
+    const sizeTip = pt => `p = ${fmtPct(pt.p)} · ${fmtInt(pt.n)} ${T('interactions')}`;
 
     const figures = {};
     let split = 'test_par';
@@ -288,18 +314,18 @@
                 return out;
             },
             x: { type: 'log', domain: sizeDomain, ticks: sizeTicks, title: sizeTitle },
-            y: { domain: [0.5, 1], ticks: [0.5, 0.6, 0.7, 0.8, 0.9, 1], baseline: 0.5, fmt: fmt3, tickFmt: fmt1, title: 'Test accuracy (chance = 0.5)' },
+            y: { domain: [0.5, 1], ticks: [0.5, 0.6, 0.7, 0.8, 0.9, 1], baseline: 0.5, fmt: fmt3, tickFmt: fmt1, title: () => T('accTitle') },
             tipTitle: sizeTip,
-            tipExtra: pt => '± ' + pt.ci.toFixed(3),
-            ariaLabel: 'Line chart of test accuracy against the number of training interactions for TR, OV, MLP and FAC. Use the left and right arrow keys to read the values.',
-            table: { xHead: 'p (interactions)', xCell: pt => `${fmtPct(pt.p)} (${fmtInt(pt.n)})`, cell: pt => `${fmt3(pt.y)} ± ${pt.ci.toFixed(3)}` },
+            tipExtra: pt => '± ' + fmt3(pt.ci),
+            ariaLabel: () => T('ariaCurves'),
+            table: { xHead: () => T('tableP'), xCell: pt => `${fmtPct(pt.p)} (${fmtInt(pt.n)})`, cell: pt => `${fmt3(pt.y)} ± ${fmt3(pt.ci)}` },
         });
         curvesFig.querySelectorAll('.kp-filters button').forEach(btn => {
             btn.addEventListener('click', () => {
                 split = btn.dataset.split;
                 curvesFig.querySelectorAll('.kp-filters button').forEach(b => {
-                    b.classList.toggle('is-on', b === btn);
-                    b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+                    b.classList.toggle('is-on', b.dataset.split === split);
+                    b.setAttribute('aria-pressed', b.dataset.split === split ? 'true' : 'false');
                 });
                 figures.curves.render();
             });
@@ -320,18 +346,18 @@
                 ['TR', 'OV'].forEach(k => { out[k] = D.long[k].map(pt => ({ x: pt.step, y: pt.mean, lo: pt.min, hi: pt.max })); });
                 return out;
             },
-            x: { type: 'linear', domain: [0, 51500], ticks: [0, 10000, 20000, 30000, 40000, 50000].map(v => ({ v, label: v ? v / 1000 + 'K' : '0' })), title: 'Training steps' },
-            y: { domain: [yMin, yMax], ticks: yTicks, baseline: yMin, fmt: fmt3, tickFmt: fmt2, title: 'Test accuracy on unseen pairs' },
-            tipTitle: pt => `${fmtInt(pt.x)} steps`,
-            tipExtra: pt => `${fmt3(pt.lo)} to ${fmt3(pt.hi)}`,
-            ariaLabel: 'Line chart of test accuracy on unseen pairs during 50,000 training steps for TR and OV. Use the left and right arrow keys to read the values.',
-            table: { xHead: 'Steps', xCell: pt => fmtInt(pt.x), cell: pt => `${fmt3(pt.y)} (${fmt3(pt.lo)} to ${fmt3(pt.hi)})` },
+            x: { type: 'linear', domain: [0, 51500], ticks: [0, 10000, 20000, 30000, 40000, 50000].map(v => ({ v, label: v ? v / 1000 + 'K' : '0' })), title: () => T('stepsTitle') },
+            y: { domain: [yMin, yMax], ticks: yTicks, baseline: yMin, fmt: fmt3, tickFmt: fmt2, title: () => T('longTitle') },
+            tipTitle: pt => `${fmtInt(pt.x)} ${T('steps')}`,
+            tipExtra: pt => `${fmt3(pt.lo)} ${T('to')} ${fmt3(pt.hi)}`,
+            ariaLabel: () => T('ariaLong'),
+            table: { xHead: () => T('tableSteps'), xCell: pt => fmtInt(pt.x), cell: pt => `${fmt3(pt.y)} (${fmt3(pt.lo)} ${T('to')} ${fmt3(pt.hi)})` },
         });
     }
 
     const probeFig = root.querySelector('[data-figure="probe"] .kp-figure');
     if (probeFig) {
-        const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
+        const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + fmt1(Math.abs(v));
         figures.probe = LineChart(probeFig, {
             id: 'kp-probe', keys: D.models,
             series: () => {
@@ -340,11 +366,11 @@
                 return out;
             },
             x: { type: 'log', domain: sizeDomain, ticks: sizeTicks, title: sizeTitle },
-            y: { domain: [-0.05, 0.9], ticks: [0, 0.2, 0.4, 0.6, 0.8], baseline: 0, fmt: fmt2, tickFmt: fmt1, title: 'R² of the linear probe' },
+            y: { domain: [-0.05, 0.9], ticks: [0, 0.2, 0.4, 0.6, 0.8], baseline: 0, fmt: fmt2, tickFmt: fmt1, title: () => T('probeTitle') },
             tipTitle: sizeTip,
-            tipExtra: pt => `edit ${signed(pt.edit)} pts`,
-            ariaLabel: 'Line chart of the R² of a linear probe towards the constitution against the number of training interactions for TR, OV, MLP and FAC. Use the left and right arrow keys to read the values.',
-            table: { xHead: 'p (interactions)', xCell: pt => `${fmtPct(pt.p)} (${fmtInt(pt.n)})`, cell: pt => `${fmt2(pt.y)} / ${signed(pt.edit)}` },
+            tipExtra: pt => `${T('edit')} ${signed(pt.edit)} ${T('pts')}`,
+            ariaLabel: () => T('ariaProbe'),
+            table: { xHead: () => T('tableP'), xCell: pt => `${fmtPct(pt.p)} (${fmtInt(pt.n)})`, cell: pt => `${fmt2(pt.y)} / ${signed(pt.edit)}` },
         });
     }
 
@@ -360,9 +386,10 @@
     })).filter(s => s.fig && s.steps.length);
 
     function stepCenter(step) {
-        const first = step.firstElementChild.getBoundingClientRect();
-        const last = step.lastElementChild.getBoundingClientRect();
-        return (first.top + last.bottom) / 2;
+        // only the elements of the language on screen take part
+        const shown = Array.prototype.filter.call(step.children, el => el.offsetParent !== null);
+        if (!shown.length) return step.getBoundingClientRect().top;
+        return (shown[0].getBoundingClientRect().top + shown[shown.length - 1].getBoundingClientRect().bottom) / 2;
     }
 
     function updateScrolly(s) {
@@ -442,4 +469,12 @@
     window.addEventListener('load', refresh);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
     if (window.ResizeObserver) new ResizeObserver(() => window.requestAnimationFrame(update)).observe(root);
+    // the site toggle changes <html lang>: redraw the charts with the strings and numbers of that language
+    let shownLang = lang();
+    new MutationObserver(() => {
+        if (lang() === shownLang) return;
+        shownLang = lang();
+        Object.keys(figures).forEach(k => figures[k].render());
+        update();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 })();
