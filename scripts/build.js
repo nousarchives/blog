@@ -35,7 +35,7 @@ const AUTHORS = {
                     es: 'Con datos suficientes acierta de 2 a 4 puntos más y el diseño estándar necesita 1,6 veces más datos. Con pocos datos pierde; con muchos, una factorización simple gana a los dos.',
                     en: 'With enough data it is 2 to 4 points more accurate and the standard design needs 1.6 times more data. With little data it loses; with a lot, a simple factorization beats both.',
                 },
-                stack: ['Python', 'PyTorch', 'scikit-learn', 'Colab T4'],
+                stack: ['Python', 'PyTorch'],
             },
             {
                 title: 'π-chón',
@@ -67,7 +67,7 @@ const AUTHORS = {
                     es: 'Fase 0: entrena, evalúa, calibra, cuantifica incertidumbre y muestra dónde mira el modelo. Se mide PPV a prevalencia real, no accuracy. El cuello de botella ahora son los datos UAV reales.',
                     en: 'Phase 0: trains, evaluates, calibrates, quantifies uncertainty and shows where the model looks. Measured by PPV at real prevalence, not accuracy. The bottleneck now is real UAV data.',
                 },
-                stack: ['Python', 'PyTorch', 'Grad-CAM', 'W&B', 'DVC', 'uv'],
+                stack: ['Python', 'PyTorch', 'GitHub Actions', 'Grad-CAM', 'W&B', 'DVC', 'uv'],
             },
             {
                 title: 'Mar Menor Health Predictor',
@@ -93,16 +93,16 @@ const AUTHORS = {
                 'AWS · AI Practitioner',
                 'GitHub Actions',
             ] },
-            { label: { es: 'idiomas', en: 'spoken' }, items: [
+            { label: { es: 'idiomas', en: 'languages' }, items: [
                 { es: 'Inglés · Cambridge C1', en: 'English · Cambridge C1' },
-                { es: 'Español · nativo', en: 'Spanish · native' },
+                { es: 'Español · Nativo', en: 'Spanish · Native' },
             ] },
         ],
         stack: [
             { label: { es: 'lenguajes', en: 'languages' }, items: ['Python', 'TypeScript / JavaScript', 'SQL', 'Go'] },
-            { label: { es: 'ia-ml', en: 'ai-ml' }, items: ['Agentes · tool calling · MCP', 'RAG', 'Evaluation harnesses', { es: 'Salida estructurada · GBNF', en: 'Structured output · GBNF' }, 'PEFT / LoRA', 'PyTorch'] },
-            { label: 'local-edge', items: ['llama.cpp · GGUF', 'Ollama', { es: 'Cuantización', en: 'Quantization' }, 'whisper.cpp', 'Raspberry Pi · ESP32'] },
-            { label: 'infra', items: ['Docker · K8s · Helm', 'Terraform · ArgoCD', 'AWS · GCP · Azure', 'GitHub Actions'] },
+            { label: { es: 'ia-ml', en: 'ai-ml' }, items: ['PyTorch', 'Agent frameworks · MCP', 'Guardrails', 'Evaluation harnesses', 'Prompt engineering', 'Context engineering', { es: 'Bases de datos vectoriales', en: 'Vector databases' }, 'PEFT / LoRA', { es: 'Cuantización (GGUF)', en: 'Quantization (GGUF)' }] },
+            { label: 'cloud-infra', items: ['Linux', 'GCP · AWS · Azure', 'Kubernetes · Docker', 'ArgoCD · Terraform', 'CI/CD', 'GitHub Actions · Jenkins', { es: 'Monitorización', en: 'Monitoring' }] },
+            { label: { es: 'integración-seguridad', en: 'integration-security' }, items: ['REST · GraphQL', 'OpenAPI · AsyncAPI', { es: 'Arquitecturas event-driven', en: 'Event-driven architectures' }, 'Kafka', 'API gateways (Azure, Apigee)', 'OAuth 2.0 · OIDC', 'SAML · IAM'] },
         ],
         socialLinks: [
             { label: 'LinkedIn ↗', url: 'https://www.linkedin.com/in/angelallepuz/', icon: 'linkedin' },

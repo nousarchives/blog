@@ -56,31 +56,39 @@
             <div class="tree">
                 <h3 class="tree-root"><span data-l="es">ia-ml</span><span data-l="en">ai-ml</span>/</h3>
                 <ul>
-                    <li>Agentes · tool calling · MCP</li>
-                    <li>RAG</li>
-                    <li>Evaluation harnesses</li>
-                    <li><span data-l="es">Salida estructurada · GBNF</span><span data-l="en">Structured output · GBNF</span></li>
-                    <li>PEFT / LoRA</li>
                     <li>PyTorch</li>
+                    <li>Agent frameworks · MCP</li>
+                    <li>Guardrails</li>
+                    <li>Evaluation harnesses</li>
+                    <li>Prompt engineering</li>
+                    <li>Context engineering</li>
+                    <li><span data-l="es">Bases de datos vectoriales</span><span data-l="en">Vector databases</span></li>
+                    <li>PEFT / LoRA</li>
+                    <li><span data-l="es">Cuantización (GGUF)</span><span data-l="en">Quantization (GGUF)</span></li>
                 </ul>
             </div>
             <div class="tree">
-                <h3 class="tree-root">local-edge/</h3>
+                <h3 class="tree-root">cloud-infra/</h3>
                 <ul>
-                    <li>llama.cpp · GGUF</li>
-                    <li>Ollama</li>
-                    <li><span data-l="es">Cuantización</span><span data-l="en">Quantization</span></li>
-                    <li>whisper.cpp</li>
-                    <li>Raspberry Pi · ESP32</li>
+                    <li>Linux</li>
+                    <li>GCP · AWS · Azure</li>
+                    <li>Kubernetes · Docker</li>
+                    <li>ArgoCD · Terraform</li>
+                    <li>CI/CD</li>
+                    <li>GitHub Actions · Jenkins</li>
+                    <li><span data-l="es">Monitorización</span><span data-l="en">Monitoring</span></li>
                 </ul>
             </div>
             <div class="tree">
-                <h3 class="tree-root">infra/</h3>
+                <h3 class="tree-root"><span data-l="es">integración-seguridad</span><span data-l="en">integration-security</span>/</h3>
                 <ul>
-                    <li>Docker · K8s · Helm</li>
-                    <li>Terraform · ArgoCD</li>
-                    <li>AWS · GCP · Azure</li>
-                    <li>GitHub Actions</li>
+                    <li>REST · GraphQL</li>
+                    <li>OpenAPI · AsyncAPI</li>
+                    <li><span data-l="es">Arquitecturas event-driven</span><span data-l="en">Event-driven architectures</span></li>
+                    <li>Kafka</li>
+                    <li>API gateways (Azure, Apigee)</li>
+                    <li>OAuth 2.0 · OIDC</li>
+                    <li>SAML · IAM</li>
                 </ul>
             </div>
         </div>
@@ -103,10 +111,10 @@
                 </ul>
             </div>
             <div class="tree">
-                <h3 class="tree-root"><span data-l="es">idiomas</span><span data-l="en">spoken</span>/</h3>
+                <h3 class="tree-root"><span data-l="es">idiomas</span><span data-l="en">languages</span>/</h3>
                 <ul>
                     <li><span data-l="es">Inglés · Cambridge C1</span><span data-l="en">English · Cambridge C1</span></li>
-                    <li><span data-l="es">Español · nativo</span><span data-l="en">Spanish · native</span></li>
+                    <li><span data-l="es">Español · Nativo</span><span data-l="en">Spanish · Native</span></li>
                 </ul>
             </div>
         </div>
@@ -125,7 +133,7 @@
                 <span class="term-panel-meta"># <span data-l="es">Conocer por lo que hace</span><span data-l="en">Known by what it does</span> · 2026</span>
                 <p class="term-panel-desc"><span data-l="es">Un paper y un experimento controlado. Un transformer que no guarda un vector por objeto; lo calcula leyendo las interacciones en que ese objeto ha sido observado, como Locke decía que se conoce una cosa, por sus potencias. Comparado con el diseño estándar en un mundo sintético de constitución conocida.</span><span data-l="en">A paper and a controlled experiment. A transformer that stores no vector for an object; it computes it by reading the interactions in which the object has been observed, the way Locke said a thing is known, by its powers. Compared with the standard design in a synthetic world whose constitution is known.</span></p>
                 <p class="term-panel-fact"><span data-l="es">Con datos suficientes acierta de 2 a 4 puntos más y el diseño estándar necesita 1,6 veces más datos. Con pocos datos pierde; con muchos, una factorización simple gana a los dos.</span><span data-l="en">With enough data it is 2 to 4 points more accurate and the standard design needs 1.6 times more data. With little data it loses; with a lot, a simple factorization beats both.</span></p>
-                <div class="term-panel-tags"><span>[python]</span><span>[pytorch]</span><span>[scikit-learn]</span><span>[colab t4]</span></div>
+                <div class="term-panel-tags"><span>[python]</span><span>[pytorch]</span></div>
                 <span class="term-panel-foot">github.com/allepuzz/knowing-a-thing-by-its-powers ↗</span>
             </a>
             <a href="https://github.com/allepuzz/pichon" target="_blank" class="term-panel">
@@ -143,7 +151,7 @@
                 <span class="term-panel-meta"># <span data-l="es">Para quien no paga APIs</span><span data-l="en">For those who don't pay for APIs</span> · 2026</span>
                 <p class="term-panel-desc"><span data-l="es">Pipeline MLOps para detectar plagas y enfermedades en cítricos desde dron, pensado para cooperativas de la Región de Murcia (28.442 ha de limonero), donde hoy la inspección se hace a pie y por muestreo.</span><span data-l="en">MLOps pipeline for pest and disease detection in citrus groves from drone imagery, aimed at cooperatives in the Region of Murcia (28,442 ha of lemon trees), where scouting is still done on foot and by sampling.</span></p>
                 <p class="term-panel-fact"><span data-l="es">Fase 0: entrena, evalúa, calibra, cuantifica incertidumbre y muestra dónde mira el modelo. Se mide PPV a prevalencia real, no accuracy. El cuello de botella ahora son los datos UAV reales.</span><span data-l="en">Phase 0: trains, evaluates, calibrates, quantifies uncertainty and shows where the model looks. Measured by PPV at real prevalence, not accuracy. The bottleneck now is real UAV data.</span></p>
-                <div class="term-panel-tags"><span>[python]</span><span>[pytorch]</span><span>[grad-cam]</span><span>[w&b]</span><span>[dvc]</span><span>[uv]</span></div>
+                <div class="term-panel-tags"><span>[python]</span><span>[pytorch]</span><span>[github actions]</span><span>[grad-cam]</span><span>[w&b]</span><span>[dvc]</span><span>[uv]</span></div>
                 <span class="term-panel-foot">github.com/allepuzz/citrus-scout ↗</span>
             </a>
             <a href="https://github.com/allepuzz/Mar-Menor-Health-Predictor" target="_blank" class="term-panel">
