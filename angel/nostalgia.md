@@ -2,11 +2,11 @@
 title: "Nostalgia, la emoción inasible"
 date: 2026-06-29
 type: ensayo
-tags: [cine, literatura]
+tags: [guion, cine, literatura]
 authorSlug: angel
 ---
 
-\*\*NOSTALGIA. El arte sobre una emoción inexistente/irreal.
+**NOSTALGIA. El arte sobre una emoción inexistente/irreal.**
 
 Harán ya 6 años de aquella noche en Cartagena, cuando vi por primera vez, esa pieza de arte. Siendo sincero, en ese momento, no sabía que estaba viendo, no entendía las motivaciones del protagonista y el mundo en el que se movía este hombre mayor que se parece a goofy y pluto juntos y claramente algo torturado, no parecía haber sido escrito con mucho detalle o interés.
 

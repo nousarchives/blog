@@ -20,6 +20,7 @@ const POSTS = [
     "date": "2026-06-29",
     "type": "ensayo",
     "tags": [
+      "guion",
       "cine",
       "literatura"
     ],
