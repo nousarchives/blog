@@ -83,7 +83,7 @@ const AUTHORS = {
                     es: 'Random Forest con lags y validación de ventana expansiva. MSE en clorofila-α: 1,211 frente a 3,671 (SARIMA) y 5,316 (regresión lineal).',
                     en: 'Random Forest with lag features and expanding-window validation. Chlorophyll-α MSE: 1.211 vs 3.671 (SARIMA) and 5.316 (linear regression).',
                 },
-                stack: ['Python', 'scikit-learn', 'statsmodels', 'pandas'],
+                stack: ['Python', 'statsmodels', 'pandas'],
             },
         ],
         certs: [
