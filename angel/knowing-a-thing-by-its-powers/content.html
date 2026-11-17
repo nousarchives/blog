@@ -91,7 +91,7 @@
             </div>
             <div class="kp-step" data-reveal="1">
                 <h3 lang="en">OV, the object vector transformer</h3><h3 lang="es">OV, el transformer de vector de objeto</h3>
-                <p lang="en">In OV, the object table is removed and replaced by a reader, a small network that is trained with the rest of the model. Whenever OV needs the vector of an object, the reader takes the interactions in which that object has been observed and computes the vector from them.</p><p lang="es">En OV, la tabla de objetos se elimina y se sustituye por un lector, una red pequeña que se entrena con el resto del modelo. Cada vez que OV necesita el vector de un objeto, el lector toma las interacciones en las que ese objeto ha sido observado y calcula el vector a partir de ellas.</p>
+                <p lang="en">In OV, the object table is removed and replaced by a reader, a transformer of a single layer. Whenever OV needs the vector of an object, the reader receives the interactions in which that object has been observed and outputs the vector.</p><p lang="es">En OV, la tabla de objetos se elimina y se sustituye por un lector, un transformer de una sola capa. Cada vez que OV necesita el vector de un objeto, el lector recibe las interacciones en las que ese objeto ha sido observado y devuelve el vector.</p>
                 <p lang="en">OV cannot store a vector for an object; it must infer it from evidence.</p><p lang="es">OV no puede guardar un vector para un objeto; tiene que inferirlo de la evidencia.</p>
             </div>
             <div class="kp-step" data-reveal="1">
