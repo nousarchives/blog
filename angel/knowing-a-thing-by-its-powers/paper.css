@@ -49,7 +49,7 @@ html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { displ
 .kp-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--kp-muted); border-top: 1px solid var(--rule); padding-top: 0.9rem; margin-bottom: 2.2rem; }
 .kp-label span { color: var(--kp-ink); margin-right: 0.9rem; }
 .kp-prose p.kp-big { font-family: var(--font-display); font-size: clamp(1.35rem, 3vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em; color: var(--kp-ink); margin: 0.4rem 0 1.8rem; text-wrap: balance; }
-.kp-quote { border-left: 2px solid var(--kp-ink); padding: 0.2rem 0 0.2rem 1.4rem; margin: 2rem 0; }
+.kp-quote { margin: 2rem 0; }
 .kp-quote p { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.45; color: var(--kp-ink); margin-bottom: 0.5rem; }
 .kp-quote cite { font-family: var(--font-mono); font-style: normal; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--kp-muted); }
 .kp-list { list-style: none; margin: 0 0 2rem; }
