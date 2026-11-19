@@ -288,8 +288,8 @@
             reveal = f;
             rect.setAttribute('width', (640 * f).toFixed(1));
             // On narrow screens show one half at a time, at a readable size, and pan to OV
-            if (narrowQuery.matches && !reduceMotion) svg.setAttribute('viewBox', `${(320 * clamp((f - 0.5) / 0.5, 0, 1)).toFixed(1)} 0 320 360`);
-            else svg.setAttribute('viewBox', '0 0 640 360');
+            if (narrowQuery.matches && !reduceMotion) svg.setAttribute('viewBox', `${(320 * clamp((f - 0.5) / 0.5, 0, 1)).toFixed(1)} 0 320 456`);
+            else svg.setAttribute('viewBox', '0 0 640 456');
         }
         return { render() { const f = reveal; reveal = -1; apply(Math.max(f, 0)); }, xFrac: v => v, setReveal: apply, setFocus() {} };
     }
