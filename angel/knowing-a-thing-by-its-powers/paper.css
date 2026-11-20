@@ -32,7 +32,7 @@
 html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { display: none; }
 
 /* ── HERO ── */
-.kp-hero { max-width: 860px; margin: 0 auto; padding: 5.5rem 3rem 4.5rem; min-height: calc(92vh - var(--kp-nav-h)); display: flex; flex-direction: column; justify-content: center; }
+.kp-hero { max-width: 860px; margin: 0 auto; padding: 5.5rem 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
 .kp-meta { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--kp-muted); display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .kp-meta a { text-decoration: none; }
 .kp-title { font-family: var(--font-display); font-size: clamp(2.3rem, 6.2vw, 4.4rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.4rem; text-wrap: balance; }
@@ -45,6 +45,7 @@ html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { displ
 
 /* ── PROSE ── */
 .kp-prose { max-width: 720px; margin: 0 auto; padding: 4.5rem 3rem; }
+.kp-hero + .kp-prose { padding-top: 2rem; }
 .kp-prose p, .kp-step p, .kp-list li { font-size: 1rem; line-height: 1.8; color: var(--kp-soft); margin-bottom: 1.3rem; }
 .kp-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--kp-muted); border-top: 1px solid var(--rule); padding-top: 0.9rem; margin-bottom: 2.2rem; }
 .kp-label span { color: var(--kp-ink); margin-right: 0.9rem; }
@@ -144,8 +145,9 @@ html[lang^="es"] .kp [lang="en"], html:not([lang^="es"]) .kp [lang="es"] { displ
 
 /* ── NARROW SCREENS: the figure sticks to the top and the steps scroll under it ── */
 @media (max-width: 900px) {
-    .kp-hero { padding: 3.5rem 1.5rem 3rem; min-height: 0; }
+    .kp-hero { padding: 3.5rem 1.5rem 2rem; }
     .kp-prose { padding: 3.2rem 1.5rem; }
+    .kp-hero + .kp-prose { padding-top: 1.5rem; }
     .kp-end { padding: 1.5rem 1.5rem 4rem; }
     .kp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .kp-tiles > div:nth-child(3) { border-left: 0; padding-left: 0; }
